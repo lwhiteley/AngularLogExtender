@@ -28,8 +28,7 @@ logEx.config(['$provide', function($provide){
     		     * */
     			var processUseOverride = function(override){
     			  	  if( override === null || override === undefined)  return false;
-    			  	  if( override === true)  return true;
-    			  	  if( override === false)  return true;
+    			  	  if( typeof override == 'boolean')  return true;
     			  	  return false;
     			    };
     			    /**

@@ -93,12 +93,11 @@ logEx.service('ProcessOverride', [  function( ){
 logEx.service('ProcessUseOverride', [  function( ){
 	/**
      * processUseOverride returns true if the override flag is set. 
-     * this is used to activated the override functionality.
+     * this is used to activate the override functionality.
      * */
 	var processUseOverride = function(override){
   	  if( override === null || override === undefined)  return false;
-  	  if( override === true)  return true;
-  	  if( override === false)  return true;
+  	  if( typeof override == 'boolean')  return true;
   	  return false;
     };
 	return processUseOverride;
