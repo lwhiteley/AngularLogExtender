@@ -96,7 +96,6 @@ logEx.service('ProcessUseOverride', [  function( ){
      * this is used to activate the override functionality.
      * */
 	var processUseOverride = function(override){
-  	  if( override === null || override === undefined)  return false;
   	  if( typeof override == 'boolean')  return true;
   	  return false;
     };
@@ -200,7 +199,7 @@ logEx.service('logEnhancer', [ 'LogUtils', function( logUtils){
 	      };
 	      /**
 	       * Accepts true or false that may enable/disable debugging in the Angularjs App
-	       * can only be used before the instance is set
+	       * can only be used when configuring the $log
 	       * */
 	      var setDebugFlag = function(flag){
 	    	   enabled = flag;

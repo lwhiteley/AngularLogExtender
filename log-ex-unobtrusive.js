@@ -27,7 +27,6 @@ logEx.config(['$provide', function($provide){
     		     * this is used to activated the override functionality.
     		     * */
     			var processUseOverride = function(override){
-    			  	  if( override === null || override === undefined)  return false;
     			  	  if( typeof override == 'boolean')  return true;
     			  	  return false;
     			    };
@@ -42,6 +41,18 @@ logEx.config(['$provide', function($provide){
     			  	  if( override === false)  return false;
     			  	  return true;
     			    };
+					
+				   var getLogPrefix = function(className){
+						var formatMessage ="";
+						var format = "MMM-dd-yyyy-h:mm:ssa";
+						var now = $filter('date')(new Date(), format);
+					  if(className === undefined || className === null || className === ""){
+						 formatMessage = "" + now  + " >> " ;
+					  }else{
+						 formatMessage = "" + now  + "::Called by:" + className;
+					  }
+					  return formatMessage;
+				  };
     			    
     			    var activateLogs = function(enabled, override){
     			     	  if(enabled == false && override == true)  return true;
@@ -61,17 +72,7 @@ logEx.config(['$provide', function($provide){
     			          }
     			      };
     			      
-    			      var getLogPrefix = function(className){
-    			    	  	var formatMessage ="";
-    			    	  	var format = "MMM-dd-yyyy-h:mm:ssa";
-    			    	  	var now = $filter('date')(new Date(), format);
-    			          if(className === undefined || className === null || className === ""){
-    			         	 formatMessage = "" + now  + " >> " ;
-    			          }else{
-    			         	 formatMessage = "" + now  + "::Called by:" + className;
-    			          }
-    			          return formatMessage;
-    			      };
+    			   
     			//---------------------------------------//
     			var enhanceLoggerFn = function( $log ){
     			      var separator = " >> ";
@@ -156,7 +157,7 @@ logEx.config(['$provide', function($provide){
     			      };
     			      /**
     			       * Accepts true or false that may enable/disable debugging in the Angularjs App
-    			       * can only be used before the instance is set
+    			       * can only be used when configuring the $log
     			       * */
     			      var setDebugFlag = function(flag){
     			    	   enabled = flag;
