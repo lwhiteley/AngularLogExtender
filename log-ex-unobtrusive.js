@@ -200,7 +200,7 @@ logEx.config(['$provide', function($provide){
     	  $delegate.setGlobalDebugFlag(false);
     	  
     	  if( $delegate.isEnabled() ){
-    		  $delegate.log("CONFIG: DEBUGGING ENABLED - $log has been activated globally");
+    		  $delegate.log("CONFIG: DEBUGGING ENABLED GLOBALLY");
     	  }
           return  logEnhancer.exposeSafeLog($delegate);
       }]);
