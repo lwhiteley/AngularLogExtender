@@ -64,7 +64,7 @@ This example can be used to know which component (controller, directive etc.) $l
 ```
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController');
-      $log.log("Simple Log Extender Example"); 
+      $log.log("Advanced Log Extender Example: Use Case 1: Example"); 
 }]);
 ```
 ######Output:
@@ -80,7 +80,7 @@ This example is used to disable logging to the console from a specific component
 ```
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', false);
-      $log.log("Simple Log Extender Example"); 
+      $log.log("Advanced Log Extender Example: Use Case 2: Eg 1"); 
 }]);
 ```
 ######Output:
@@ -94,7 +94,7 @@ Setting the override without the class name
 ```
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance(false);
-      $log.log("Simple Log Extender Example"); 
+      $log.log("Advanced Log Extender Example: Use Case 2: Eg 2 "); 
 }]);
 ```
 ######Output:
@@ -109,7 +109,7 @@ For this override to work, Debugging must be globally disabled. The practical us
 ```
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', true);
-      $log.log("Simple Log Extender Example"); 
+      $log.log("Advanced Log Extender Example: Use Case 3: Eg 1 "); 
 }]);
 ```
 ######Output:
@@ -123,7 +123,7 @@ Setting the override without the class name
 ```
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance(true);
-      $log.log("Simple Log Extender Example"); 
+      $log.log("Advanced Log Extender Example: Use Case 3: Eg 2"); 
 }]);
 ```
 ######Output:
