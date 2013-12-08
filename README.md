@@ -132,7 +132,7 @@ Dec-08-2013-1:20:56PM >> [OVERRIDE] DEBUGGING ENABLED - $log enabled for this in
 Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 ```
 ####NB.
-These examples only shows the use of $log.log, however, the other $log methods were left in tact and can be used as well.
+These examples only show the use of $log.log(), however, the other $log methods were left in tact and can be used as well.
 
 These are:
 ```
