@@ -131,7 +131,14 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 Dec-08-2013-1:20:56PM >> [OVERRIDE] DEBUGGING ENABLED - $log enabled for this instance
 Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 ```
-
+####NB.
+These examples only show the use of $log.log, however, the other $log methods were left in tact and can be used as well
+These are:
+```
+1. $log.warn()
+2. $log.info()
+3. $log.error()
+```
 ##Future Implementations
 
 1. More configurations are being considered such as disabling timestamp to offer more customizations for a developers needs
