@@ -23,7 +23,7 @@ logEx.config(['$provide', function($provide){
     	  logEnhancer.enhanceLogger($delegate);
     	  
     	  // ensure false is being passed for production deployments
-    	  $delegate.setGlobalDebugFlag(true);
+    	  $delegate.setGlobalDebugFlag(false);
     	  
     	  if( $delegate.isEnabled() ){
     		  $delegate.log("CONFIG: DEBUGGING ENABLED - $log has been activated globally");
