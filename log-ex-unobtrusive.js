@@ -66,9 +66,9 @@ logEx.config(['$provide', function($provide){
     			    
     			    var printOverrideLogs = function(_$log, useOverride, _override, className, enabled){
     			    	  if(enabled == false && useOverride && _override){
-    			        	  _$log.log(getLogPrefix(className) + "[OVERRIDE] DEBUGGING ENABLED - $log enabled for this instance " );
+    			        	  _$log.log(getLogPrefix(className) + "[OVERRIDE] DEBUGGING ENABLED - $log enabled for this instance");
     			          }else if (enabled && useOverride && _override == false ){
-    			        	  _$log.log(getLogPrefix(className) + "[OVERRIDE] DEBUGGING DISABLED - $log disabled for this instance: ");
+    			        	  _$log.log(getLogPrefix(className) + "[OVERRIDE] DEBUGGING DISABLED - $log disabled for this instance");
     			          }
     			      };
     			      
@@ -196,6 +196,7 @@ logEx.config(['$provide', function($provide){
     	 logEnhancer.enhanceLogger($delegate);
     	  
     	  // ensure false is being passed for production deployments
+		  //set to true for local development
     	  $delegate.setGlobalDebugFlag(false);
     	  
     	  if( $delegate.isEnabled() ){
