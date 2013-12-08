@@ -53,7 +53,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ######Step 4. Load the web page and look in the Developer Console
 Sample Output
 ```
-Dec-08-2013-12:50:52PM >>  CONFIG: DEBUGGING ENABLED - $log has been activated globally 
+Dec-08-2013-12:50:52PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
 Dec-08-2013-12:50:52PM >>  Simple Log Extender Example 
 ```
 
@@ -69,7 +69,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:00:47PM >>  CONFIG: DEBUGGING ENABLED - $log has been activated globally 
+Dec-08-2013-1:00:47PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
 Dec-08-2013-1:00:47PM::Called by:CoreController >>  Advanced Log Extender Example: Use Case 1
 ```
 
@@ -85,7 +85,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:08:34PM >>  CONFIG: DEBUGGING ENABLED - $log has been activated globally 
+Dec-08-2013-1:08:34PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
 Dec-08-2013-1:08:34PM::Called by:CoreController >> [OVERRIDE] DEBUGGING DISABLED - $log disabled for this instance 
 ```
 
@@ -99,7 +99,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:08:34PM >>  CONFIG: DEBUGGING ENABLED - $log has been activated globally 
+Dec-08-2013-1:08:34PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
 Dec-08-2013-1:08:34PM >> [OVERRIDE] DEBUGGING DISABLED - $log disabled for this instance 
 ```
 
