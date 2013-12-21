@@ -5,3 +5,10 @@
 *.ipr
 *.iws
 .idea/
+
+logs/*
+!.gitkeep
+libpeerconnection.log
+node_modules/
+.DS_Store
+.idea/
