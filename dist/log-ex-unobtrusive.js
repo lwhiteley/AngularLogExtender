@@ -21,7 +21,6 @@ angular.module("log.extension.uo", []).config(['$provide',
         $provide.decorator('$log', ["$delegate", "$filter",
             function($delegate, $filter) {
                 var logEnhancerObj = function() {
-
                     //declarations and functions , extensions
                     var enabled = false;
 
@@ -167,7 +166,6 @@ angular.module("log.extension.uo", []).config(['$provide',
                         $log.isEnabled = function() {
                             return enabled;
                         };
-
                         return $log;
                     };
                     //---------------------------------------//
@@ -179,7 +177,6 @@ angular.module("log.extension.uo", []).config(['$provide',
                     this.enhanceLogger = enhanceLogger;
                     this.exposeSafeLog = exposeSafeLog;
                 };
-
                 //=======================================================================//
                 // Configuration Section
                 //=======================================================================//
