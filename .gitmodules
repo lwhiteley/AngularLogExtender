@@ -1,0 +1,3 @@
+[submodule "example_app"]
+	path = example_app
+	url = git@github.com:ferronrsmith/AngularLogExtender_AngularSeed.git
