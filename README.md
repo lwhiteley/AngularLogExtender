@@ -144,6 +144,8 @@ These are:
 
 1. More configurations are being considered such as disabling timestamp to offer more customizations for a developers needs
 2. Different version using AMD to bring in different functions as seen on http://solutionoptimist.com
+3. Addition of tests
+4. remove the need to reassign $log instance
 
 
 
