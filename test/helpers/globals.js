@@ -1,0 +1,2 @@
+// Test Helpers
+var $log = {};

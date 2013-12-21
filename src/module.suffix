@@ -1,0 +1,17 @@
+
+        //=======================================================================//
+        // Configuration Section
+        //=======================================================================//
+        var logEnhancer = new logEnhancerObj();
+        logEnhancer.enhanceLogger($delegate);
+
+        // ensure false is being passed for production deployments
+        // set to true for local development
+        $delegate.setGlobalDebugFlag(true);
+
+        if ($delegate.isEnabled()) {
+            $delegate.log("CONFIG: LOGGING ENABLED GLOBALLY");
+        }
+        return  logEnhancer.exposeSafeLog($delegate);
+    }]);
+}]);

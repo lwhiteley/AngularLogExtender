@@ -13,200 +13,188 @@
  * - Created and tested with AngularJS v.1.2.3
  */
 
-var logEx = angular.module("log.extension.uo", [ ]);
 
-logEx.config(['$provide', function ($provide) {
-    // Register our $log decorator with AngularJS $provider
-    //scroll down to the Configuration section to set the log settings
-    $provide.decorator('$log', [ "$delegate", "$filter", function ($delegate, $filter) {
-        var logEnhancerObj = function () {
-            //declarations and functions , extensions
-            var enabled = false;
-            var isBoolean = function (value) {
-                return typeof value == 'boolean';
-            };
-            var isString = function (value) {
-                return typeof value == 'string';
-            };
-            var trimString = function (value) {
-                if (isString(value))
-                    return value.replace(/^\s*/, '').replace(/\s*$/, '');
-            };
-            var isValidString = function (value) {
-                return (isString(value) && trimString(value) !== "");
-            };
-            /**
-             * processUseOverride returns true if the override flag is set.
-             * this is used to activated the override functionality.
-             * */
-            var processUseOverride = function (override) {
-                return isBoolean(override);
-            };
-            /**
-             * process override only takes true or false as valid input.
-             * any other input will resolve as true.
-             * this function is used to override the global flag for displaying logs
-             * */
-            var processOverride = function (override) {
-                return override !== false;
-            };
+angular.module("log.extension.uo", []).config(['$provide',
+    function($provide) {
+        // Register our $log decorator with AngularJS $provider
+        //scroll down to the Configuration section to set the log settings
+        $provide.decorator('$log', ["$delegate", "$filter",
+            function($delegate, $filter) {
+                var logEnhancerObj = function() {
 
-            var getLogPrefix = function (className) {
-                var formatMessage = "";
-                var separator = " >> ";
-                var format = "MMM-dd-yyyy-h:mm:ssa";
-                var now = $filter('date')(new Date(), format);
-                if (!isValidString(className)) {
-                    formatMessage = "" + now + separator;
-                } else {
-                    formatMessage = "" + now + "::" + className + separator;
-                }
-                return formatMessage;
-            };
+                    //declarations and functions , extensions
+                    var enabled = false;
 
-            var activateLogs = function (enabled, override) {
-                if (isBoolean(enabled) && override)  return true;
-                if (isBoolean(enabled) && !override) return false;
-                return false;
-            };
-
-
-            var printOverrideLogs = function (_$log, useOverride, _override, className, enabled) {
-                var instance = (isValidString(className)) ? className : "this instance";
-                if (!enabled && useOverride && _override) {
-                    _$log.log(getLogPrefix() + "[OVERRIDE] LOGGING ENABLED - $log enabled for " + instance);
-                } else if (enabled && useOverride && !_override) {
-                    _$log.log(getLogPrefix() + "[OVERRIDE] LOGGING DISABLED - $log disabled for " + instance);
-                }
-            };
-
-            //---------------------------------------//
-            var enhanceLoggerFn = function ($log) {
-                // var separator = " >> ";
-                //original methods
-                /**
-                 * Partial application to pre-capture a logger function
-                 */
-                var prepareLogFn = function (logFn, className, override, useOverride) {
-                    var enhancedLogFn = function () {
-                        var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
-                        if (activate) {
-                            var args = Array.prototype.slice.call(arguments);
-                            var formatMessage = getLogPrefix(className);
-                            args.unshift(formatMessage);
-                            logFn.apply(null, args);
-                        }
+                    var isBoolean = function(value) {
+                        return typeof value == 'boolean';
                     };
-
-                    // Only needed to support angular-mocks expectations
-                    enhancedLogFn.logs = [ ];
-                    return enhancedLogFn;
-                };
-                /**
-                 * Capture the original $log functions; for use in enhancedLogFn()
-                 */
-                var _$log = (function ($log) {
-                        return {
-                            log: $log.log,
-                            info: $log.info,
-                            warn: $log.warn,
-                            error: $log.error,
-                            debug: $log.debug
-                        };
-                    })($log),
-
+                    var trimString = function(value) {
+                        if (angular.isString(value))
+                            return value.replace(/^\s*/, '').replace(/\s*$/, '');
+                    };
+                    var isValidString = function(value) {
+                        return (angular.isString(value) && trimString(value) !== "");
+                    };
                     /**
-                     * Support to generate class-specific logger instance with/without classname or override
-                     *
-                     * @param className Name of object in which $log.<function> calls is invoked.
-                     * @param override activates/deactivates component level logging
-                     *
-                     * @returns {*} Logger instance
-                     */
-                        getInstance = function (className, override) {
-                        if (isBoolean(className)) {
-                            override = className;
-                            className = null;
-                        } else if (isString(className)) {
-                            className = trimString(className);
+                     * processUseOverride returns true if the override flag is set.
+                     * this is used to activated the override functionality.
+                     * */
+                    var processUseOverride = function(override) {
+                        return isBoolean(override);
+                    };
+                    /**
+                     * process override only takes true or false as valid input.
+                     * any other input will resolve as true.
+                     * this function is used to override the global flag for displaying logs
+                     * */
+                    var processOverride = function(override) {
+                        return override !== false;
+                    };
+
+                    var getLogPrefix = function(className) {
+                        var formatMessage = "";
+                        var separator = " >> ";
+                        var format = "MMM-dd-yyyy-h:mm:ssa";
+                        var now = $filter('date')(new Date(), format);
+                        if (!isValidString(className)) {
+                            formatMessage = "" + now + separator;
                         } else {
-                            className = null;
+                            formatMessage = "" + now + "::" + className + separator;
                         }
-                        var useOverride = processUseOverride(override);
-                        override = processOverride(override);
-                        printOverrideLogs(_$log, useOverride, override, className, enabled);
-                        return {
-                            log: prepareLogFn(_$log.log, className, override, useOverride),
-                            info: prepareLogFn(_$log.info, className, override, useOverride),
-                            warn: prepareLogFn(_$log.warn, className, override, useOverride),
-                            error: prepareLogFn(_$log.error, className, override, useOverride),
-                            debug: prepareLogFn(_$log.debug, className, override, useOverride)
+                        return formatMessage;
+                    };
+
+                    var activateLogs = function(enabled, override) {
+                        if (isBoolean(enabled) && override) return true;
+                        if (isBoolean(enabled) && !override) return false;
+                        return false;
+                    };
+
+
+                    var printOverrideLogs = function(_$log, useOverride, _override, className, enabled) {
+                        var instance = (isValidString(className)) ? className : "this instance";
+                        if (!enabled && useOverride && _override) {
+                            _$log.log(getLogPrefix() + "[OVERRIDE] LOGGING ENABLED - $log enabled for " + instance);
+                        } else if (enabled && useOverride && !_override) {
+                            _$log.log(getLogPrefix() + "[OVERRIDE] LOGGING DISABLED - $log disabled for " + instance);
+                        }
+                    };
+
+                    var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
+
+                    var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+
+                    var createLobObj = function(oSrc, aMethods, func, aParams) {
+                        var resultSet = {};
+                        angular.forEach(aMethods, function(value) {
+                            if (angular.isDefined(aParams)) {
+                                var params = [];
+                                angular.copy(aParams, params);
+                                params.unshift(oSrc[value]);
+                                resultSet[value] = func.apply(null, params);
+                            } else {
+                                resultSet[value] = oSrc[value];
+                            }
+                        });
+                        return resultSet;
+                    };
+                    var enhanceLogger = function($log) {
+
+
+                        // var separator = " >> ";
+                        //original methods
+                        /**
+                         * Partial application to pre-capture a logger function
+                         */
+                        var prepareLogFn = function(logFn, className, override, useOverride) {
+                            var enhancedLogFn = function() {
+                                var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
+                                if (activate) {
+                                    var args = Array.prototype.slice.call(arguments);
+                                    var formatMessage = getLogPrefix(className);
+                                    args.unshift(formatMessage);
+                                    logFn.apply(null, args);
+                                }
+                            };
+
+                            // Only needed to support angular-mocks expectations
+                            enhancedLogFn.logs = [];
+                            return enhancedLogFn;
                         };
+
+                        /**
+                         * Capture the original $log functions; for use in enhancedLogFn()
+                         */
+                        var _$log = createLobObj($log, logMethods);
+
+                        /**
+                         * Support to generate class-specific logger instance with/without classname or override
+                         *
+                         * @param className Name of object in which $log.<function> calls is invoked.
+                         * @param override activates/deactivates component level logging
+                         *
+                         * @returns {*} Logger instance
+                         */
+                        var getInstance = function(className, override) {
+                            if (isBoolean(className)) {
+                                override = className;
+                                className = null;
+                            } else if (angular.isString(className)) {
+                                className = trimString(className);
+                            } else {
+                                className = null;
+                            }
+                            var useOverride = processUseOverride(override);
+                            override = processOverride(override);
+                            printOverrideLogs(_$log, useOverride, override, className, enabled);
+                            return createLobObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
+                        };
+
+                        angular.extend($log, createLobObj($log, logMethods, prepareLogFn, [null, false, false]));
+
+                        // Add special methods to AngularJS $log
+                        $log.getInstance = getInstance;
+
+
+                        $log.setGlobalDebugFlag = function(flag) {
+                            enabled = flag;
+                        };
+
+                        /**
+                         * returns true if debugging is enabled or false when debugging is not enabled
+                         * @author : layton
+                         */
+                        $log.isEnabled = function() {
+                            return enabled;
+                        };
+
+                        return $log;
                     };
-                $log.log = prepareLogFn($log.log, null, false, false);
-                $log.info = prepareLogFn($log.info, null, false, false);
-                $log.warn = prepareLogFn($log.warn, null, false, false);
-                $log.error = prepareLogFn($log.error, null, false, false);
-                $log.debug = prepareLogFn($log.debug, null, false, false);
+                    //---------------------------------------//
 
-                // Add special methods to AngularJS $log
-                $log.getInstance = getInstance;
-
-                //added methods - by Layton
-                /**
-                 * returns true if debugging is enabled or false when debugging is not enabled
-                 * */
-                var isEnabled = function () {
-                    return enabled;
-                };
-                /**
-                 * Accepts true or false that may enable/disable debugging in the Angularjs App
-                 * can only be used when configuring the $log
-                 * */
-                var setDebugFlag = function (flag) {
-                    enabled = flag;
-                };
-
-                $log.setGlobalDebugFlag = setDebugFlag;
-                $log.isEnabled = isEnabled;
-
-                return $log;
-            };
-            //added by layton
-            var exposeSafeLogFn = function ($log) {
-                return (function ($log) {
-                    return {
-                        log: $log.log,
-                        info: $log.info,
-                        warn: $log.warn,
-                        error: $log.error,
-                        debug: $log.debug,
-                        getInstance: $log.getInstance
+                    //added by layton
+                    var exposeSafeLog = function($log) {
+                        return createLobObj($log, allowedMethods);
                     };
-                })($log);
-            };
+                    this.enhanceLogger = enhanceLogger;
+                    this.exposeSafeLog = exposeSafeLog;
+                };
 
+                //=======================================================================//
+                // Configuration Section
+                //=======================================================================//
+                var logEnhancer = new logEnhancerObj();
+                logEnhancer.enhanceLogger($delegate);
 
-            this.enhanceLogger = enhanceLoggerFn;
-            this.exposeSafeLog = exposeSafeLogFn;
+                // ensure false is being passed for production deployments
+                // set to true for local development
+                $delegate.setGlobalDebugFlag(true);
 
-        };
-        //=======================================================================//
-        // Configuration Section
-        //=======================================================================//
-        var logEnhancer = new logEnhancerObj();
-        logEnhancer.enhanceLogger($delegate);
-
-        // ensure false is being passed for production deployments
-        // set to true for local development
-        $delegate.setGlobalDebugFlag(true);
-
-        if ($delegate.isEnabled()) {
-            $delegate.log("CONFIG: LOGGING ENABLED GLOBALLY");
-        }
-        return  logEnhancer.exposeSafeLog($delegate);
-    }]);
-}]);
- 
-
-
+                if ($delegate.isEnabled()) {
+                    $delegate.log("CONFIG: LOGGING ENABLED GLOBALLY");
+                }
+                return logEnhancer.exposeSafeLog($delegate);
+            }
+        ]);
+    }
+]);

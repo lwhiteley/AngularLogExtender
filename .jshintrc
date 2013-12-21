@@ -1,6 +1,7 @@
 {
     "jquery": true,
     "browser": true,
+    "newcap": false,
     "globals": {
         "describe":false,
         "beforeEach":false,

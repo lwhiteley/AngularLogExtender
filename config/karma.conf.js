@@ -5,11 +5,14 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
         files: [
             'libs/angular/angular.js',
-            'libs/angular/angular-route.js',
             'libs/angular/angular-mocks.js',
-            'dist/*.js',
+            'test/helpers/globals.js',
+            'src/enhanceObj/*.js',
+            'src/eLogger/*.js',
+            'src/extras/*.js',
             'test/unit/*.js'
         ],
+        exclude : ['src/**/globals.js'],
         autoWatch: true,
         browsers: ['Chrome'],
         junitReporter: {
