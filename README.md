@@ -53,7 +53,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ######Step 4. Load the web page and look in the Developer Console
 Sample Output
 ```
-Dec-08-2013-12:50:52PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
+Dec-08-2013-12:50:52PM >>  CONFIG: LOGGING ENABLED GLOBALLY
 Dec-08-2013-12:50:52PM >>  Simple Log Extender Example 
 ```
 
@@ -69,8 +69,8 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:00:47PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
-Dec-08-2013-1:00:47PM::Called by:CoreController >>  Advanced Log Extender Example: Use Case 1
+Dec-08-2013-1:00:47PM >>  CONFIG: LOGGING ENABLED GLOBALLY
+Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Case 1
 ```
 
 ###Use Case 2: Disable Logging within a specific Component
@@ -85,8 +85,8 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:08:34PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
-Dec-08-2013-1:08:34PM::Called by:CoreController >> [OVERRIDE] DEBUGGING DISABLED - $log disabled for this instance 
+Dec-08-2013-1:08:34PM >>  CONFIG: LOGGING ENABLED GLOBALLY
+Dec-08-2013-1:08:34PM::Called by:CoreController >> [OVERRIDE] LOGGING DISABLED - $log disabled for this instance 
 ```
 
 #####Eg 2.
@@ -99,8 +99,8 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:08:34PM >>  CONFIG: DEBUGGING ENABLED GLOBALLY
-Dec-08-2013-1:08:34PM >> [OVERRIDE] DEBUGGING DISABLED - $log disabled for this instance 
+Dec-08-2013-1:08:34PM >>  CONFIG: LOGGING ENABLED GLOBALLY
+Dec-08-2013-1:08:34PM >> [OVERRIDE] LOGGING DISABLED - $log disabled for this instance 
 ```
 
 ###Use Case 3: Enable Logging within a specific Component 
@@ -114,8 +114,8 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:20:56PM::Called by:CoreController >> [OVERRIDE] DEBUGGING ENABLED - $log enabled for this instance
-Dec-08-2013-1:20:56PM::Called by:CoreController >>  Advanced Log Extender Example: Use Case 3: Eg 1 
+Dec-08-2013-1:20:56PM::CoreController >> [OVERRIDE] LOGGING ENABLED - $log enabled for this instance
+Dec-08-2013-1:20:56PM::CoreController >>  Advanced Log Extender Example: Use Case 3: Eg 1 
 ```
 
 #####Eg 2.
@@ -128,7 +128,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:20:56PM >> [OVERRIDE] DEBUGGING ENABLED - $log enabled for this instance
+Dec-08-2013-1:20:56PM >> [OVERRIDE] LOGGING ENABLED - $log enabled for this instance
 Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 ```
 ####NB.
@@ -139,6 +139,7 @@ These are:
 1. $log.warn()
 2. $log.info()
 3. $log.error()
+4. $log.debug()
 ```
 ##Future Implementations
 
