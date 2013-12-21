@@ -31,7 +31,6 @@ logEx.config(['$provide', function($provide){
 				var trimString = function(value){
 					if(isString(value))
 						return value.replace(/^\s*/, '').replace(/\s*$/, '');
-					return;
 				};
 				var isValidString = function(value){
 					return (isString(value) && trimString(value) !== "");
@@ -49,11 +48,7 @@ logEx.config(['$provide', function($provide){
     			     * this function is used to override the global flag for displaying logs
     			     * */
     			    var processOverride = function(override){
-    			    	if( override === false) {
-    			    		return false;
-    			    	}else{
-    			    		return true;
-    			    	}
+    			    	return override !== false;
     			    };
 					
 				   var getLogPrefix = function(className){
@@ -111,14 +106,13 @@ logEx.config(['$provide', function($provide){
     		           * Capture the original $log functions; for use in enhancedLogFn()
     		           */
     			         var  _$log = (function( $log ){
-    			            var _log =  {
-    			                  log   : $log.log,
-    			                  info  : $log.info,
-    			                  warn  : $log.warn,
-    			                  error : $log.error,
-    			                  debug : $log.debug
-    			              };
-    			        	 return _log;
+                              return {
+                                 log: $log.log,
+                                 info: $log.info,
+                                 warn: $log.warn,
+                                 error: $log.error,
+                                 debug: $log.debug
+                             };
     			          })( $log),
     			          
     			          /**
@@ -141,15 +135,13 @@ logEx.config(['$provide', function($provide){
     			              var useOverride = processUseOverride(override);
     			              override = processOverride(override);
     			              printOverrideLogs(_$log, useOverride, override, className, enabled);
-    			              var instance = {
-    			                  log   : prepareLogFn( _$log.log,    className, override, useOverride ),
-    			                  info  : prepareLogFn( _$log.info,   className, override, useOverride ),
-    			                  warn  : prepareLogFn( _$log.warn,   className, override, useOverride ),
-    			                  error : prepareLogFn( _$log.error,  className, override, useOverride ),
-    			                  debug : prepareLogFn( _$log.debug,  className, override, useOverride ),
-    			              };
-    			              
-    			              return instance;
+                              return {
+                                  log: prepareLogFn(_$log.log, className, override, useOverride),
+                                  info: prepareLogFn(_$log.info, className, override, useOverride),
+                                  warn: prepareLogFn(_$log.warn, className, override, useOverride),
+                                  error: prepareLogFn(_$log.error, className, override, useOverride),
+                                  debug: prepareLogFn(_$log.debug, className, override, useOverride)
+                              };
     			          };
     			      $log.log   = prepareLogFn( $log.log, null, false, false );
     			      $log.info  = prepareLogFn( $log.info, null, false, false );
@@ -182,19 +174,16 @@ logEx.config(['$provide', function($provide){
     			    };
     			    //added by layton
     			    var exposeSafeLogFn = function($log){
-    			    	 var  _$log = (function( $log ){
-    			   	              var log = {
-    			   	                  log   : $log.log,
-    			   	                  info  : $log.info,
-    			   	                  warn  : $log.warn,
-    			   	                  error : $log.error,
-    			   	                  debug : $log.debug,
-    			   	                  getInstance: $log.getInstance
-    			   	              };
-    			   	              
-    			   	              return log ;
-    			   	          })( $log); 
-    			   	      return _$log;
+                        return (function ($log) {
+                              return {
+                                  log: $log.log,
+                                  info: $log.info,
+                                  warn: $log.warn,
+                                  error: $log.error,
+                                  debug: $log.debug,
+                                  getInstance: $log.getInstance
+                              };
+                          })($log);
     			    };
     			    
     			    
