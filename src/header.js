@@ -5,6 +5,8 @@
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
  * @original-author  Thomas Burleson
+ * @contributor Layton Whiteley
+ * @contributor <ferronrsmith@gmail.com>
  * @website http://www.theSolutionOptimist.com
  *
  * Modifications made by @author Layton Whiteley:
