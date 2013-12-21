@@ -149,5 +149,5 @@ These are:
 4. remove the need to reassign $log instance
 
 
-
+[![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
 
