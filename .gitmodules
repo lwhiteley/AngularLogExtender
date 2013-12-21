@@ -1,0 +1,6 @@
+[submodule "example_app"]
+	path = example_app
+	url = https://github.com/ferronrsmith/AngularLogExtender_AngularSeed
+[submodule "sample_app"]
+	path = sample_app
+	url = https://github.com/ferronrsmith/AngularLogExtender_AngularSeed
