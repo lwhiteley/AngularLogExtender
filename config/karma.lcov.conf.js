@@ -26,9 +26,9 @@ module.exports = function (config) {
             // (these files will be instrumented by Istanbul)
             'src/**/*.js': ['coverage']
         },
-        coverageReporter: {
-            type : 'html',
-            dir : 'coverage/'
+        coverageReporter : {
+            type : 'lcov',
+            dir : 'lcov/'
         }
     });
 };

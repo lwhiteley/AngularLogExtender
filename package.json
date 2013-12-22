@@ -13,6 +13,7 @@
     "grunt-karma": "~0.6.2",
     "karma-coverage": "~0.1.4",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-jsbeautifier": "~0.2.6"
+    "grunt-jsbeautifier": "~0.2.6",
+    "grunt-karma-coveralls": "~2.2.0"
   }
 }
