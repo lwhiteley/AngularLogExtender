@@ -1,6 +1,3 @@
-//declarations and functions , extensions
-var enabled = false;
-
 var isBoolean = function (value) {
     return typeof value == 'boolean';
 };

@@ -3,6 +3,8 @@ angular.extend($log, createLobObj($log, logMethods, prepareLogFn, [null, false, 
 // Add special methods to AngularJS $log
 $log.getInstance = getInstance;
 
+//declarations and functions , extensions
+var enabled = false;
 
 $log.setGlobalDebugFlag = function (flag) {
     enabled = flag;

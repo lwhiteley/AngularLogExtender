@@ -23,9 +23,6 @@ angular.module("log.extension.uo", []).config(['$provide',
         $provide.decorator('$log', ["$delegate", "$filter",
             function($delegate, $filter) {
                 var logEnhancerObj = function() {
-                    //declarations and functions , extensions
-                    var enabled = false;
-
                     var isBoolean = function(value) {
                         return typeof value == 'boolean';
                     };
@@ -156,6 +153,8 @@ angular.module("log.extension.uo", []).config(['$provide',
                         // Add special methods to AngularJS $log
                         $log.getInstance = getInstance;
 
+                        //declarations and functions , extensions
+                        var enabled = false;
 
                         $log.setGlobalDebugFlag = function(flag) {
                             enabled = flag;
