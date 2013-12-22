@@ -23,23 +23,44 @@ angular.module("log.extension.uo", []).config(['$provide',
         $provide.decorator('$log', ["$delegate", "$filter",
             function($delegate, $filter) {
                 var logEnhancerObj = function() {
+                    /**
+                     *
+                     * @param value
+                     * @returns {boolean}
+                     */
                     var isBoolean = function(value) {
                         return typeof value == 'boolean';
                     };
+
+                    /**
+                     *
+                     * @param value
+                     * @returns {String}
+                     */
                     var trimString = function(value) {
                         if (angular.isString(value))
                             return value.replace(/^\s*/, '').replace(/\s*$/, '');
+                        return "";
                     };
+
+                    /**
+                     * @param value
+                     * @returns {*|Boolean|boolean}
+                     */
                     var isValidString = function(value) {
                         return (angular.isString(value) && trimString(value) !== "");
                     };
+
                     /**
                      * processUseOverride returns true if the override flag is set.
                      * this is used to activated the override functionality.
-                     * */
+                     * @param override
+                     * @returns {}
+                     */
                     var processUseOverride = function(override) {
                         return isBoolean(override);
                     };
+
                     /**
                      * process override only takes true or false as valid input.
                      * any other input will resolve as true.
@@ -49,6 +70,11 @@ angular.module("log.extension.uo", []).config(['$provide',
                         return override !== false;
                     };
 
+                    /**
+                     *
+                     * @param className
+                     * @returns {string}
+                     */
                     var getLogPrefix = function(className) {
                         var formatMessage = "";
                         var separator = " >> ";
@@ -62,13 +88,26 @@ angular.module("log.extension.uo", []).config(['$provide',
                         return formatMessage;
                     };
 
+                    /**
+                     *
+                     * @param enabled
+                     * @param override
+                     * @returns {boolean}
+                     */
                     var activateLogs = function(enabled, override) {
                         if (isBoolean(enabled) && override) return true;
                         if (isBoolean(enabled) && !override) return false;
                         return false;
                     };
 
-
+                    /**
+                     *
+                     * @param _$log
+                     * @param useOverride
+                     * @param _override
+                     * @param className
+                     * @param enabled
+                     */
                     var printOverrideLogs = function(_$log, useOverride, _override, className, enabled) {
                         var instance = (isValidString(className)) ? className : "this instance";
                         if (!enabled && useOverride && _override) {
@@ -78,10 +117,26 @@ angular.module("log.extension.uo", []).config(['$provide',
                         }
                     };
 
+                    /**
+                     *
+                     * @type {string[]}
+                     */
                     var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
 
+                    /**
+                     *
+                     * @type {string[]}
+                     */
                     var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
+                    /**
+                     *
+                     * @param oSrc
+                     * @param aMethods
+                     * @param func
+                     * @param aParams
+                     * @returns {{}}
+                     */
                     var createLobObj = function(oSrc, aMethods, func, aParams) {
                         var resultSet = {};
                         angular.forEach(aMethods, function(value) {
@@ -99,10 +154,13 @@ angular.module("log.extension.uo", []).config(['$provide',
                     var enhanceLogger = function($log) {
 
 
-                        // var separator = " >> ";
-                        //original methods
                         /**
                          * Partial application to pre-capture a logger function
+                         * @param logFn
+                         * @param className
+                         * @param override
+                         * @param useOverride
+                         * @returns {Function}
                          */
                         var prepareLogFn = function(logFn, className, override, useOverride) {
                             var enhancedLogFn = function() {
@@ -122,15 +180,17 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                         /**
                          * Capture the original $log functions; for use in enhancedLogFn()
+                         * @type {*}
+                         * @private
                          */
                         var _$log = createLobObj($log, logMethods);
 
+
                         /**
-                         * Support to generate class-specific logger instance with/without classname or override
+                         * Support to generate class-specific logger instance with/without className or override
                          *
                          * @param className Name of object in which $log.<function> calls is invoked.
                          * @param override activates/deactivates component level logging
-                         *
                          * @returns {*} Logger instance
                          */
                         var getInstance = function(className, override) {
@@ -148,21 +208,29 @@ angular.module("log.extension.uo", []).config(['$provide',
                             return createLobObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
                         };
 
+                        // <need comment>
                         angular.extend($log, createLobObj($log, logMethods, prepareLogFn, [null, false, false]));
 
-                        // Add special methods to AngularJS $log
+                        /**
+                         * Add special methods to AngularJS $log
+                         * @type {getInstance}
+                         */
                         $log.getInstance = getInstance;
 
                         //declarations and functions , extensions
                         var enabled = false;
 
+                        /**
+                         *
+                         * @param flag
+                         */
                         $log.setGlobalDebugFlag = function(flag) {
                             enabled = flag;
                         };
 
                         /**
-                         * returns true if debugging is enabled or false when debugging is not enabled
-                         * @author : layton
+                         * Returns true if debugging is enabled or false when debugging is not enabled
+                         * @returns {boolean}
                          */
                         $log.isEnabled = function() {
                             return enabled;
@@ -171,7 +239,11 @@ angular.module("log.extension.uo", []).config(['$provide',
                     };
                     //---------------------------------------//
 
-                    //added by layton
+                    /**
+                     * The following function exposes the $decorated logger to allow the defaults to be overriden
+                     * @param $log
+                     * @returns {*}
+                     */
                     var exposeSafeLog = function($log) {
                         return createLobObj($log, allowedMethods);
                     };

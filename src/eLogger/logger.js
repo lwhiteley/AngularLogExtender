@@ -1,7 +1,10 @@
-// var separator = " >> ";
-//original methods
 /**
  * Partial application to pre-capture a logger function
+ * @param logFn
+ * @param className
+ * @param override
+ * @param useOverride
+ * @returns {Function}
  */
 var prepareLogFn = function (logFn, className, override, useOverride) {
     var enhancedLogFn = function () {
@@ -21,15 +24,17 @@ var prepareLogFn = function (logFn, className, override, useOverride) {
 
 /**
  * Capture the original $log functions; for use in enhancedLogFn()
+ * @type {*}
+ * @private
  */
 var _$log = createLobObj($log, logMethods);
 
+
 /**
- * Support to generate class-specific logger instance with/without classname or override
+ * Support to generate class-specific logger instance with/without className or override
  *
  * @param className Name of object in which $log.<function> calls is invoked.
  * @param override activates/deactivates component level logging
- *
  * @returns {*} Logger instance
  */
 var getInstance = function (className, override) {

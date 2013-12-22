@@ -1,2 +1,2 @@
-this.enhanceLogger = enhanceLogger  ;
+this.enhanceLogger = enhanceLogger;
 this.exposeSafeLog = exposeSafeLog;
