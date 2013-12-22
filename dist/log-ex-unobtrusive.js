@@ -1,6 +1,5 @@
 /**
- * Log Extension Unobtrusive
- * v.0.0.2
+ * Log Extension Unobtrusive v0.0.2-sha.72b7c60
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -8,6 +7,8 @@
  * @contributor Layton Whiteley
  * @contributor <ferronrsmith@gmail.com>
  * @website http://www.theSolutionOptimist.com
+ * (c) 2013 https://github.com/lwhiteley/AngularLogExtender
+ * License: MIT
  *
  * Modifications made by @contributor Layton Whiteley:
  * - Modified to be a full stand-alone Angular Application for reuse
@@ -94,8 +95,8 @@ angular.module("log.extension.uo", []).config(['$provide',
                      * @param override
                      * @returns {boolean}
                      */
-                   var activateLogs = function (enabled, override) {
-                        if(isBoolean(enabled) && isBoolean(override)){
+                    var activateLogs = function(enabled, override) {
+                        if (isBoolean(enabled) && isBoolean(override)) {
                             return override;
                         }
                         return false;

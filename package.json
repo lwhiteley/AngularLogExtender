@@ -2,6 +2,17 @@
   "name": "AngularLogExtender",
   "description": "Angular Log Extender",
   "author": "A confused individual <ferronrsmith@gmail.com>",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/lwhiteley/AngularLogExtender.git"
+  },
+  "licenses": [
+      {
+          "type": "MIT",
+          "url": "https://github.com/lwhiteley/AngularLogExtender/blob/master/LICENSE"
+      }
+  ],
+  "version": "0.0.2-snapshot",
   "engine": "node >= 0.10.0",
   "devDependencies": {
     "karma": "~0.10.8",
@@ -14,6 +25,8 @@
     "karma-coverage": "~0.1.4",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-jsbeautifier": "~0.2.6",
-    "grunt-karma-coveralls": "~2.2.0"
+    "grunt-karma-coveralls": "~2.2.0",
+    "shelljs": "~0.2.6",
+    "grunt-bump": "0.0.13"
   }
 }

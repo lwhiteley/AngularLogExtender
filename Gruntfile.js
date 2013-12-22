@@ -1,6 +1,11 @@
+var util = require('./config/grunt/utils.js');
+
 module.exports = function (grunt) {
 
+    var APP_VERSION = util.getVersion();
+
     grunt.initConfig({
+        APP_VERSION:APP_VERSION,
         pkg: grunt.file.readJSON('package.json'),
         meta : {
             files : ['Gruntfile.js', 'dist/*.js', 'test/unit/*.js', 'src/**/*.js'],
@@ -18,7 +23,10 @@ module.exports = function (grunt) {
         },
         concat: {
             options: {
-                separator: '\n'
+                separator: '\n',
+                process: function(src, filepath){
+                    return src.replace(/%VERSION%/g, APP_VERSION.full);
+                }
             },
             dist: {
                 src: [
@@ -64,9 +72,18 @@ module.exports = function (grunt) {
             options: {
                 coverage_dir: 'lcov'
             }
+        },
+        bump: {
+            options: {
+                files: ['package.json'],
+                commit: false,
+                createTag: false,
+                push: false
+            }
         }
     });
 
+    grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
@@ -75,5 +92,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.registerTask('test', ['jshint', 'karma:unit']);
     grunt.registerTask('dist', ['concat', 'jsbeautifier']);
+    grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('default', ['jshint', 'karma:coverage', 'coveralls']);
 };
