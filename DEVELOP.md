@@ -12,14 +12,14 @@ Navigate to the project directory `personsal_git/log_ex_proj` and execute the `n
 
 ##### Running tests
 
-> Use grunt command to run tests : `grunt test`
+> Use the following grunt command to run tests once : `grunt test`
 
 ##### Autorun tests
 
-> Use grunt command to run tests : `grunt watch`
+> Use the following grunt command to autorun test : `grunt watch`
 
 ##### Creating Distrubuted Version
 
-> Use grunt command to run tests : `grunt dist`
+> Use following grunt command to build a distributed version of application : `grunt dist`
 
 > NB: All files are checked for lint. Please ensure files are lint free
