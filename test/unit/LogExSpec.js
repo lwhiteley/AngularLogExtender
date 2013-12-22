@@ -53,7 +53,7 @@ describe('$log: logEx unit tests', function() {
            expect(processUseOverride("")).toBeFalsy();
            expect(processUseOverride(undefined)).toBeFalsy();
         });
-       it('should return true when passing a  populated string ', function(){
+       it('should return true when passing a boolean', function(){
             expect(processUseOverride(true)).toBeTruthy();
             expect(processUseOverride(false)).toBeTruthy();
         });
@@ -70,9 +70,28 @@ describe('$log: logEx unit tests', function() {
            expect(processOverride(null)).toBeTruthy();
         });
     });
+    describe('testing activateLogs function. takes 2 params enabled and override respectively', function(){
+       it('should return false when no booleans are passed', function(){
+           expect(activateLogs("false", "")).toBeFalsy();
+        });
+        it('should return false when no boolean is passed for enabled', function(){
+           expect(activateLogs("false", true)).toBeFalsy();
+        });
+        it('should return false when no boolean is passed for override', function(){
+           expect(activateLogs(true, "true")).toBeFalsy();
+        });
+        it('should return false when enaabled is a boolean and override is false ', function(){
+            expect(activateLogs(false, false)).toBeFalsy();
+            expect(activateLogs(true, false)).toBeFalsy();
+        });
+       it('should return true when enaabled is a boolean and override is true ', function(){
+            expect(activateLogs(true, true)).toBeTruthy();
+            expect(activateLogs(false, true)).toBeTruthy();
+        });
+    });
 
     
-// need to set up $filter dependencyto test
+// need to set up $filter dependency to test
 //    describe('testing getLogPrefix function', function(){
 //       it('should not contain a class separator if no class is passed  ', function(){
 //           expect(getLogPrefix(null)).not.toContain(classSep);

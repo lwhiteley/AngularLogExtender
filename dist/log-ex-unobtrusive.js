@@ -9,7 +9,7 @@
  * @contributor <ferronrsmith@gmail.com>
  * @website http://www.theSolutionOptimist.com
  *
- * Modifications made by @author Layton Whiteley:
+ * Modifications made by @contributor Layton Whiteley:
  * - Modified to be a full stand-alone Angular Application for reuse
  * - Has global and feature level activation/disabling for $log
  * - Created and tested with AngularJS v.1.2.3
@@ -94,9 +94,10 @@ angular.module("log.extension.uo", []).config(['$provide',
                      * @param override
                      * @returns {boolean}
                      */
-                    var activateLogs = function(enabled, override) {
-                        if (isBoolean(enabled) && override) return true;
-                        if (isBoolean(enabled) && !override) return false;
+                   var activateLogs = function (enabled, override) {
+                        if(isBoolean(enabled) && isBoolean(override)){
+                            return override;
+                        }
                         return false;
                     };
 

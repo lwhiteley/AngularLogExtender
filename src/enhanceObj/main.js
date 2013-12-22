@@ -70,8 +70,9 @@ var getLogPrefix = function (className) {
  * @returns {boolean}
  */
 var activateLogs = function (enabled, override) {
-    if (isBoolean(enabled) && override)  return true;
-    if (isBoolean(enabled) && !override) return false;
+    if(isBoolean(enabled) && isBoolean(override)){
+        return override;
+    }
     return false;
 };
 
