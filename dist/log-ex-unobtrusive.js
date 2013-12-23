@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.2-sha.aac017f
+ * Log Unobtrusive Extension v0.0.2-sha.8adf883
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -15,8 +15,6 @@
  * - Has global and feature level activation/disabling for $log
  * - Created and tested with AngularJS v.1.2.3
  */
-
-
 angular.module("log.extension.uo", []).config(['$provide',
     function($provide) {
         // Register our $log decorator with AngularJS $provider
@@ -139,7 +137,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                      * @param {Array=} aParams
                      * @returns {{}}
                      */
-                    var createLobObj = function(oSrc, aMethods, /**{Function=}*/ func, /**{*Array=}*/ aParams) {
+                    var createLogObj = function(oSrc, aMethods, /**{Function=}*/ func, /**{*Array=}*/ aParams) {
                         var resultSet = {};
                         angular.forEach(aMethods, function(value) {
                             if (angular.isDefined(aParams)) {
@@ -171,7 +169,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                                     var args = Array.prototype.slice.call(arguments);
                                     var formatMessage = getLogPrefix(className);
                                     args.unshift(formatMessage);
-                                    logFn.apply(null, args);
+                                    if (logFn) logFn.apply(null, args);
                                 }
                             };
 
@@ -185,7 +183,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                          * @type {*}
                          * @private
                          */
-                        var _$log = createLobObj($log, logMethods);
+                        var _$log = createLogObj($log, logMethods);
 
 
                         /**
@@ -207,11 +205,11 @@ angular.module("log.extension.uo", []).config(['$provide',
                             var useOverride = processUseOverride(override);
                             override = processOverride(override);
                             printOverrideLogs(_$log, useOverride, override, className, enabled);
-                            return createLobObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
+                            return createLogObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
                         };
 
                         // <need comment>
-                        angular.extend($log, createLobObj($log, logMethods, prepareLogFn, [null, false, false]));
+                        angular.extend($log, createLogObj($log, logMethods, prepareLogFn, [null, false, false]));
 
                         /**
                          * Add special methods to AngularJS $log
@@ -247,7 +245,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                      * @returns {*}
                      */
                     var exposeSafeLog = function($log) {
-                        return createLobObj($log, allowedMethods);
+                        return createLogObj($log, allowedMethods);
                     };
                     this.enhanceLogger = enhanceLogger;
                     this.exposeSafeLog = exposeSafeLog;

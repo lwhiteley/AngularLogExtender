@@ -1,5 +1,5 @@
 // <need comment>
-angular.extend($log, createLobObj($log, logMethods, prepareLogFn, [null, false, false]));
+angular.extend($log, createLogObj($log, logMethods, prepareLogFn, [null, false, false]));
 
 /**
  * Add special methods to AngularJS $log

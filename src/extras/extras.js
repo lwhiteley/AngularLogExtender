@@ -6,5 +6,5 @@
  * @returns {*}
  */
 var exposeSafeLog = function ($log) {
-    return createLobObj($log, allowedMethods);
+    return createLogObj($log, allowedMethods);
 };

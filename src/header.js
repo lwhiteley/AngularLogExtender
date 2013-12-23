@@ -15,4 +15,3 @@
  * - Has global and feature level activation/disabling for $log
  * - Created and tested with AngularJS v.1.2.3
  */
-

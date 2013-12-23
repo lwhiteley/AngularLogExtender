@@ -13,7 +13,7 @@ var prepareLogFn = function (logFn, className, override, useOverride) {
             var args = Array.prototype.slice.call(arguments);
             var formatMessage = getLogPrefix(className);
             args.unshift(formatMessage);
-            logFn.apply(null, args);
+            if(logFn) logFn.apply(null, args);
         }
     };
 
@@ -27,7 +27,7 @@ var prepareLogFn = function (logFn, className, override, useOverride) {
  * @type {*}
  * @private
  */
-var _$log = createLobObj($log, logMethods);
+var _$log = createLogObj($log, logMethods);
 
 
 /**
@@ -49,5 +49,5 @@ var getInstance = function (className, override) {
     var useOverride = processUseOverride(override);
     override = processOverride(override);
     printOverrideLogs(_$log, useOverride, override, className, enabled);
-    return createLobObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
+    return createLogObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
 };

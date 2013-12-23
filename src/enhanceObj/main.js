@@ -113,7 +113,7 @@ var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
  * @param {Array=} aParams
  * @returns {{}}
  */
-var createLobObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/aParams) {
+var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/aParams) {
     var resultSet = {};
     angular.forEach(aMethods, function (value) {
         if (angular.isDefined(aParams)) {
