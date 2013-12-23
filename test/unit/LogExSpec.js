@@ -1,8 +1,5 @@
 describe('$log: logEx unit tests', function () {
-    var $window, logger, $log,
-        log, warn, info, error, debug,
-        emptyString = "",
-        classSep = "::",
+    var emptyString = "",
         logSpy = jasmine.createSpy('logSpy');
 
     describe('testing isBoolean function', function () {

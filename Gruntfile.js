@@ -8,7 +8,7 @@ module.exports = function (grunt) {
         APP_VERSION:APP_VERSION,
         pkg: grunt.file.readJSON('package.json'),
         meta : {
-            files : ['Gruntfile.js', 'dist/*.js', 'test/**/*.js', 'src/**/*.js'],
+            files : ['Gruntfile.js', 'dist/*.js', 'test/**/*.js', 'src/**/*.js', 'config/**/*.js'],
             dist : ["dist/*.js"]
         },
         jshint: {
@@ -24,7 +24,7 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 separator: '\n',
-                process: function(src, filepath){
+                process: function(src){
                     return src
                         .replace(/%VERSION%/g, APP_VERSION.full)
                         .replace(/%WEBSITE%/g, APP_VERSION.website)

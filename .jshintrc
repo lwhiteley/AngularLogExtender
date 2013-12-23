@@ -1,16 +1,2 @@
 {
-    "jquery": true,
-    "browser": true,
-    "newcap": false,
-    "globals": {
-        "describe":false,
-        "beforeEach":false,
-        "module":false,
-        "it":false,
-        "inject":false,
-        "expect":false,
-        "browser":false,
-        "element":false,
-        "angular":false
-    }
 }
