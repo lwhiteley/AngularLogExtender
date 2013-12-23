@@ -47,10 +47,10 @@ var processOverride = function (override) {
 
 /**
  *
- * @param className
+ * @param {string=} className
  * @returns {string}
  */
-var getLogPrefix = function (className) {
+var getLogPrefix = function (/**{String=}*/className) {
     var formatMessage = "";
     var separator = " >> ";
     var format = "MMM-dd-yyyy-h:mm:ssa";
@@ -107,13 +107,13 @@ var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
 /**
  *
- * @param oSrc
- * @param aMethods
- * @param func
- * @param aParams
+ * @param {Object} oSrc
+ * @param {Array=} aMethods
+ * @param {Function=} func
+ * @param {Array} aParams
  * @returns {{}}
  */
-var createLobObj = function (oSrc, aMethods, func, aParams) {
+var createLobObj = function(oSrc, aMethods, /**Function=*/func, /*Array=*/aParams) {
     var resultSet = {};
     angular.forEach(aMethods, function (value) {
         if (angular.isDefined(aParams)) {

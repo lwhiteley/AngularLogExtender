@@ -1,14 +1,14 @@
 /**
- * Log Extension Unobtrusive v%VERSION%
+ * %APP_NAME% v%VERSION%
  *
- * Used within AngularJS to enhance functionality within the AngularJS $log service.
+ * %DESCRIPTION%
  *
  * @original-author  Thomas Burleson
  * @contributor Layton Whiteley
- * @contributor <ferronrsmith@gmail.com>
+ * @contributor %CONTRIBUTOR%
  * @website http://www.theSolutionOptimist.com
- * (c) 2013 https://github.com/lwhiteley/AngularLogExtender
- * License: MIT
+ * (c) 2013 %WEBSITE%
+ * License: %LICENSE%
  *
  * Modifications made by @contributor Layton Whiteley:
  * - Modified to be a full stand-alone Angular Application for reuse

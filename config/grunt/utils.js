@@ -27,7 +27,12 @@ module.exports = {
             full: fullVersion,
             major: semver[0],
             minor: semver[1],
-            dot: semver[2].replace(/rc\d+/, '')
+            dot: semver[2].replace(/rc\d+/, ''),
+            website : pkg.website,
+            license : pkg.license.type,
+            contributor : pkg.author,
+            name : pkg.name,
+            description : pkg.description
         };
 
         return version;

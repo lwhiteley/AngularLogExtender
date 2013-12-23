@@ -1,11 +1,11 @@
 /**
- * Log Extension Unobtrusive v0.0.2-sha.72b7c60
+ * Log Extension Unobtrusive v0.0.2-sha.b86437c
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
  * @original-author  Thomas Burleson
  * @contributor Layton Whiteley
- * @contributor <ferronrsmith@gmail.com>
+ * @contributor A confused individual <ferronrsmith@gmail.com>
  * @website http://www.theSolutionOptimist.com
  * (c) 2013 https://github.com/lwhiteley/AngularLogExtender
  * License: MIT
@@ -73,10 +73,10 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                     /**
                      *
-                     * @param className
+                     * @param {string=} className
                      * @returns {string}
                      */
-                    var getLogPrefix = function(className) {
+                    var getLogPrefix = function( /**{String=}*/ className) {
                         var formatMessage = "";
                         var separator = " >> ";
                         var format = "MMM-dd-yyyy-h:mm:ssa";
@@ -133,13 +133,13 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                     /**
                      *
-                     * @param oSrc
-                     * @param aMethods
-                     * @param func
-                     * @param aParams
+                     * @param {Object} oSrc
+                     * @param {Array=} aMethods
+                     * @param {Function=} func
+                     * @param {Array} aParams
                      * @returns {{}}
                      */
-                    var createLobObj = function(oSrc, aMethods, func, aParams) {
+                    var createLobObj = function(oSrc, aMethods, /**Function=*/ func, /*Array=*/ aParams) {
                         var resultSet = {};
                         angular.forEach(aMethods, function(value) {
                             if (angular.isDefined(aParams)) {
@@ -242,7 +242,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                     //---------------------------------------//
 
                     /**
-                     * The following function exposes the $decorated logger to allow the defaults to be overriden
+                     * The following function exposes the $decorated logger to allow the defaults to be overridden
                      * @param $log
                      * @returns {*}
                      */
