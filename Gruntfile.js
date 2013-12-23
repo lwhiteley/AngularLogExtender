@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                         .replace(/%WEBSITE%/g, APP_VERSION.website)
                         .replace(/%LICENSE%/g, APP_VERSION.license)
                         .replace(/%CONTRIBUTOR%/g, APP_VERSION.contributor)
-                        .replace(/%APP_NAME%/g, APP_VERSION.name)
+                        .replace(/%APP_NAME%/g, APP_VERSION.appname)
                         .replace(/%DESCRIPTION%/g, APP_VERSION.description);
                 }
             },

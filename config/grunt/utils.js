@@ -31,7 +31,7 @@ module.exports = {
             website : pkg.website,
             license : pkg.license.type,
             contributor : pkg.author,
-            name : pkg.name,
+            appname : pkg.appname,
             description : pkg.description
         };
 
