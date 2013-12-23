@@ -1,7 +1,8 @@
 
-0.0.2-sha.9c223a5 / 2013-12-22 
+0.0.2-sha.b54e447 / 2013-12-22 
 ==================
 
+ * update changelog
  * added grunt shell
  * generate new snapshot
  * remove default config from jshintrc add config files & util files to lint process fix closure optimal syntax remove unsed variables from tests
