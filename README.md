@@ -86,7 +86,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ######Output:
 ```
 Dec-08-2013-1:08:34PM >>  CONFIG: LOGGING ENABLED GLOBALLY
-Dec-08-2013-1:08:34PM::Called by:CoreController >> [OVERRIDE] LOGGING DISABLED - $log disabled for this instance 
+Dec-08-2013-1:08:34PM >> [OVERRIDE] LOGGING DISABLED - $log disabled for CoreController
 ```
 
 #####Eg 2.
@@ -114,7 +114,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 ######Output:
 ```
-Dec-08-2013-1:20:56PM::CoreController >> [OVERRIDE] LOGGING ENABLED - $log enabled for this instance
+Dec-08-2013-1:20:56PM >> [OVERRIDE] LOGGING ENABLED - $log enabled for CoreController
 Dec-08-2013-1:20:56PM::CoreController >>  Advanced Log Extender Example: Use Case 3: Eg 1 
 ```
 
@@ -144,9 +144,8 @@ These are:
 ##Future Implementations
 
 1. More configurations are being considered such as disabling timestamp to offer more customizations for a developers needs
-2. Different version using AMD to bring in different functions as seen on http://solutionoptimist.com
-3. Addition of tests
-4. remove the need to reassign $log instance
+2. remove the need to reassign $log instance
+3. Log function level overriding
 
 
 [![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
