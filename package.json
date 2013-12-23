@@ -1,15 +1,15 @@
 {
-  "name": "Log Extension Unobtrusive",
+  "name": "LogUnobtrusiveExtension",
   "description": "Used within AngularJS to enhance functionality within the AngularJS $log service.",
   "author": "A confused individual <ferronrsmith@gmail.com>",
-  "website" : "https://github.com/lwhiteley/AngularLogExtender",
+  "website": "https://github.com/lwhiteley/AngularLogExtender",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/lwhiteley/AngularLogExtender.git"
+    "type": "git",
+    "url": "https://github.com/lwhiteley/AngularLogExtender.git"
   },
   "license": {
-      "type": "MIT",
-      "url": "https://github.com/lwhiteley/AngularLogExtender/blob/master/LICENSE"
+    "type": "MIT",
+    "url": "https://github.com/lwhiteley/AngularLogExtender/blob/master/LICENSE"
   },
   "version": "0.0.2-snapshot",
   "engine": "node >= 0.10.0",
@@ -26,6 +26,7 @@
     "grunt-jsbeautifier": "~0.2.6",
     "grunt-karma-coveralls": "~2.2.0",
     "shelljs": "~0.2.6",
-    "grunt-bump": "0.0.13"
+    "grunt-bump": "0.0.13",
+    "grunt-shell": "~0.6.1"
   }
 }
