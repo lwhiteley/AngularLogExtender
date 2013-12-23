@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.2-sha.8adf883
+ * Log Unobtrusive Extension v0.0.2-sha.c10a0ab
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -189,11 +189,11 @@ angular.module("log.extension.uo", []).config(['$provide',
                         /**
                          * Support to generate class-specific logger instance with/without className or override
                          *
-                         * @param className Name of object in which $log.<function> calls is invoked.
-                         * @param override activates/deactivates component level logging
+                         * @param {string=} className Name of object in which $log.<function> calls is invoked.
+                         * @param {boolean=} override activates/deactivates component level logging
                          * @returns {*} Logger instance
                          */
-                        var getInstance = function(className, override) {
+                        var getInstance = function( /*{string=}**/ className, /**{boolean=}*/ override) {
                             if (isBoolean(className)) {
                                 override = className;
                                 className = null;
