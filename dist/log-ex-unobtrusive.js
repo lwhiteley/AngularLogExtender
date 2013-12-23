@@ -1,5 +1,5 @@
 /**
- * Log Extension Unobtrusive v0.0.2-sha.b86437c
+ * Log Extension Unobtrusive v0.0.2-sha.cb7ba46
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -136,10 +136,10 @@ angular.module("log.extension.uo", []).config(['$provide',
                      * @param {Object} oSrc
                      * @param {Array=} aMethods
                      * @param {Function=} func
-                     * @param {Array} aParams
+                     * @param {Array=} aParams
                      * @returns {{}}
                      */
-                    var createLobObj = function(oSrc, aMethods, /**Function=*/ func, /*Array=*/ aParams) {
+                    var createLobObj = function(oSrc, aMethods, /**{Function=}*/ func, /**{*Array=}*/ aParams) {
                         var resultSet = {};
                         angular.forEach(aMethods, function(value) {
                             if (angular.isDefined(aParams)) {
