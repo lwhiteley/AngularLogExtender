@@ -86,10 +86,16 @@ module.exports = function (grunt) {
                 createTag: false,
                 push: false
             }
+        },
+        shell: {
+            changelog: {
+                command: 'git changelog --tag <%= APP_VERSION.full %>'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-bump');
+    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
@@ -99,5 +105,6 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['jshint', 'karma:unit']);
     grunt.registerTask('dist', ['concat', 'jsbeautifier']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
+    grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('default', ['jshint', 'karma:coverage', 'coveralls']);
 };
