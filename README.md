@@ -21,7 +21,7 @@ Feel Free to make your own contributions to this module so we can make it better
 ##How to Use 
 
 ######Step 1. Add Module Dependency
-```
+```javascript
 var app = angular.module('myAngularApp', ['log.extension.uo']);
 ```
 
@@ -29,7 +29,7 @@ var app = angular.module('myAngularApp', ['log.extension.uo']);
 
 look for $delegate.setGlobalDebugFlag in the Configuration Section of the unobtrusive file and pass true to the function as a parameter. This is set to false by default to disable logging in a production environment. The Best practice is to keep this flag set to false in the master version of the code base, given that some version control system is being used.
 
-```
+```javascript
 //log-ex-unobtrusive.js  snippet
 //=======================================================================//
 // Configuration Section
@@ -61,7 +61,7 @@ Dec-08-2013-12:50:52PM >>  Simple Log Extender Example
 ###Use Case 1: Set Component Class Name
 This example can be used to know which component (controller, directive etc.) $log instances are being pushed from to the console. The new instance must be re-assigned to the $log object to take effect. This Advanced use case is always recommended to get more information from your application logs. 
 #####Example
-```
+```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController');
       $log.log("Advanced Log Extender Example: Use Case 1: Example"); 
@@ -77,7 +77,7 @@ Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Cas
 This example is used to disable logging to the console from a specific component. The new instance must be re-assigned to the $log object to take effect.
 
 #####Eg 1.
-```
+```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', false);
       $log.log("Advanced Log Extender Example: Use Case 2: Eg 1"); 
@@ -106,7 +106,7 @@ Dec-08-2013-1:08:34PM >> [OVERRIDE] LOGGING DISABLED - $log disabled for this in
 ###Use Case 3: Enable Logging within a specific Component 
 For this override to work, Debugging must be globally disabled. The practical use for this scenario is when you want to enable logging for a specific component in production to see the logs there. 
 #####Eg 1.
-```
+```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', true);
       $log.log("Advanced Log Extender Example: Use Case 3: Eg 1 "); 
@@ -120,7 +120,7 @@ Dec-08-2013-1:20:56PM::CoreController >>  Advanced Log Extender Example: Use Cas
 
 #####Eg 2.
 Setting the override without the class name
-```
+```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance(true);
       $log.log("Advanced Log Extender Example: Use Case 3: Eg 2"); 
