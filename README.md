@@ -44,7 +44,7 @@ look for $delegate.setGlobalDebugFlag in the Configuration Section of the unobtr
 ```
 ######Step 3. Print logs from any component (Controller, Directive, Service etc.)
 Sample - Logging from a Controller
-```
+```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log.log("Simple Log Extender Example"); 
 }]);
@@ -91,7 +91,7 @@ Dec-08-2013-1:08:34PM >> [OVERRIDE] LOGGING DISABLED - $log disabled for CoreCon
 
 #####Eg 2.
 Setting the override without the class name
-```
+```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance(false);
       $log.log("Advanced Log Extender Example: Use Case 2: Eg 2 "); 
