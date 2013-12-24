@@ -6,9 +6,9 @@
 
         // ensure false is being passed for production deployments
         // set to true for local development
-        $delegate.setGlobalDebugFlag(true);
+        $delegate.enableLog(true);
 
-        if ($delegate.isEnabled()) {
+        if ($delegate.logEnabled()) {
             $delegate.log("CONFIG: LOGGING ENABLED GLOBALLY");
         }
         return  logEnhancer.exposeSafeLog($delegate);

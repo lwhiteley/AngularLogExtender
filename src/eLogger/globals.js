@@ -14,7 +14,7 @@ var enabled = false;
  * 
  * @param flag
  */
-$log.setGlobalDebugFlag = function (flag) {
+$log.enableLog = function (flag) {
     enabled = flag;
 };
 
@@ -22,6 +22,6 @@ $log.setGlobalDebugFlag = function (flag) {
  * Returns true if debugging is enabled or false when debugging is not enabled
  * @returns {boolean}
  */
-$log.isEnabled = function () {
+$log.logEnabled = function () {
     return enabled;
 };

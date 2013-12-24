@@ -146,10 +146,10 @@ describe('$log: logEx unit tests', function () {
 
         describe('testing prepareLogFn function when global enabled flag is true', function () {
             beforeEach(function () {
-                $log.setGlobalDebugFlag(true);
+                $log.enableLog(true);
             });
             afterEach(function () {
-                $log.setGlobalDebugFlag(false);
+                $log.enableLog(false);
             });
             it('should  call apply when no params are sent', function () {
                 var exFn = prepareLogFn(null);
@@ -186,13 +186,13 @@ describe('$log: logEx unit tests', function () {
         });
         describe('testing getInstance function when global enabled flag is true', function () {
             beforeEach(function () {
-                $log.setGlobalDebugFlag(true);
+                $log.enableLog(true);
             });
             afterEach(function () {
-                $log.setGlobalDebugFlag(false);
+                $log.enableLog(false);
             });
             it('should expect global debug flag to be enabled ', function () {
-                expect($log.isEnabled()).toBeTruthy();
+                expect($log.logEnabled()).toBeTruthy();
             });
             it('should return an extended log instance with only the original log methods', function () {
                 var logEx = getInstance();
@@ -235,7 +235,7 @@ describe('$log: logEx unit tests', function () {
         });
         describe('testing getInstance function when global enabled flag is false', function () {
             it('should expect global debug flag to be disabled ', function () {
-                expect($log.isEnabled()).toBeFalsy();
+                expect($log.logEnabled()).toBeFalsy();
             });
             it('should return an extended log instance with only the original log methods', function () {
                 var logEx = getInstance();

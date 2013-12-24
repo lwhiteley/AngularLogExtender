@@ -39,7 +39,7 @@ look for $delegate.setGlobalDebugFlag in the Configuration Section of the unobtr
     	  
     	  // ensure false is being passed for production deployments
     	  //set to true for local dev
-    	  $delegate.setGlobalDebugFlag(false); 
+    	  $delegate.enableLog(false); 
 
 ```
 ######Step 3. Print logs from any component (Controller, Directive, Service etc.)

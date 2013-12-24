@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.2-sha.c10a0ab
+ * Log Unobtrusive Extension v0.0.2-sha.f468483
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -224,7 +224,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                          *
                          * @param flag
                          */
-                        $log.setGlobalDebugFlag = function(flag) {
+                        $log.enableLog = function(flag) {
                             enabled = flag;
                         };
 
@@ -232,7 +232,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                          * Returns true if debugging is enabled or false when debugging is not enabled
                          * @returns {boolean}
                          */
-                        $log.isEnabled = function() {
+                        $log.logEnabled = function() {
                             return enabled;
                         };
                         return $log;
@@ -258,9 +258,9 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                 // ensure false is being passed for production deployments
                 // set to true for local development
-                $delegate.setGlobalDebugFlag(true);
+                $delegate.enableLog(true);
 
-                if ($delegate.isEnabled()) {
+                if ($delegate.logEnabled()) {
                     $delegate.log("CONFIG: LOGGING ENABLED GLOBALLY");
                 }
                 return logEnhancer.exposeSafeLog($delegate);
