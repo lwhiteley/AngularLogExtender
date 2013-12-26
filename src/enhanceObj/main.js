@@ -50,7 +50,7 @@ var processOverride = function (override) {
 
 /**
  * This method is responsible for generating the prefix of 
- * all extended $log methods
+ * all extended $log messages pushed to the console
  * @param {string=} className
  * @returns {string}
  */

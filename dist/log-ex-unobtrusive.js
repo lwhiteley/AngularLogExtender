@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.2-sha.8066f84
+ * Log Unobtrusive Extension v0.0.2-sha.4939417
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -78,7 +78,7 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                     /**
                      * This method is responsible for generating the prefix of
-                     * all extended $log methods
+                     * all extended $log messages pushed to the console
                      * @param {string=} className
                      * @returns {string}
                      */
