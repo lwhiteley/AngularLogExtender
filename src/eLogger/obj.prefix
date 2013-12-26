@@ -1,2 +1,6 @@
+/**
+* Runs functionality for transforming the AngularJS $log
+* returns entended $log object
+* @param $log {Object}
+**/
 var enhanceLogger = function ($log) {
-

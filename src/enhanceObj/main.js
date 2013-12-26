@@ -1,5 +1,5 @@
 /**
- *
+ * checks if a variable is of @type {boolean}
  * @param value
  * @returns {boolean}
  */
@@ -8,7 +8,8 @@ var isBoolean = function (value) {
 };
 
 /**
- *
+ * Trims whitespace at the beginning and/or end of a string
+ * returns an empty string if the value passed is not of type {string}
  * @param value
  * @returns {String}
  */
@@ -19,6 +20,8 @@ var trimString = function (value) {
 };
 
 /**
+ * This method checks if a variabble is of type {string}
+ * and if the string is not an empty string
  * @param value
  * @returns {*|Boolean|boolean}
  */
@@ -46,7 +49,8 @@ var processOverride = function (override) {
 };
 
 /**
- *
+ * This method is responsible for generating the prefix of 
+ * all extended $log methods
  * @param {string=} className
  * @returns {string}
  */
@@ -64,9 +68,13 @@ var getLogPrefix = function (/**{String=}*/className) {
 };
 
 /**
- *
- * @param enabled
- * @param override
+ * This method checks if the global enabled flag and 
+ * the override flag are set as type {boolean}
+ * variables. Once both are set it returns the 
+ * value of the override flag to control $log outputs
+ * returns false as default.
+ * @param {boolean} enabled
+ * @param {boolean} override
  * @returns {boolean}
  */
 var activateLogs = function (enabled, override) {
@@ -77,7 +85,12 @@ var activateLogs = function (enabled, override) {
 };
 
 /**
- *
+ * This method handles printing out a message to 
+ * indicate if a $log instance is using an override
+ * if logging is disabled globally & an override of true is set,
+ *  then a message will be displayed for the specific $log instance
+ * if logging is enabled globally & an override of false is set, 
+ *  then a message will be displayed for the specific $log instance
  * @param _$log
  * @param useOverride
  * @param _override
@@ -94,19 +107,24 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
 };
 
 /**
- *
+ * original $log methods exposed after extended $log instance is set
  * @type {string[]}
  */
 var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
 
 /**
- *
+ * publicly allowed methods for the extended $log object. 
+ * this give the developer the option of using special features
+ * such as setting a className and overriding log messages. 
+ * More Options to come.
  * @type {string[]}
  */
 var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
 /**
- *
+ * This generic method builds $log objects for different uses around the module 
+ * and AngularJS app. It gives the capability to specify which methods to expose
+ * when using the $log object in different sections of the app.
  * @param {Object} oSrc
  * @param {Array=} aMethods
  * @param {Function=} func

@@ -1,4 +1,13 @@
-// <need comment>
+
+//declarations and functions , extensions
+var enabled = false;
+
+/** 
+ * Extends the AngularJS $log object. Tranforms native methods and add 
+ * configuration methofds
+ * @param $log
+ * @param function (with transformation rules) 
+ **/
 angular.extend($log, createLogObj($log, logMethods, prepareLogFn, [null, false, false]));
 
 /**
@@ -7,19 +16,17 @@ angular.extend($log, createLogObj($log, logMethods, prepareLogFn, [null, false, 
  */
 $log.getInstance = getInstance;
 
-//declarations and functions , extensions
-var enabled = false;
-
 /**
- * 
- * @param flag
+ * Accepts a boolean to enable/disable logging globally for
+ * the AngularJS App
+ * @param flag {boolean}
  */
 $log.enableLog = function (flag) {
     enabled = flag;
 };
 
 /**
- * Returns true if debugging is enabled or false when debugging is not enabled
+ * Returns true if logging is enabled or false when logging is not enabled
  * @returns {boolean}
  */
 $log.logEnabled = function () {
