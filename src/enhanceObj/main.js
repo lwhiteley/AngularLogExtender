@@ -20,7 +20,7 @@ var trimString = function (value) {
 };
 
 /**
- * This method checks if a variabble is of type {string}
+ * This method checks if a variable is of type {string}
  * and if the string is not an empty string
  * @param value
  * @returns {*|Boolean|boolean}
@@ -68,9 +68,9 @@ var getLogPrefix = function (/**{String=}*/className) {
 };
 
 /**
- * This method checks if the global enabled flag and 
+ * This method checks if the global enabled flag and
  * the override flag are set as type {boolean}
- * variables. Once both are set it returns the 
+ * variables. Once both are set it returns the
  * value of the override flag to control $log outputs
  * returns false as default.
  * @param {boolean} enabled

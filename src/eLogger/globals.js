@@ -3,8 +3,8 @@
 var enabled = false;
 
 /** 
- * Extends the AngularJS $log object. Tranforms native methods and add 
- * configuration methofds
+ * Extends the AngularJS $log object. Transforms native methods and add
+ * configuration methods
  * @param $log
  * @param function (with transformation rules) 
  **/

@@ -32,7 +32,6 @@ var _$log = createLogObj($log, logMethods);
 
 /**
  * Support to generate class-specific logger instance with/without className or override
- *
  * @param {string=} className Name of object in which $log.<function> calls is invoked.
  * @param {boolean=} override activates/deactivates component level logging
  * @returns {*} Logger instance

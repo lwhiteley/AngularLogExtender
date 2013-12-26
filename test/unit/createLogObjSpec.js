@@ -20,7 +20,7 @@ describe('Log Object Create Method Spec', function () {
 
     it('should return resultSet with method array objects', function () {
         var myLog = {},
-            resultSet = {};
+            resultSet;
         angular.forEach(allowedMethods, function(val, idx) {
             myLog[val] = idx;
         });
@@ -38,6 +38,7 @@ describe('Log Object Create Method Spec', function () {
             utils = {
                 myLog : {},
                 resultSet : {},
+                arr : [1,2,3,4,5],
                 myFunc : function () {
                     var params = Array.prototype.slice.call(arguments);
                     return params.reduce(function(a, b) { return a + b; });
@@ -49,7 +50,34 @@ describe('Log Object Create Method Spec', function () {
                 utils.myLog[val] = idx;
             });
 
-            utils.resultSet = createLogObj(utils.myLog, allowedMethods, utils.myFunc, [1,2,3,4,5]);
+            utils.resultSet = createLogObj(utils.myLog, allowedMethods, utils.myFunc, utils.arr);
+        });
+
+        it('should have mostRecentCall array with the last idx', function () {
+            // should have the last array index
+            utils.arr.unshift(allowedMethods.length-1);
+            expect(utils.myFunc.mostRecentCall.args).toEqual(utils.arr);
+        });
+
+        it('should call myFunc with utils.arr prefixed with idx', function () {
+           angular.forEach(utils.myFunc.calls, function (value, idx) {
+               // avoid src propagation by creating a new array on each iteration
+               var newarr = [];
+               angular.copy(utils.arr, newarr);
+               newarr.unshift(idx);
+               expect(value.args).toEqual(newarr);
+           });
+        });
+
+        it('should have n arguments for call to myFunc', function () {
+            var main = [];
+            angular.forEach(allowedMethods, function(val, idx) {
+                var newArr = [];
+                angular.copy(utils.arr, newArr);
+                newArr.unshift(idx);
+                main.push(newArr);
+            });
+            expect(utils.myFunc.argsForCall).toEqual(main);
         });
 
         it('should call myFunc method', function () {
