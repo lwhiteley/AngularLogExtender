@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.2-sha.4939417
+ * Log Unobtrusive Extension v0.0.2-sha.8c23194
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -48,7 +48,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                     };
 
                     /**
-                     * This method checks if a variabble is of type {string}
+                     * This method checks if a variable is of type {string}
                      * and if the string is not an empty string
                      * @param value
                      * @returns {*|Boolean|boolean}
@@ -175,7 +175,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                     };
                     /**
                      * Runs functionality for transforming the AngularJS $log
-                     * returns entended $log object
+                     * returns extended $log object
                      * @param $log {Object}
                      **/
                     var enhanceLogger = function($log) {
@@ -214,7 +214,6 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                         /**
                          * Support to generate class-specific logger instance with/without className or override
-                         *
                          * @param {string=} className Name of object in which $log.<function> calls is invoked.
                          * @param {boolean=} override activates/deactivates component level logging
                          * @returns {*} Logger instance
@@ -239,8 +238,8 @@ angular.module("log.extension.uo", []).config(['$provide',
                         var enabled = false;
 
                         /** 
-                         * Extends the AngularJS $log object. Tranforms native methods and add
-                         * configuration methofds
+                         * Extends the AngularJS $log object. Transforms native methods and add
+                         * configuration methods
                          * @param $log
                          * @param function (with transformation rules)
                          **/
