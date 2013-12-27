@@ -79,12 +79,27 @@ module.exports = function (grunt) {
                 coverage_dir: 'lcov'
             }
         },
+//        bump: {
+//            options: {
+//                files: ['package.json'],
+//                commit: false,
+//                createTag: false,
+//                push: false
+//            }
+//        },
         bump: {
             options: {
                 files: ['package.json'],
-                commit: false,
-                createTag: false,
-                push: false
+                updateConfigs: [],
+                commit: true,
+                commitMessage: 'Release v%VERSION%',
+                commitFiles: ['-a'], // '-a' for all files
+                createTag: true,
+                tagName: 'v%VERSION%',
+                tagMessage: 'Version %VERSION%',
+                push: true,
+                pushTo: 'develop',
+                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
             }
         },
         shell: {
