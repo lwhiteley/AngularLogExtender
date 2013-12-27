@@ -3,30 +3,28 @@
 var enabled = false;
 
 /** 
- * Extends the AngularJS $log object. Transforms native methods and add
- * configuration methods
+ * Extends the $log object with the transformed native methods
  * @param $log
  * @param function (with transformation rules) 
  **/
 angular.extend($log, createLogObj($log, logMethods, prepareLogFn, [null, false, false]));
 
 /**
- * Add special methods to AngularJS $log
+ * Extend the $log with the {@see getInstance} method
  * @type {getInstance}
  */
 $log.getInstance = getInstance;
 
 /**
- * Accepts a boolean to enable/disable logging globally for
- * the AngularJS App
- * @param flag {boolean}
+ * The following method enable/disable logging globally
+ * @param flag {boolean} - boolean flag specifying if log should be enabled/disabled
  */
 $log.enableLog = function (flag) {
     enabled = flag;
 };
 
 /**
- * Returns true if logging is enabled or false when logging is not enabled
+ * The following returns the status of the {@see enabled}
  * @returns {boolean}
  */
 $log.logEnabled = function () {

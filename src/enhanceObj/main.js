@@ -9,9 +9,8 @@ var isBoolean = function (value) {
 
 /**
  * Trims whitespace at the beginning and/or end of a string
- * returns an empty string if the value passed is not of type {string}
- * @param value
- * @returns {String}
+ * @param value - string to be trimmed
+ * @returns {String} - returns an empty string if the value passed is not of type {String}
  */
 var trimString = function (value) {
     if (angular.isString(value))
@@ -31,7 +30,7 @@ var isValidString = function (value) {
 
 /**
  * processUseOverride returns true if the override flag is set.
- * this is used to activated the override functionality.
+ * this is used to activate the override functionality.
  * @param override
  * @returns {}
  */
@@ -40,7 +39,7 @@ var processUseOverride = function (override) {
 };
 
 /**
- * process override only takes true or false as valid input.
+ * processOverride only takes true or false as valid input.
  * any other input will resolve as true.
  * this function is used to override the global flag for displaying logs
  * */
@@ -49,10 +48,9 @@ var processOverride = function (override) {
 };
 
 /**
- * This method is responsible for generating the prefix of 
- * all extended $log messages pushed to the console
- * @param {string=} className
- * @returns {string}
+ * This method is responsible for generating the prefix of all extended $log messages pushed to the console
+ * @param {string=} className - $controller name
+ * @returns {string} - formatted string
  */
 var getLogPrefix = function (/**{String=}*/className) {
     var formatMessage = "";
@@ -68,11 +66,8 @@ var getLogPrefix = function (/**{String=}*/className) {
 };
 
 /**
- * This method checks if the global enabled flag and
- * the override flag are set as type {boolean}
- * variables. Once both are set it returns the
- * value of the override flag to control $log outputs
- * returns false as default.
+ * This method checks if the global enabled flag and the override flag are set as type {boolean}
+ * variables. If both are set it returns the value of the override flag to control $log outputs
  * @param {boolean} enabled
  * @param {boolean} override
  * @returns {boolean}
@@ -85,11 +80,10 @@ var activateLogs = function (enabled, override) {
 };
 
 /**
- * This method handles printing out a message to 
- * indicate if a $log instance is using an override
+ * This method handles printing out a message to indicate if a $log instance is using an override
  * if logging is disabled globally & an override of true is set,
  *  then a message will be displayed for the specific $log instance
- * if logging is enabled globally & an override of false is set, 
+ * if logging is enabled globally & an override of false is set,
  *  then a message will be displayed for the specific $log instance
  * @param _$log
  * @param useOverride

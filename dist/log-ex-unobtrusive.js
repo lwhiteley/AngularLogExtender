@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.2-sha.8c23194
+ * Log Unobtrusive Extension v0.0.2-sha.c0e3e25
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -22,8 +22,7 @@ angular.module("log.extension.uo", []).config(['$provide',
         $provide.decorator('$log', ["$delegate", "$filter",
             function($delegate, $filter) {
                 /** 
-                 * Encapsulates functionality to extends $log and expose functionality
-                 * needed throughout the AngularJS app
+                 * Encapsulates functionality to extends $log and expose additional functionality
                  **/
                 var logEnhancerObj = function() {
                     /**
@@ -37,9 +36,8 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                     /**
                      * Trims whitespace at the beginning and/or end of a string
-                     * returns an empty string if the value passed is not of type {string}
-                     * @param value
-                     * @returns {String}
+                     * @param value - string to be trimmed
+                     * @returns {String} - returns an empty string if the value passed is not of type {String}
                      */
                     var trimString = function(value) {
                         if (angular.isString(value))
@@ -59,7 +57,7 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                     /**
                      * processUseOverride returns true if the override flag is set.
-                     * this is used to activated the override functionality.
+                     * this is used to activate the override functionality.
                      * @param override
                      * @returns {}
                      */
@@ -68,7 +66,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                     };
 
                     /**
-                     * process override only takes true or false as valid input.
+                     * processOverride only takes true or false as valid input.
                      * any other input will resolve as true.
                      * this function is used to override the global flag for displaying logs
                      * */
@@ -77,10 +75,9 @@ angular.module("log.extension.uo", []).config(['$provide',
                     };
 
                     /**
-                     * This method is responsible for generating the prefix of
-                     * all extended $log messages pushed to the console
-                     * @param {string=} className
-                     * @returns {string}
+                     * This method is responsible for generating the prefix of all extended $log messages pushed to the console
+                     * @param {string=} className - $controller name
+                     * @returns {string} - formatted string
                      */
                     var getLogPrefix = function( /**{String=}*/ className) {
                         var formatMessage = "";
@@ -96,11 +93,8 @@ angular.module("log.extension.uo", []).config(['$provide',
                     };
 
                     /**
-                     * This method checks if the global enabled flag and
-                     * the override flag are set as type {boolean}
-                     * variables. Once both are set it returns the
-                     * value of the override flag to control $log outputs
-                     * returns false as default.
+                     * This method checks if the global enabled flag and the override flag are set as type {boolean}
+                     * variables. If both are set it returns the value of the override flag to control $log outputs
                      * @param {boolean} enabled
                      * @param {boolean} override
                      * @returns {boolean}
@@ -113,8 +107,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                     };
 
                     /**
-                     * This method handles printing out a message to
-                     * indicate if a $log instance is using an override
+                     * This method handles printing out a message to indicate if a $log instance is using an override
                      * if logging is disabled globally & an override of true is set,
                      *  then a message will be displayed for the specific $log instance
                      * if logging is enabled globally & an override of false is set,
@@ -174,7 +167,7 @@ angular.module("log.extension.uo", []).config(['$provide',
                         return resultSet;
                     };
                     /**
-                     * Runs functionality for transforming the AngularJS $log
+                     * Contains functionality for transforming the AngularJS $log
                      * returns extended $log object
                      * @param $log {Object}
                      **/
@@ -182,8 +175,8 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                         /**
                          * Partial application to pre-capture a logger function
-                         * @param logFn
-                         * @param className
+                         * @param logFn     - $log instance
+                         * @param className - name of the $controller class
                          * @param override
                          * @param useOverride
                          * @returns {Function}
@@ -214,9 +207,9 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                         /**
                          * Support to generate class-specific logger instance with/without className or override
-                         * @param {string=} className Name of object in which $log.<function> calls is invoked.
-                         * @param {boolean=} override activates/deactivates component level logging
-                         * @returns {*} Logger instance
+                         * @param {string=} className - Name of object in which $log.<function> calls is invoked.
+                         * @param {boolean=} override - activates/deactivates component level logging
+                         * @returns {*} $log instance
                          */
                         var getInstance = function( /*{string=}**/ className, /**{boolean=}*/ override) {
                             if (isBoolean(className)) {
@@ -238,30 +231,28 @@ angular.module("log.extension.uo", []).config(['$provide',
                         var enabled = false;
 
                         /** 
-                         * Extends the AngularJS $log object. Transforms native methods and add
-                         * configuration methods
+                         * Extends the $log object with the transformed native methods
                          * @param $log
                          * @param function (with transformation rules)
                          **/
                         angular.extend($log, createLogObj($log, logMethods, prepareLogFn, [null, false, false]));
 
                         /**
-                         * Add special methods to AngularJS $log
+                         * Extend the $log with the {@see getInstance} method
                          * @type {getInstance}
                          */
                         $log.getInstance = getInstance;
 
                         /**
-                         * Accepts a boolean to enable/disable logging globally for
-                         * the AngularJS App
-                         * @param flag {boolean}
+                         * The following method enable/disable logging globally
+                         * @param flag {boolean} - boolean flag specifying if log should be enabled/disabled
                          */
                         $log.enableLog = function(flag) {
                             enabled = flag;
                         };
 
                         /**
-                         * Returns true if logging is enabled or false when logging is not enabled
+                         * The following returns the status of the {@see enabled}
                          * @returns {boolean}
                          */
                         $log.logEnabled = function() {

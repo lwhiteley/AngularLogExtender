@@ -1,5 +1,4 @@
         /** 
-        * Encapsulates functionality to extends $log and expose functionality
-        * needed throughout the AngularJS app
+        * Encapsulates functionality to extends $log and expose additional functionality
         **/
         var logEnhancerObj = function () {
