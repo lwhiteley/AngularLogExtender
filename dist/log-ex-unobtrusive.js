@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3
+ * Log Unobtrusive Extension v0.0.3-sha.7a58e8e
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
