@@ -1,4 +1,15 @@
 
+0.0.3 / 2013-12-31 
+==================
+
+* added datespy library to project solution to help with testing dates …
+* remove integration tests and replace with unit tests
+* update test structure
+* added more tests for key methods
+* modularize tests
+
+
+
 0.0.2-sha.b54e447 / 2013-12-22 
 ==================
 
