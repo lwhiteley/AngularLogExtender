@@ -6,6 +6,7 @@ module.exports = function (config) {
         files: [
             'libs/angular/angular.js',
             'libs/angular/angular-mocks.js',
+            'libs/angular/datespy.js',
             'test/helpers/globals.js',
             'src/enhanceObj/*.js',
             'src/eLogger/logger.js',

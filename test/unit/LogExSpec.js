@@ -1,9 +1,13 @@
 describe('$log: logEx unit tests', function () {
     var emptyString = "", classSep = "::",
-        logSpy = jasmine.createSpy('logSpy');
-    var ngLog = $injector.get('$log');
+        logSpy, ngLog;
 
-    describe('testing isBoolean function', function () {
+    beforeEach(function () {
+        ngLog = $injector.get('$log');
+        logSpy = jasmine.createSpy('logSpy');
+    });
+
+    describe('isBoolean function Spec', function () {
         it('should return false when passing a non boolean ', function () {
             expect(isBoolean(null)).toBeFalsy();
             expect(isBoolean(1)).toBeFalsy();
@@ -15,7 +19,7 @@ describe('$log: logEx unit tests', function () {
         });
     });
 
-    describe('testing trimString function', function () {
+    describe('trimString function Spec', function () {
         it('should return an empty string when passing a non string ', function () {
             expect(trimString(null)).toBe(emptyString);
             expect(trimString(1)).toBe(emptyString);
@@ -31,20 +35,22 @@ describe('$log: logEx unit tests', function () {
         });
     });
 
-    describe('testing isValidString function', function () {
+    describe('isValidString function Spec', function () {
         it('should return false when passing a non string or empty string', function () {
             expect(isValidString(null)).toBeFalsy();
             expect(isValidString(1)).toBeFalsy();
             expect(isValidString("")).toBeFalsy();
             expect(isValidString(true)).toBeFalsy();
             expect(isValidString(undefined)).toBeFalsy();
+            expect(isValidString([])).toBeFalsy();
+            expect(isValidString({})).toBeFalsy();
         });
         it('should return true when passing a  populated string ', function () {
             expect(isValidString("true")).toBeTruthy();
         });
     });
 
-    describe('testing processUseOverride function. only activates override if it is set as a boolean', function () {
+    describe('processUseOverride function Spec', function () {
         it('should return false when passing a non boolean  ', function () {
             expect(processUseOverride(null)).toBeFalsy();
             expect(processUseOverride(1)).toBeFalsy();
@@ -57,7 +63,7 @@ describe('$log: logEx unit tests', function () {
         });
     });
 
-    describe('testing processOverride function. only returns false when false is passed, everything else returns true', function () {
+    describe('processOverride function Spec', function () {
         it('should return false when passing false   ', function () {
             expect(processOverride(false)).toBeFalsy();
         });
@@ -70,7 +76,7 @@ describe('$log: logEx unit tests', function () {
         });
     })
     ;
-    describe('testing activateLogs function. takes 2 params enabled and override respectively', function () {
+    describe('activateLogs function Spec', function () {
         it('should return false when no booleans are passed', function () {
             expect(activateLogs("false", "")).toBeFalsy();
         });
@@ -90,21 +96,45 @@ describe('$log: logEx unit tests', function () {
         });
     });
 
-    describe('testing exposeSafeLog function', function () {
-        var logEx = exposeSafeLog(ngLog);
-        it('should return an extended log object when the orignal angular log is passed with only getInstance as an extended method', function () {
-            expect(logEx).toBeDefined();
-            expect(logEx.hasOwnProperty('getInstance')).toBeTruthy();
-            expect(logEx.hasOwnProperty('log')).toBeTruthy();
-            expect(logEx.hasOwnProperty('debug')).toBeTruthy();
-            expect(logEx.hasOwnProperty('warn')).toBeTruthy();
-            expect(logEx.hasOwnProperty('info')).toBeTruthy();
-            expect(logEx.hasOwnProperty('error')).toBeTruthy();
-            expect(logEx.hasOwnProperty('isEnabled')).toBeFalsy();
-            expect(logEx.hasOwnProperty('setGlobalDebugFlag')).toBeFalsy();
+    describe('exposeSafeLog function Spec', function () {
+        var logEx;
+
+        beforeEach(function () {
+            ngLog = $injector.get('$log'); 
+            logEx = exposeSafeLog(ngLog);
         });
+
+        it('should return an extended log object when the orignal angular log is passed with getInstance undefined', function () {
+            expect(logEx).toBeDefined();
+            expect(logEx.getInstance).toBeUndefined();
+            expect(logEx.log).toBeDefined();
+            expect(logEx.debug).toBeDefined();
+            expect(logEx.warn).toBeDefined();
+            expect(logEx.info).toBeDefined();
+            expect(logEx.error).toBeDefined();
+            expect(logEx.isEnabled).toBeFalsy();
+            expect(logEx.setGlobalDebugFlag).toBeFalsy();
+        });
+
+        it('should return an extended log object when the orignal angular log is passed with getInstance defined', function () {
+            angular.extend(logEx, {
+                getInstance : function () {
+                    return "something";
+                }
+            });
+            expect(logEx).toBeDefined();
+            expect(logEx.getInstance).toBeDefined();
+            expect(logEx.log).toBeDefined();
+            expect(logEx.debug).toBeDefined();
+            expect(logEx.warn).toBeDefined();
+            expect(logEx.info).toBeDefined();
+            expect(logEx.error).toBeDefined();
+            expect(logEx.isEnabled).toBeFalsy();
+            expect(logEx.setGlobalDebugFlag).toBeFalsy();
+        });
+
     });
-    describe('testing getLogPrefix function', function () {
+    describe('getLogPrefix function Spec', function () {
         it('should not contain a class separator if no class is passed  ', function () {
             expect(getLogPrefix(null)).not.toContain(classSep);
         });
@@ -115,13 +145,15 @@ describe('$log: logEx unit tests', function () {
         });
     });
 
-    describe('testing prepareLogFn function, params (logFn, className, override, useOverride)', function () {
-        var logFn = ngLog.log;
+    describe('prepareLogFn function Spec', function () {
+        var logFn;
         beforeEach(function () {
+            logFn = ngLog.log;
+            ngLog = $injector.get('$log');
             spyOn(logFn, 'apply');
         });
 
-        describe('testing prepareLogFn function when global enabled flag is false', function () {
+        describe('prepareLogFn function Spec - global enabled flag is false', function () {
             it('should not callapply when no params are sent', function () {
                 var exFn = prepareLogFn(null);
                 exFn();
@@ -144,7 +176,7 @@ describe('$log: logEx unit tests', function () {
             });
         });
 
-        describe('testing prepareLogFn function when global enabled flag is true', function () {
+        describe('prepareLogFn function Spec - global enabled flag is true', function () {
             beforeEach(function () {
                 $log.enableLog(true);
             });
@@ -174,110 +206,4 @@ describe('$log: logEx unit tests', function () {
         });
 
     });
-
-    describe('testing getInstance function ', function () {
-        var temp = _$log;
-        beforeEach(function () {
-            _$log = ngLog;
-            spyOn(_$log, 'log');
-        });
-        afterEach(function () {
-            _$log = temp;
-        });
-        describe('testing getInstance function when global enabled flag is true', function () {
-            beforeEach(function () {
-                $log.enableLog(true);
-            });
-            afterEach(function () {
-                $log.enableLog(false);
-            });
-            it('should expect global debug flag to be enabled ', function () {
-                expect($log.logEnabled()).toBeTruthy();
-            });
-            it('should return an extended log instance with only the original log methods', function () {
-                var logEx = getInstance();
-                expect(logEx).toBeDefined();
-                expect(logEx.hasOwnProperty('getInstance')).toBeFalsy();
-                expect(logEx.hasOwnProperty('log')).toBeTruthy();
-                expect(logEx.hasOwnProperty('debug')).toBeTruthy();
-                expect(logEx.hasOwnProperty('warn')).toBeTruthy();
-                expect(logEx.hasOwnProperty('info')).toBeTruthy();
-                expect(logEx.hasOwnProperty('error')).toBeTruthy();
-                expect(logEx.hasOwnProperty('isEnabled')).toBeFalsy();
-                expect(logEx.hasOwnProperty('setGlobalDebugFlag')).toBeFalsy();
-            });
-            it('should return an extended log instance with an override to stop logs', function () {
-                var logEx = getInstance(false);
-                expect(logEx).toBeDefined();
-                expect(_$log.log).toHaveBeenCalled();
-                expect(logEx.hasOwnProperty('getInstance')).toBeFalsy();
-                expect(logEx.hasOwnProperty('log')).toBeTruthy();
-                expect(logEx.hasOwnProperty('debug')).toBeTruthy();
-                expect(logEx.hasOwnProperty('warn')).toBeTruthy();
-                expect(logEx.hasOwnProperty('info')).toBeTruthy();
-                expect(logEx.hasOwnProperty('error')).toBeTruthy();
-                expect(logEx.hasOwnProperty('isEnabled')).toBeFalsy();
-                expect(logEx.hasOwnProperty('setGlobalDebugFlag')).toBeFalsy();
-            });
-            it('should return an extended log instance with an override to stop logs and a className', function () {
-                var logEx = getInstance('testLogger', false);
-                expect(logEx).toBeDefined();
-                expect(_$log.log).toHaveBeenCalled();
-                expect(logEx.hasOwnProperty('getInstance')).toBeFalsy();
-                expect(logEx.hasOwnProperty('log')).toBeTruthy();
-                expect(logEx.hasOwnProperty('debug')).toBeTruthy();
-                expect(logEx.hasOwnProperty('warn')).toBeTruthy();
-                expect(logEx.hasOwnProperty('info')).toBeTruthy();
-                expect(logEx.hasOwnProperty('error')).toBeTruthy();
-                expect(logEx.hasOwnProperty('isEnabled')).toBeFalsy();
-                expect(logEx.hasOwnProperty('setGlobalDebugFlag')).toBeFalsy();
-            });
-        });
-        describe('testing getInstance function when global enabled flag is false', function () {
-            it('should expect global debug flag to be disabled ', function () {
-                expect($log.logEnabled()).toBeFalsy();
-            });
-            it('should return an extended log instance with only the original log methods', function () {
-                var logEx = getInstance();
-                expect(logEx).toBeDefined();
-                expect(logEx.hasOwnProperty('getInstance')).toBeFalsy();
-                expect(logEx.hasOwnProperty('log')).toBeTruthy();
-                expect(logEx.hasOwnProperty('debug')).toBeTruthy();
-                expect(logEx.hasOwnProperty('warn')).toBeTruthy();
-                expect(logEx.hasOwnProperty('info')).toBeTruthy();
-                expect(logEx.hasOwnProperty('error')).toBeTruthy();
-                expect(logEx.hasOwnProperty('isEnabled')).toBeFalsy();
-                expect(logEx.hasOwnProperty('setGlobalDebugFlag')).toBeFalsy();
-            });
-            it('should return an extended log instance with an override to persist logs', function () {
-                var logEx = getInstance(true);
-                expect(logEx).toBeDefined();
-                expect(_$log.log).toHaveBeenCalled();
-                expect(logEx.hasOwnProperty('getInstance')).toBeFalsy();
-                expect(logEx.hasOwnProperty('log')).toBeTruthy();
-                expect(logEx.hasOwnProperty('debug')).toBeTruthy();
-                expect(logEx.hasOwnProperty('warn')).toBeTruthy();
-                expect(logEx.hasOwnProperty('info')).toBeTruthy();
-                expect(logEx.hasOwnProperty('error')).toBeTruthy();
-                expect(logEx.hasOwnProperty('isEnabled')).toBeFalsy();
-                expect(logEx.hasOwnProperty('setGlobalDebugFlag')).toBeFalsy();
-            });
-            it('should return an extended log instance with an override to persist logs and a className', function () {
-                var logEx = getInstance('testLogger', true);
-                expect(logEx).toBeDefined();
-                expect(_$log.log).toHaveBeenCalled();
-                expect(logEx.hasOwnProperty('getInstance')).toBeFalsy();
-                expect(logEx.hasOwnProperty('log')).toBeTruthy();
-                expect(logEx.hasOwnProperty('debug')).toBeTruthy();
-                expect(logEx.hasOwnProperty('warn')).toBeTruthy();
-                expect(logEx.hasOwnProperty('info')).toBeTruthy();
-                expect(logEx.hasOwnProperty('error')).toBeTruthy();
-                expect(logEx.hasOwnProperty('isEnabled')).toBeFalsy();
-                expect(logEx.hasOwnProperty('setGlobalDebugFlag')).toBeFalsy();
-            });
-        });
-
-
-    });
-
 });
