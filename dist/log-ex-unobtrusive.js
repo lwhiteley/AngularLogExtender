@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.9e2c53d
+ * Log Unobtrusive Extension v0.0.3-sha.3971eb8
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -18,8 +18,9 @@
 angular.module("log.extension.uo", []).provider('logEx', ['$provide',
     function($provide) {
 
-        var $injector = angular.injector([ 'ng' ]);
-        var $filter = $injector.get( '$filter' );
+        var $injector = angular.injector(['ng']);
+
+        var $filter = $injector.get('$filter');
 
         var enableGlobally = false;
 
@@ -37,7 +38,6 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
          * @type {string[]}
          */
         var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
-
 
         /**
          * Trims whitespace at the beginning and/or end of a string
@@ -95,8 +95,6 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                     var isBoolean = function(value) {
                         return typeof value == 'boolean';
                     };
-
-
 
                     /**
                      * processUseOverride returns true if the override flag is set.
@@ -334,7 +332,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.9e2c53d',
+                version: '0.0.3-sha.3971eb8',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
