@@ -6,7 +6,9 @@
         return {
             name: '%APP_NAME%',
             version: '%VERSION%',
-            enableLogging:enableLogging
+            enableLogging:enableLogging,
+            restrictLogMethods:restrictLogMethods,
+            overrideLogPrefix:overrideLogPrefix
         };
     };
 
@@ -15,4 +17,14 @@
     * @param flag {boolean}
     **/
     this.enableLogging = enableLogging;
+
+    /**
+    * Modify the default log prefix
+    **/
+    this.overrideLogPrefix = overrideLogPrefix;
+
+    /**
+    * Configure which log functions can be exposed at runtime
+    */
+    this.restrictLogMethods = restrictLogMethods;
 }]);

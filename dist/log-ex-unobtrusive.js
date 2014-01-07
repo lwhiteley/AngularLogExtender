@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.6e7ec33
+ * Log Unobtrusive Extension v0.0.3-sha.9e2c53d
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -15,14 +15,51 @@
  * - Has global and feature level activation/disabling for $log
  * - Created and tested with AngularJS v.1.2.3
  */
-angular.module("log.extension.uo", []).provider('logEx', ['$provide',
-    function($provide) {
+angular.module("log.extension.uo", []).provider('logEx', ['$provide', '$injector',
+    function($provide, $injector) {
+
+        var $filter = $injector.get('$filter');
 
         var enableGlobally = false;
+
+        /**
+         * original $log methods exposed after extended $log instance is set
+         * @type {string[]}
+         */
+        var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
+
+        /**
+         * publicly allowed methods for the extended $log object.
+         * this give the developer the option of using special features
+         * such as setting a className and overriding log messages.
+         * More Options to come.
+         * @type {string[]}
+         */
+        var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+
+        /**
+         * This method is responsible for generating the prefix of all extended $log messages pushed to the console
+         * @param {string=} className - $controller name
+         * @returns {string} - formatted string
+         */
+        var getLogPrefix = function( /**{String=}*/ className) {
+            var formatMessage = "";
+            var separator = " >> ";
+            var format = "MMM-dd-yyyy-h:mm:ssa";
+            var now = $filter('date')(new Date(), format);
+            if (!isValidString(className)) {
+                formatMessage = "" + now + separator;
+            } else {
+                formatMessage = "" + now + "::" + className + separator;
+            }
+            return formatMessage;
+        };
+
+
         // Register our $log decorator with AngularJS $provider
         //scroll down to the Configuration section to set the log settings
-        $provide.decorator('$log', ["$delegate", "$filter",
-            function($delegate, $filter) {
+        $provide.decorator('$log', ["$delegate",
+            function($delegate) {
                 /** 
                  * Encapsulates functionality to extends $log and expose additional functionality
                  **/
@@ -77,24 +114,6 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                     };
 
                     /**
-                     * This method is responsible for generating the prefix of all extended $log messages pushed to the console
-                     * @param {string=} className - $controller name
-                     * @returns {string} - formatted string
-                     */
-                    var getLogPrefix = function( /**{String=}*/ className) {
-                        var formatMessage = "";
-                        var separator = " >> ";
-                        var format = "MMM-dd-yyyy-h:mm:ssa";
-                        var now = $filter('date')(new Date(), format);
-                        if (!isValidString(className)) {
-                            formatMessage = "" + now + separator;
-                        } else {
-                            formatMessage = "" + now + "::" + className + separator;
-                        }
-                        return formatMessage;
-                    };
-
-                    /**
                      * This method checks if the global enabled flag and the override flag are set as type {boolean}
                      * variables. If both are set it returns the value of the override flag to control $log outputs
                      * @param {boolean} enabled
@@ -128,21 +147,6 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                             _$log.log(getLogPrefix() + "[OVERRIDE] LOGGING DISABLED - $log disabled for " + instance);
                         }
                     };
-
-                    /**
-                     * original $log methods exposed after extended $log instance is set
-                     * @type {string[]}
-                     */
-                    var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
-
-                    /**
-                     * publicly allowed methods for the extended $log object.
-                     * this give the developer the option of using special features
-                     * such as setting a className and overriding log messages.
-                     * More Options to come.
-                     * @type {string[]}
-                     */
-                    var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
                     /**
                      * This generic method builds $log objects for different uses around the module
@@ -304,6 +308,21 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
             enableGlobally = flag;
         };
 
+
+        var restrictLogMethods = function(arrMethods) {
+            if (angular.isArray(arrMethods)) {
+                // TODO: should do validation on this to ensure valid properties are passed in
+                allowedMethods = arrMethods;
+            }
+        };
+
+        var overrideLogPrefix = function(logPrefix) {
+            if (angular.isFunction(logPrefix)) {
+                // TODO : Validation of the function to ensure it's of the correct format etc
+                // TODO : Might want to allow memoization of the default functionality and allow easy toggling of custom vs default
+                getLogPrefix = logPrefix;
+            }
+        };
         /**
          * default $get method necessary for provider to work
          * not sure what to do with this yet
@@ -311,8 +330,10 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.6e7ec33',
-                enableLogging: enableLogging
+                version: '0.0.3-sha.9e2c53d',
+                enableLogging: enableLogging,
+                restrictLogMethods: restrictLogMethods,
+                overrideLogPrefix: overrideLogPrefix
             };
         };
 
@@ -321,5 +342,15 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
          * @param flag {boolean}
          **/
         this.enableLogging = enableLogging;
+
+        /**
+         * Modify the default log prefix
+         **/
+        this.overrideLogPrefix = overrideLogPrefix;
+
+        /**
+         * Configure which log functions can be exposed at runtime
+         */
+        this.restrictLogMethods = restrictLogMethods;
     }
 ]);

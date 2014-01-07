@@ -48,24 +48,6 @@ var processOverride = function (override) {
 };
 
 /**
- * This method is responsible for generating the prefix of all extended $log messages pushed to the console
- * @param {string=} className - $controller name
- * @returns {string} - formatted string
- */
-var getLogPrefix = function (/**{String=}*/className) {
-    var formatMessage = "";
-    var separator = " >> ";
-    var format = "MMM-dd-yyyy-h:mm:ssa";
-    var now = $filter('date')(new Date(), format);
-    if (!isValidString(className)) {
-        formatMessage = "" + now + separator;
-    } else {
-        formatMessage = "" + now + "::" + className + separator;
-    }
-    return formatMessage;
-};
-
-/**
  * This method checks if the global enabled flag and the override flag are set as type {boolean}
  * variables. If both are set it returns the value of the override flag to control $log outputs
  * @param {boolean} enabled

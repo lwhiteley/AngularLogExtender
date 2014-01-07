@@ -1,1 +1,1 @@
-angular.module("log.extension.uo", [ ]).provider('logEx', ['$provide', function ($provide) {
+angular.module("log.extension.uo", [ ]).provider('logEx', ['$provide', '$filter', function ($provide, $filter) {
