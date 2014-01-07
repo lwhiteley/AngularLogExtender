@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.c9e7a52
+ * Log Unobtrusive Extension v0.0.3-sha.9ad9ff8
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -292,6 +292,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                 return logEnhancer.exposeSafeLog($delegate);
             }
         ]);
+
         /** 
          * default $get method necessary for provider to work
          * not sure what to do with this yet
@@ -299,7 +300,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             var value = {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.c9e7a52'
+                version: '0.0.3-sha.9ad9ff8'
             };
             return value;
         };
