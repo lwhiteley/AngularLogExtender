@@ -15,10 +15,11 @@
  * - Has global and feature level activation/disabling for $log
  * - Created and tested with AngularJS v.1.2.3
  */
-angular.module("log.extension.uo", []).provider('logEx', ['$provide', '$injector',
-    function($provide, $injector) {
+angular.module("log.extension.uo", []).provider('logEx', ['$provide',
+    function($provide) {
 
-        var $filter = $injector.get('$filter');
+        var $injector = angular.injector([ 'ng' ]);
+        var $filter = $injector.get( '$filter' );
 
         var enableGlobally = false;
 
@@ -36,6 +37,28 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide', '$injector
          * @type {string[]}
          */
         var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+
+
+        /**
+         * Trims whitespace at the beginning and/or end of a string
+         * @param value - string to be trimmed
+         * @returns {String} - returns an empty string if the value passed is not of type {String}
+         */
+        var trimString = function(value) {
+            if (angular.isString(value))
+                return value.replace(/^\s*/, '').replace(/\s*$/, '');
+            return "";
+        };
+
+        /**
+         * This method checks if a variable is of type {string}
+         * and if the string is not an empty string
+         * @param value
+         * @returns {*|Boolean|boolean}
+         */
+        var isValidString = function(value) {
+            return (angular.isString(value) && trimString(value) !== "");
+        };
 
         /**
          * This method is responsible for generating the prefix of all extended $log messages pushed to the console
@@ -73,26 +96,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide', '$injector
                         return typeof value == 'boolean';
                     };
 
-                    /**
-                     * Trims whitespace at the beginning and/or end of a string
-                     * @param value - string to be trimmed
-                     * @returns {String} - returns an empty string if the value passed is not of type {String}
-                     */
-                    var trimString = function(value) {
-                        if (angular.isString(value))
-                            return value.replace(/^\s*/, '').replace(/\s*$/, '');
-                        return "";
-                    };
 
-                    /**
-                     * This method checks if a variable is of type {string}
-                     * and if the string is not an empty string
-                     * @param value
-                     * @returns {*|Boolean|boolean}
-                     */
-                    var isValidString = function(value) {
-                        return (angular.isString(value) && trimString(value) !== "");
-                    };
 
                     /**
                      * processUseOverride returns true if the override flag is set.
