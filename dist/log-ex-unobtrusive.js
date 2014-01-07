@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.7a58e8e
+ * Log Unobtrusive Extension v0.0.3-sha.c9e7a52
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -15,8 +15,10 @@
  * - Has global and feature level activation/disabling for $log
  * - Created and tested with AngularJS v.1.2.3
  */
-angular.module("log.extension.uo", []).config(['$provide',
+angular.module("log.extension.uo", []).provider('logEx', ['$provide',
     function($provide) {
+
+        var enableGlobally = false;
         // Register our $log decorator with AngularJS $provider
         //scroll down to the Configuration section to set the log settings
         $provide.decorator('$log', ["$delegate", "$filter",
@@ -282,7 +284,7 @@ angular.module("log.extension.uo", []).config(['$provide',
 
                 // ensure false is being passed for production deployments
                 // set to true for local development
-                $delegate.enableLog(true);
+                $delegate.enableLog(enableGlobally);
 
                 if ($delegate.logEnabled()) {
                     $delegate.log("CONFIG: LOGGING ENABLED GLOBALLY");
@@ -290,5 +292,24 @@ angular.module("log.extension.uo", []).config(['$provide',
                 return logEnhancer.exposeSafeLog($delegate);
             }
         ]);
+        /** 
+         * default $get method necessary for provider to work
+         * not sure what to do with this yet
+         **/
+        this.$get = function() {
+            var value = {
+                name: 'Log Unobtrusive Extension',
+                version: '0.0.3-sha.c9e7a52'
+            };
+            return value;
+        };
+
+        /** 
+         * used externally to enable/disable logging globally
+         * @param flag {boolean}
+         **/
+        this.enableLogging = function(flag) {
+            enableGlobally = flag;
+        };
     }
 ]);

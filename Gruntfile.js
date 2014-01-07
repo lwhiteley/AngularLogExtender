@@ -38,6 +38,7 @@ module.exports = function (grunt) {
                 src: [
                     'src/header.js',
                     'src/module.prefix',
+                    'src/declarations.js',
                     // < ----------------
                     'src/enhanceObj/obj.prefix',
                     'src/enhanceObj/main.js',
@@ -52,6 +53,9 @@ module.exports = function (grunt) {
                     // <------- extras End
                     'src/enhanceObj/globals.js',
                     'src/enhanceObj/obj.suffix',
+                    'src/decorator.suffix',
+                    // < ----------------
+                    
                     // < ----------------
                     'src/module.suffix'
                 ],

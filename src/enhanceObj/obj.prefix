@@ -1,3 +1,6 @@
+ // Register our $log decorator with AngularJS $provider
+ //scroll down to the Configuration section to set the log settings
+ $provide.decorator('$log', [ "$delegate", "$filter", function ($delegate, $filter) {
         /** 
         * Encapsulates functionality to extends $log and expose additional functionality
         **/
