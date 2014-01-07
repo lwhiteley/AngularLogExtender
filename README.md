@@ -27,19 +27,12 @@ var app = angular.module('myAngularApp', ['log.extension.uo']);
 
 ######Step 2. Enable Debugging Globally to see logs
 
-look for $delegate.setGlobalDebugFlag in the Configuration Section of the unobtrusive file and pass true to the function as a parameter. This is set to false by default to disable logging in a production environment. The Best practice is to keep this flag set to false in the master version of the code base, given that some version control system is being used.
+Add the logExProvider dependency to your AngularJS app to configure logging. Pass true to the logExProvider.enableLogging(boolean) function as a parameter to enable logging. This is set to false by default to disable logging in a production environment. The Best practice is to keep this flag set to false in the master version of the code base, given that some version control system is being used. See eg. below.
 
 ```javascript
-//log-ex-unobtrusive.js  snippet
-//=======================================================================//
-// Configuration Section
-//=======================================================================//	  
-    	 var logEnhancer = new logEnhancerObj();  
-    	 logEnhancer.enhanceLogger($delegate);
-    	  
-    	  // ensure false is being passed for production deployments
-    	  //set to true for local dev
-    	  $delegate.enableLog(false); 
+app.config([ 'logExProvider', function(logExProvider) {
+    logExProvider.enableLogging(true);
+}]);
 
 ```
 ######Step 3. Print logs from any component (Controller, Directive, Service etc.)
