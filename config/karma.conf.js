@@ -13,6 +13,7 @@ module.exports = function (config) {
             'src/eLogger/logger.js',
             'src/eLogger/globals.js',
             'src/extras/*.js',
+            'src/providerFunc/*.js',
             'test/unit/*.js'
         ],
         exclude : ['src/enhanceObj/globals.js'],
