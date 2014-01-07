@@ -101,21 +101,6 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
 };
 
 /**
- * original $log methods exposed after extended $log instance is set
- * @type {string[]}
- */
-var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
-
-/**
- * publicly allowed methods for the extended $log object. 
- * this give the developer the option of using special features
- * such as setting a className and overriding log messages. 
- * More Options to come.
- * @type {string[]}
- */
-var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
-
-/**
  * This generic method builds $log objects for different uses around the module 
  * and AngularJS app. It gives the capability to specify which methods to expose
  * when using the $log object in different sections of the app.
