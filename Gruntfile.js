@@ -53,11 +53,13 @@ module.exports = function (grunt) {
                     // <------- extras End
                     'src/enhanceObj/globals.js',
                     'src/enhanceObj/obj.suffix',
-                    'src/decorator.suffix',
                     // < ----------------
                     
                     // < ----------------
-                    'src/module.suffix'
+                    'src/module.suffix',
+                    // <--------- provider func start
+                    'src/providerFunc/main.js',
+                    'src/providerFunc/provider.suffix'
                 ],
                 dest: 'dist/log-ex-unobtrusive.js'
             }

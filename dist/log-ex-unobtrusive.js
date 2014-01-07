@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.9ad9ff8
+ * Log Unobtrusive Extension v0.0.3-sha.6e7ec33
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -293,24 +293,33 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
             }
         ]);
 
-        /** 
+
+        // Provider functions that will be exposed to allow overriding of default $logProvider functionality
+
+        /**
+         * Enables/disables global logging
+         * @param flag
+         */
+        var enableLogging = function(flag) {
+            enableGlobally = flag;
+        };
+
+        /**
          * default $get method necessary for provider to work
          * not sure what to do with this yet
          **/
         this.$get = function() {
-            var value = {
+            return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.9ad9ff8'
+                version: '0.0.3-sha.6e7ec33',
+                enableLogging: enableLogging
             };
-            return value;
         };
 
-        /** 
+        /**
          * used externally to enable/disable logging globally
          * @param flag {boolean}
          **/
-        this.enableLogging = function(flag) {
-            enableGlobally = flag;
-        };
+        this.enableLogging = enableLogging;
     }
 ]);

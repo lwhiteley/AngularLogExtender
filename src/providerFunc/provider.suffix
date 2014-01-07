@@ -1,0 +1,18 @@
+    /**
+    * default $get method necessary for provider to work
+    * not sure what to do with this yet
+    **/
+    this.$get = function(){
+        return {
+            name: '%APP_NAME%',
+            version: '%VERSION%',
+            enableLogging:enableLogging
+        };
+    };
+
+    /**
+    * used externally to enable/disable logging globally
+    * @param flag {boolean}
+    **/
+    this.enableLogging = enableLogging;
+}]);

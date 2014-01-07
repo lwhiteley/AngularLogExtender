@@ -13,24 +13,4 @@
         }
         return  logEnhancer.exposeSafeLog($delegate);
     }]);
-        
-    /** 
-    * default $get method necessary for provider to work
-    * not sure what to do with this yet
-    **/
-    this.$get = function(){
-        var value = {
-            name: '%APP_NAME%',
-            version: '%VERSION%'
-        };
-        return value;
-    };
-    
-    /** 
-    * used externally to enable/disable logging globally
-    * @param flag {boolean}
-    **/
-    this.enableLogging = function(flag){
-        enableGlobally = flag;
-    };
-}]);
+
