@@ -3,6 +3,10 @@ AngularLogExtender
 
 This is an extension of the Angular $log functionality. It uses the native $decorator to push the $log pass its capabilities and provide new functionality such as configuring the $log for different environments such as production and development.
 
+[![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
+
+[![Coverage Status](https://coveralls.io/repos/ferronrsmith/AngularLogExtender/badge.png)](https://coveralls.io/r/ferronrsmith/AngularLogExtender)
+
 ###Notes
 
 The prefered file to use is the log-ex-unobtrusive.js file. With this file you can just include the module to your AngularJs Application and it does all the work. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin.
@@ -70,7 +74,6 @@ app.config([ 'logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods([ lm.log, lm.info ]);
 }]);
 ```
-
 ######2. Override Log Prefix - Log Prefix Formatter
 
 Add the logExProvider dependency to your AngularJS app to configure logging. Pass a custom function that accepts a `className` param to the `overrideLogPrefix` method
@@ -178,6 +181,3 @@ These are:
 2. remove the need to reassign $log instance
 
 
-[![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
-
-[![Coverage Status](https://coveralls.io/repos/ferronrsmith/AngularLogExtender/badge.png)](https://coveralls.io/r/ferronrsmith/AngularLogExtender)
