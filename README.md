@@ -35,7 +35,23 @@ app.config([ 'logExProvider', function(logExProvider) {
 }]);
 ```
 
-######Step 3. Restrict Logging to specific methods
+######Step 3. Print Log from any component (Controller, Directive etc..)
+
+```javascript
+app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+    $log.log("Advanced Log Extender Example: Use Case 1: Example"); 
+}]);
+```
+
+######Step 4. Load the web page and look in the Developer Console
+Sample Output
+```
+Dec-08-2013-12:50:52PM >>  CONFIG: LOGGING ENABLED GLOBALLY
+Dec-08-2013-12:50:52PM >>  Simple Log Extender Example 
+```
+##Advanced Configurations
+
+######1. Restrict Logging to specific methods
 
 Add the logExProvider dependency to your AngularJS app to configure logging. Pass an array with the methods that should be enabled to the `restrictLogMethods` method. `$warn, $debug, $error` messages won't be displayed in the console
 
@@ -45,12 +61,12 @@ app.config([ 'logExProvider', function(logExProvider) {
 }]);
 ```
 
-######Step 4. Override Log Prefix - Log Prefix Formatter
+######2. Override Log Prefix - Log Prefix Formatter
 
 Add the logExProvider dependency to your AngularJS app to configure logging. Pass a custom function that accepts a `className` param to the `overrideLogPrefix` method
 
 ```javascript
-app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+app.config([ 'logExProvider', function(logExProvider) {
     logExProvider.overrideLogPrefix(function (className) {
         var $injector = angular.injector([ 'ng' ]);
         var $filter = $injector.get( '$filter' );
@@ -62,14 +78,6 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
     });
 }]);
 ```
-
-######Step 5. Load the web page and look in the Developer Console
-Sample Output
-```
-Dec-08-2013-12:50:52PM >>  CONFIG: LOGGING ENABLED GLOBALLY
-Dec-08-2013-12:50:52PM >>  Simple Log Extender Example 
-```
-
 ##Advanced Use Cases
 ###Use Case 1: Set Component Class Name
 This example can be used to know which component (controller, directive etc.) $log instances are being pushed from to the console. The new instance must be re-assigned to the $log object to take effect. This Advanced use case is always recommended to get more information from your application logs. 

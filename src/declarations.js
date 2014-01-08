@@ -8,6 +8,15 @@
 
         // default log methods available
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+       
+        // methods as object [constant]
+        var _logMethods = {
+            log: 'log',
+            info: 'info',
+            warn: 'warn',
+            error: 'error',
+            debug: 'debug'
+        };
         /**
          * publicly allowed methods for the extended $log object.
          * this give the developer the option of using special features

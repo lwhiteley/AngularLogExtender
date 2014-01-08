@@ -6,9 +6,10 @@
         return {
             name: '%APP_NAME%',
             version: '%VERSION%',
-            enableLogging:enableLogging,
-            restrictLogMethods:restrictLogMethods,
-            overrideLogPrefix:overrideLogPrefix
+            logMethods: _logMethods,
+            enableLogging: enableLogging,
+            restrictLogMethods: restrictLogMethods,
+            overrideLogPrefix: overrideLogPrefix
         };
     };
 
