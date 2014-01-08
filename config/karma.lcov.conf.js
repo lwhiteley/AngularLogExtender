@@ -7,12 +7,12 @@ module.exports = function (config) {
             'libs/angular/angular-mocks.js',
             'libs/angular/datespy.js',
             'test/helpers/globals.js',
+            'src/declarations.js',
             'src/enhanceObj/*.js',
             'src/eLogger/logger.js',
             'src/eLogger/globals.js',
             'src/extras/*.js',
             'src/providerFunc/*.js',
-            'src/declarations.js',
             'test/unit/*.js'
         ],
         exclude : ['src/enhanceObj/globals.js'],
