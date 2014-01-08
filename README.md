@@ -3,16 +3,15 @@ AngularLogExtender
 
 This is an extension of the Angular $log functionality. It uses the native $decorator to push the $log pass its capabilities and provide new functionality such as configuring the $log for different environments such as production and development.
 
-[![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
+To view the blog this module was extended from and inspired by, go to 
+http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
 
+[![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
 [![Coverage Status](https://coveralls.io/repos/ferronrsmith/AngularLogExtender/badge.png)](https://coveralls.io/r/ferronrsmith/AngularLogExtender)
 
 ###Notes
 
-The prefered file to use is the log-ex-unobtrusive.js file. With this file you can just include the module to your AngularJs Application and it does all the work. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin.
-
-To view the blog this module was extended from and inspired by, go to 
-http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
+The prefered file to use is the log-ex-unobtrusive.js file. You can include the module to your AngularJs Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style.
 
 Feel Free to make your own contributions to this module so we can make it better :)
 
@@ -30,17 +29,15 @@ Feel Free to make your own contributions to this module so we can make it better
 ```javascript
 var app = angular.module('myAngularApp', ['log.extension.uo']);
 ```
-
 ######Step 2. Enable Debugging Globally to see logs
 
-Add the logExProvider dependency to your AngularJS app to configure logging. Pass true to the logExProvider.enableLogging(boolean) function as a parameter to enable logging. This is set to false by default to disable logging in a production environment. The Best practice is to keep this flag set to false in the master version of the code base, given that some version control system is being used. See eg. below.
+Add the logExProvider dependency to your AngularJS app to configure logging. Pass true to the `logExProvider.enableLogging(boolean)` function as a parameter to enable logging. This is set to false by default to disable logging in a production environment. The Best practice is to keep this flag set to false in the master version of the code base, given that some version control system is being used. See eg. below.
 
 ```javascript
 app.config([ 'logExProvider', function(logExProvider) {
     logExProvider.enableLogging(true);
 }]);
 ```
-
 ######Step 3. Print Log from any component (Controller, Directive etc..)
 
 ```javascript
@@ -48,7 +45,6 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
     $log.log("Simple Log Extender Example"); 
 }]);
 ```
-
 ######Step 4. Load the web page and look in the Developer Console
 Sample Output
 ```
