@@ -17,6 +17,8 @@ Feel Free to make your own contributions to this module so we can make it better
 1. Set $log Instance Class Name
 2. Enable/Disable Logging Globally
 3. Enable/Disable Logging at a Component Level
+4. Customize the Log Prefix
+5. Enable/Disable Specific $log methods throughout the app
 
 ##How to Use 
 
@@ -39,7 +41,7 @@ app.config([ 'logExProvider', function(logExProvider) {
 
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
-    $log.log("Advanced Log Extender Example: Use Case 1: Example"); 
+    $log.log("Simple Log Extender Example"); 
 }]);
 ```
 
@@ -174,7 +176,6 @@ These are:
 
 1. More configurations are being considered such as disabling timestamp to offer more customizations for a developers needs
 2. remove the need to reassign $log instance
-3. Log function level overriding
 
 
 [![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
