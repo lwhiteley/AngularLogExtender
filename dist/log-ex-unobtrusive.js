@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.280fc13
+ * Log Unobtrusive Extension v0.0.3-sha.f6846fb
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -146,14 +146,21 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                         }
                     };
 
+                    /**
+                     * Converts an array to a object literal
+                     * @param arr
+                     * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
+                     */
                     var arrToObject = function(arr) {
-                        var result = {
-                            getInstance: angular.noop
-                        };
-                        angular.forEach(arr, function(value) {
-                            result[value] = angular.noop;
-                        });
-
+                        var result = {};
+                        if (angular.isArray(arr)) {
+                            result = {
+                                getInstance: angular.noop
+                            };
+                            angular.forEach(arr, function(value) {
+                                result[value] = angular.noop;
+                            });
+                        }
                         return result;
                     };
 
@@ -324,6 +331,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
 
         var restrictLogMethods = function(arrMethods) {
             if (angular.isArray(arrMethods)) {
+                // TODO: should do validation on this to ensure valid properties are passed in
                 allowedMethods = arrMethods;
             }
         };
@@ -342,7 +350,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.280fc13',
+                version: '0.0.3-sha.f6846fb',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
