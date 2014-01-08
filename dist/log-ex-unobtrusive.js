@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.3971eb8
+ * Log Unobtrusive Extension v0.0.3-sha.c78c5e2
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -18,8 +18,10 @@
 angular.module("log.extension.uo", []).provider('logEx', ['$provide',
     function($provide) {
 
+        // Creates an injector function that can be used for retrieving services as well as for dependency injection
         var $injector = angular.injector(['ng']);
 
+        // Used the $injector defined to retrieve the $filterProvider
         var $filter = $injector.get('$filter');
 
         var enableGlobally = false;
@@ -332,7 +334,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.3971eb8',
+                version: '0.0.3-sha.c78c5e2',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
