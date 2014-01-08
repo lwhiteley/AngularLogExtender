@@ -37,7 +37,7 @@ app.config([ 'logExProvider', function(logExProvider) {
 
 ######Step 3. Restrict Logging to specific methods
 
-Add the logExProvider dependency to your AngularJS app to configure logging. Pass an array with the methods that should be enabled to the `restrictLogMethods` method
+Add the logExProvider dependency to your AngularJS app to configure logging. Pass an array with the methods that should be enabled to the `restrictLogMethods` method. `$warn, $debug, $error` messages won't be displayed in the console
 
 ```javascript
 app.config([ 'logExProvider', function(logExProvider) {
