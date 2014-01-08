@@ -5,7 +5,7 @@
  * @param flag
  */
 var enableLogging = function (flag) {
-    enableGlobally = flag;
+    enableGlobally = isBoolean(flag) ? flag : false;
 };
 
 var overrideLogPrefix = function (logPrefix) {

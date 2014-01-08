@@ -10,10 +10,22 @@ describe('Provider Func Spec', function () {
             expect(enableGlobally).toBe(true);
         });
 
-        it('should set enableGlobally to true when input flag is falsy', function () {
+        it('should set enableGlobally to false when input flag is falsy', function () {
             enableLogging(false);
             expect(enableGlobally).toBe(false);
         });
+        
+        it('should set enableGlobally to false when input flag is not a boolean', function () {
+            enableLogging('false');
+            expect(enableGlobally).toBe(false);
+            enableLogging(null);
+            expect(enableGlobally).toBe(false);
+            enableLogging(undefined);
+            expect(enableGlobally).toBe(false);
+            enableLogging(8);
+            expect(enableGlobally).toBe(false);
+        });
+        
     });
 
     describe('override log prefix Spec', function () {

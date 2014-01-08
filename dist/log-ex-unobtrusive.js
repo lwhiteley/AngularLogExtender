@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.e1ea9a6
+ * Log Unobtrusive Extension v0.0.3-sha.74a6737
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -51,7 +51,14 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
         };
-
+        /**
+         * checks if a variable is of @type {boolean}
+         * @param value
+         * @returns {boolean}
+         */
+        var isBoolean = function(value) {
+            return typeof value == 'boolean';
+        };
         /**
          * This method checks if a variable is of type {string}
          * and if the string is not an empty string
@@ -89,15 +96,6 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                  * Encapsulates functionality to extends $log and expose additional functionality
                  **/
                 var logEnhancerObj = function() {
-                    /**
-                     * checks if a variable is of @type {boolean}
-                     * @param value
-                     * @returns {boolean}
-                     */
-                    var isBoolean = function(value) {
-                        return typeof value == 'boolean';
-                    };
-
                     /**
                      * processUseOverride returns true if the override flag is set.
                      * this is used to activate the override functionality.
@@ -309,7 +307,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
          * @param flag
          */
         var enableLogging = function(flag) {
-            enableGlobally = flag;
+            enableGlobally = isBoolean(flag) ? flag : false;
         };
 
         var overrideLogPrefix = function(logPrefix) {
@@ -326,7 +324,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.e1ea9a6',
+                version: '0.0.3-sha.74a6737',
                 enableLogging: enableLogging,
                 overrideLogPrefix: overrideLogPrefix
             };

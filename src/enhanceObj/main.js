@@ -1,13 +1,4 @@
 /**
- * checks if a variable is of @type {boolean}
- * @param value
- * @returns {boolean}
- */
-var isBoolean = function (value) {
-    return typeof value == 'boolean';
-};
-
-/**
  * processUseOverride returns true if the override flag is set.
  * this is used to activate the override functionality.
  * @param override
