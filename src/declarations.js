@@ -31,7 +31,14 @@
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
         };
-
+        /**
+         * checks if a variable is of @type {boolean}
+         * @param value
+         * @returns {boolean}
+         */
+        var isBoolean = function (value) {
+            return typeof value == 'boolean';
+        };
         /**
          * This method checks if a variable is of type {string}
          * and if the string is not an empty string

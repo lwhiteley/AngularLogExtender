@@ -14,6 +14,18 @@ describe('Provider Func Spec', function () {
             enableLogging(false);
             expect(enableGlobally).toBe(false);
         });
+        
+        it('should set enableGlobally to false when input flag is not a boolean', function () {
+            enableLogging('false');
+            expect(enableGlobally).toBe(false);
+            enableLogging(null);
+            expect(enableGlobally).toBe(false);
+            enableLogging(undefined);
+            expect(enableGlobally).toBe(false);
+            enableLogging(8);
+            expect(enableGlobally).toBe(false);
+        });
+        
     });
 
     describe('override log prefix Spec', function () {
@@ -35,17 +47,16 @@ describe('Provider Func Spec', function () {
         });
 
         it('should not return default formatter if function is passed', function () {
-            var format = "<><><><>";
-
-            overrideLogPrefix(function () {
-                return format;
+            overrideLogPrefix(function (className) {
+                return "<><><><>";
             });
-            expect(getLogPrefix()).toBe(format);
+            expect(getLogPrefix()).toBe("<><><><>");
             expect(getLogPrefix()).not.toBe(sDateFormat);
         });
     });
 
     describe('restrictLogMethods Spec', function () {
+
         var logMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
         it('should return default formatter if function is not passed', function () {

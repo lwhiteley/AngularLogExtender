@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.c78c5e2
+ * Log Unobtrusive Extension v0.0.3-sha.8d61825
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -51,7 +51,14 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
         };
-
+        /**
+         * checks if a variable is of @type {boolean}
+         * @param value
+         * @returns {boolean}
+         */
+        var isBoolean = function(value) {
+            return typeof value == 'boolean';
+        };
         /**
          * This method checks if a variable is of type {string}
          * and if the string is not an empty string
@@ -309,7 +316,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
          * @param flag
          */
         var enableLogging = function(flag) {
-            enableGlobally = flag;
+            enableGlobally = isBoolean(flag) ? flag : false;
         };
 
 
@@ -334,7 +341,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.c78c5e2',
+                version: '0.0.3-sha.8d61825',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
