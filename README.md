@@ -34,16 +34,44 @@ app.config([ 'logExProvider', function(logExProvider) {
     logExProvider.enableLogging(true);
 }]);
 
-```
-######Step 3. Print logs from any component (Controller, Directive, Service etc.)
-Sample - Logging from a Controller
+######Step 3. Restrict Logging to specific methods
+
+Add the logExProvider dependency to your AngularJS app to configure logging. Pass an array with the methods that should be enabled to the `restrictLogMethods` method
+
 ```javascript
-app.controller('CoreController', ['$scope','$log', function($scope, $log) {
-      $log.log("Simple Log Extender Example"); 
+app.config([ 'logExProvider', function(logExProvider) {
+    logExProvider.restrictLogMethods(['log', 'info']);
+}]);
+```
+######Step 4. Restrict Logging to specific methods
+
+Add the logExProvider dependency to your AngularJS app to configure logging. Pass an array with the methods that should be enabled to the `restrictLogMethods` method
+
+```javascript
+app.config([ 'logExProvider', function(logExProvider) {
+    logExProvider.restrictLogMethods(['log', 'info']);
 }]);
 ```
 
-######Step 4. Load the web page and look in the Developer Console
+######Step 5. Override Log Prefix - Log Prefix Formatter
+
+Add the logExProvider dependency to your AngularJS app to configure logging. Pass a custom function that accepts a `className` param to the `overrideLogPrefix` method
+
+```javascript
+app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+    logExProvider.overrideLogPrefix(function (className) {
+        var $injector = angular.injector([ 'ng' ]);
+        var $filter = $injector.get( '$filter' );
+        var formatMessage = "";
+        var separator = " >> ";
+        var format = "MMMM-dd-yyyy-h:mm:ssa";
+        var now = $filter('date')(new Date(), format);
+        return "" + now + (className === null ? "" : "::" + className) + separator;
+    });
+}]);
+```
+
+######Step 6. Load the web page and look in the Developer Console
 Sample Output
 ```
 Dec-08-2013-12:50:52PM >>  CONFIG: LOGGING ENABLED GLOBALLY
