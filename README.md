@@ -33,6 +33,7 @@ Add the logExProvider dependency to your AngularJS app to configure logging. Pas
 app.config([ 'logExProvider', function(logExProvider) {
     logExProvider.enableLogging(true);
 }]);
+```
 
 ######Step 3. Restrict Logging to specific methods
 
