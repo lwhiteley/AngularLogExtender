@@ -1,5 +1,7 @@
+        // Creates an injector function that can be used for retrieving services as well as for dependency injection
         var $injector = angular.injector([ 'ng' ]);
 
+        // Used the $injector defined to retrieve the $filterProvider
         var $filter = $injector.get( '$filter' );
 
         var enableGlobally = false;

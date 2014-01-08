@@ -35,16 +35,17 @@ describe('Provider Func Spec', function () {
         });
 
         it('should not return default formatter if function is passed', function () {
-            overrideLogPrefix(function (className) {
-                return "<><><><>";
+            var format = "<><><><>";
+
+            overrideLogPrefix(function () {
+                return format;
             });
-            expect(getLogPrefix()).toBe("<><><><>");
+            expect(getLogPrefix()).toBe(format);
             expect(getLogPrefix()).not.toBe(sDateFormat);
         });
     });
 
     describe('restrictLogMethods Spec', function () {
-
         var logMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
         it('should return default formatter if function is not passed', function () {
