@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.c78c5e2
+ * Log Unobtrusive Extension v0.0.3-sha.e1ea9a6
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -312,14 +312,6 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
             enableGlobally = flag;
         };
 
-
-        var restrictLogMethods = function(arrMethods) {
-            if (angular.isArray(arrMethods)) {
-                // TODO: should do validation on this to ensure valid properties are passed in
-                allowedMethods = arrMethods;
-            }
-        };
-
         var overrideLogPrefix = function(logPrefix) {
             if (angular.isFunction(logPrefix)) {
                 // TODO : Validation of the function to ensure it's of the correct format etc
@@ -334,9 +326,8 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.c78c5e2',
+                version: '0.0.3-sha.e1ea9a6',
                 enableLogging: enableLogging,
-                restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
             };
         };
@@ -351,10 +342,5 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
          * Modify the default log prefix
          **/
         this.overrideLogPrefix = overrideLogPrefix;
-
-        /**
-         * Configure which log functions can be exposed at runtime
-         */
-        this.restrictLogMethods = restrictLogMethods;
     }
 ]);
