@@ -10,7 +10,7 @@ describe('Provider Func Spec', function () {
             expect(enableGlobally).toBe(true);
         });
 
-        it('should set enableGlobally to true when input flag is falsy', function () {
+        it('should set enableGlobally to false when input flag is falsy', function () {
             enableLogging(false);
             expect(enableGlobally).toBe(false);
         });
