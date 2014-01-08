@@ -60,6 +60,14 @@ app.config([ 'logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods(['log', 'info']);
 }]);
 ```
+OR constants can be used instead of typing the strings
+
+```javascript
+app.config([ 'logExProvider', function(logExProvider) {
+    var lm = logExProvider.$get().logMethods;
+    logExProvider.restrictLogMethods([ lm.log, lm.info ]);
+}]);
+```
 
 ######2. Override Log Prefix - Log Prefix Formatter
 
