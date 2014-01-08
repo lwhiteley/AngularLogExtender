@@ -6,16 +6,26 @@
 describe('Log Object Create Method Spec', function () {
 
 
-    it('should return an empty resultSet if an empty method array is passed', function () {
+    it('should return an object of noop if an empty method array is passed', function () {
         var aMethods = [],
-            myLog = {};
-        expect(createLogObj(myLog, aMethods)).toEqual({});
+            myLog = {},
+            resultSet = createLogObj(myLog, aMethods);
+
+        delete resultSet.getInstance;
+        angular.forEach(resultSet, function (key) {
+            expect(key).toEqual(angular.noop);
+        });
     });
 
-    it('should return an empty resultSet if a null method array is passed', function () {
+    it('should return an object of noop if a null method array is passed', function () {
         var aMethod = null,
-            mYLog = {};
-        expect(createLogObj(mYLog, aMethod)).toEqual({});
+            mYLog = {},
+            resultSet = createLogObj(mYLog, aMethod);
+
+        delete resultSet.getInstance;
+        angular.forEach(resultSet, function (key) {
+            expect(key).toEqual(angular.noop);
+        });
     });
 
     it('should return resultSet with method array objects', function () {

@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.3-sha.74a6737
+ * Log Unobtrusive Extension v0.0.3-sha.280fc13
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -26,12 +26,8 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
 
         var enableGlobally = false;
 
-        /**
-         * original $log methods exposed after extended $log instance is set
-         * @type {string[]}
-         */
-        var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
-
+        // default log methods available
+        var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
         /**
          * publicly allowed methods for the extended $log object.
          * this give the developer the option of using special features
@@ -39,7 +35,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
          * More Options to come.
          * @type {string[]}
          */
-        var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+        var allowedMethods = defaultLogMethods;
 
         /**
          * Trims whitespace at the beginning and/or end of a string
@@ -150,6 +146,17 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                         }
                     };
 
+                    var arrToObject = function(arr) {
+                        var result = {
+                            getInstance: angular.noop
+                        };
+                        angular.forEach(arr, function(value) {
+                            result[value] = angular.noop;
+                        });
+
+                        return result;
+                    };
+
                     /**
                      * This generic method builds $log objects for different uses around the module
                      * and AngularJS app. It gives the capability to specify which methods to expose
@@ -161,17 +168,22 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                      * @returns {{}}
                      */
                     var createLogObj = function(oSrc, aMethods, /**{Function=}*/ func, /**{*Array=}*/ aParams) {
-                        var resultSet = {};
-                        angular.forEach(aMethods, function(value) {
+                        var resultSet = {},
+                            oMethods = arrToObject(aMethods);
+                        angular.forEach(defaultLogMethods, function(value) {
+                            var res;
                             if (angular.isDefined(aParams)) {
                                 var params = [];
                                 angular.copy(aParams, params);
                                 params.unshift(oSrc[value]);
-                                resultSet[value] = func.apply(null, params);
+                                res = func.apply(null, params);
                             } else {
-                                resultSet[value] = oSrc[value];
+                                res = oSrc[value];
                             }
+                            //        console.log(angular.isUndefined(oMethods[value]), oMethods);
+                            resultSet[value] = angular.isUndefined(oMethods[value]) ? angular.noop : res;
                         });
+                        //    console.log(resultSet);
                         return resultSet;
                     };
                     /**
@@ -210,7 +222,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                          * @type {*}
                          * @private
                          */
-                        var _$log = createLogObj($log, logMethods);
+                        var _$log = createLogObj($log, allowedMethods);
 
 
                         /**
@@ -231,7 +243,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                             var useOverride = processUseOverride(override);
                             override = processOverride(override);
                             printOverrideLogs(_$log, useOverride, override, className, enabled);
-                            return createLogObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
+                            return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride]);
                         };
 
 
@@ -243,7 +255,7 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
                          * @param $log
                          * @param function (with transformation rules)
                          **/
-                        angular.extend($log, createLogObj($log, logMethods, prepareLogFn, [null, false, false]));
+                        angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false]));
 
                         /**
                          * Extend the $log with the {@see getInstance} method
@@ -310,6 +322,12 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
             enableGlobally = isBoolean(flag) ? flag : false;
         };
 
+        var restrictLogMethods = function(arrMethods) {
+            if (angular.isArray(arrMethods)) {
+                allowedMethods = arrMethods;
+            }
+        };
+
         var overrideLogPrefix = function(logPrefix) {
             if (angular.isFunction(logPrefix)) {
                 // TODO : Validation of the function to ensure it's of the correct format etc
@@ -324,8 +342,9 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.3-sha.74a6737',
+                version: '0.0.3-sha.280fc13',
                 enableLogging: enableLogging,
+                restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
             };
         };
@@ -340,5 +359,10 @@ angular.module("log.extension.uo", []).provider('logEx', ['$provide',
          * Modify the default log prefix
          **/
         this.overrideLogPrefix = overrideLogPrefix;
+
+        /**
+         * Configure which log functions can be exposed at runtime
+         */
+        this.restrictLogMethods = restrictLogMethods;
     }
 ]);

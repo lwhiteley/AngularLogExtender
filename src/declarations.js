@@ -6,12 +6,8 @@
 
         var enableGlobally = false;
 
-        /**
-         * original $log methods exposed after extended $log instance is set
-         * @type {string[]}
-         */
-        var logMethods = ['log', 'info', 'warn', 'debug', 'error'];
-
+        // default log methods available
+        var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
         /**
          * publicly allowed methods for the extended $log object.
          * this give the developer the option of using special features
@@ -19,7 +15,7 @@
          * More Options to come.
          * @type {string[]}
          */
-        var allowedMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+        var allowedMethods = defaultLogMethods;
 
         /**
          * Trims whitespace at the beginning and/or end of a string

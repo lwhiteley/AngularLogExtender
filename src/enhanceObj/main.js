@@ -53,6 +53,22 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
 };
 
 /**
+ * Converts an array to a object literal
+ * @param arr
+ * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
+ */
+var arrToObject = function(arr) {
+    var result = {};
+    if(angular.isArray(arr)) {
+        result = { getInstance:angular.noop };
+        angular.forEach(arr, function(value) {
+            result[value] = angular.noop;
+        });
+    }
+    return result;
+};
+
+/**
  * This generic method builds $log objects for different uses around the module 
  * and AngularJS app. It gives the capability to specify which methods to expose
  * when using the $log object in different sections of the app.
@@ -63,16 +79,21 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
  * @returns {{}}
  */
 var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/aParams) {
-    var resultSet = {};
-    angular.forEach(aMethods, function (value) {
+    var resultSet = {},
+        oMethods = arrToObject(aMethods);
+    angular.forEach(defaultLogMethods, function (value) {
+        var res;
         if (angular.isDefined(aParams)) {
             var params = [];
             angular.copy(aParams, params);
             params.unshift(oSrc[value]);
-            resultSet[value] = func.apply(null, params);
+            res = func.apply(null, params);
         } else {
-            resultSet[value] = oSrc[value];
+            res = oSrc[value];
         }
+//        console.log(angular.isUndefined(oMethods[value]), oMethods);
+        resultSet[value] = angular.isUndefined(oMethods[value]) ? angular.noop : res;
     });
+//    console.log(resultSet);
     return resultSet;
 };

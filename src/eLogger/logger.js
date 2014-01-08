@@ -27,7 +27,7 @@ var prepareLogFn = function (logFn, className, override, useOverride) {
  * @type {*}
  * @private
  */
-var _$log = createLogObj($log, logMethods);
+var _$log = createLogObj($log, allowedMethods);
 
 
 /**
@@ -48,5 +48,5 @@ var getInstance = function (/*{string=}**/className, /**{boolean=}*/override) {
     var useOverride = processUseOverride(override);
     override = processOverride(override);
     printOverrideLogs(_$log, useOverride, override, className, enabled);
-    return createLogObj(_$log, logMethods, prepareLogFn, [className, override, useOverride]);
+    return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride]);
 };

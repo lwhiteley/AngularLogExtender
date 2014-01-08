@@ -56,4 +56,19 @@ describe('Provider Func Spec', function () {
             expect(getLogPrefix()).not.toBe(sDateFormat);
         });
     });
+
+    describe('restrictLogMethods Spec', function () {
+        var logMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+
+        it('should return default formatter if function is not passed', function () {
+            restrictLogMethods();
+            expect(allowedMethods).toEqual(logMethods);
+        });
+
+        it('should not return default formatter if function is passed', function () {
+            restrictLogMethods(['log', 'info']);
+            expect(allowedMethods).not.toBe(logMethods);
+        });
+    });
+
 });

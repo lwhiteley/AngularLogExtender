@@ -7,6 +7,7 @@
             name: '%APP_NAME%',
             version: '%VERSION%',
             enableLogging:enableLogging,
+            restrictLogMethods:restrictLogMethods,
             overrideLogPrefix:overrideLogPrefix
         };
     };
@@ -21,4 +22,9 @@
     * Modify the default log prefix
     **/
     this.overrideLogPrefix = overrideLogPrefix;
+
+    /**
+    * Configure which log functions can be exposed at runtime
+    */
+    this.restrictLogMethods = restrictLogMethods;
 }]);
