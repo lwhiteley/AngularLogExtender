@@ -58,16 +58,8 @@ Dec-08-2013-12:50:52PM >>  Simple Log Extender Example
 Add the logExProvider dependency to your AngularJS app to configure logging. Pass an array with the methods that should be enabled to the `restrictLogMethods` method. `$warn, $debug, $error` messages won't be displayed in the console
 
 ```javascript
-app.config([ 'logExProvider', function(logExProvider) {
+app.config(['logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods(['log', 'info']);
-}]);
-```
-OR constants can be used instead of typing the strings
-
-```javascript
-app.config([ 'logExProvider', function(logExProvider) {
-    var lm = logExProvider.$get().logMethods;
-    logExProvider.restrictLogMethods([ lm.log, lm.info ]);
 }]);
 ```
 ######2. Override Log Prefix - Log Prefix Formatter
@@ -75,7 +67,7 @@ app.config([ 'logExProvider', function(logExProvider) {
 Add the logExProvider dependency to your AngularJS app to configure logging. Pass a custom function that accepts a `className` param to the `overrideLogPrefix` method
 
 ```javascript
-app.config([ 'logExProvider', function(logExProvider) {
+app.config(['logExProvider', function(logExProvider) {
     logExProvider.overrideLogPrefix(function (className) {
         var $injector = angular.injector([ 'ng' ]);
         var $filter = $injector.get( '$filter' );
@@ -160,6 +152,17 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
 ```
 Dec-08-2013-1:20:56PM >> [OVERRIDE] LOGGING ENABLED - $log enabled for this instance
 Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
+```
+
+###Use Case 4: Configure only specific methods to print to the console
+This scenario is helpful when you want to only allow specific types of log messages to be sent to the console in a 
+particular environment. For eg. Say we want to only allow error logs to seen in production, the following configuration will
+produce this result.
+#####Eg 1.
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    logExProvider.restrictLogMethods(['error']);
+}]);
 ```
 ####NB.
 These examples only show the use of $log.log(), however, the other $log methods were left in tact and can be used as well.
