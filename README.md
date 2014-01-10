@@ -161,6 +161,7 @@ produce this result.
 #####Eg 1.
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
+    logExProvider.enableLogging(true);
     logExProvider.restrictLogMethods(['error']);
 }]);
 ```
