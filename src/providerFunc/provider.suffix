@@ -6,7 +6,6 @@
         return {
             name: '%APP_NAME%',
             version: '%VERSION%',
-            logMethods: lm,
             enableLogging: enableLogging,
             restrictLogMethods: restrictLogMethods,
             overrideLogPrefix: overrideLogPrefix
@@ -28,4 +27,5 @@
     * Configure which log functions can be exposed at runtime
     */
     this.restrictLogMethods = restrictLogMethods;
+    
 }]);
