@@ -156,7 +156,7 @@ Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 
 ###Use Case 4: Configure only specific methods to print to the console
 This scenario is helpful when you want to only allow specific types of log messages to be sent to the console in a 
-particular environment. For eg. Say we want to only allow error logs to seen in production, the following configuration will
+particular environment. For eg. Say we want to only allow error logs to be seen in production, then the following configuration will
 produce this result.
 #####Eg 1.
 ```javascript
