@@ -27,7 +27,7 @@ Feel Free to make your own contributions to this module so we can make it better
 
 ######Step 1. Add Module Dependency
 ```javascript
-var app = angular.module('myAngularApp', ['log.extension.uo']);
+var app = angular.module('myAngularApp', ['log.ex.uo']);
 ```
 ######Step 2. Enable Debugging Globally to see logs
 
