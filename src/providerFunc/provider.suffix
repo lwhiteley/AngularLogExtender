@@ -6,7 +6,7 @@
         return {
             name: '%APP_NAME%',
             version: '%VERSION%',
-            logMethods: _logMethods,
+            logMethods: lm,
             enableLogging: enableLogging,
             restrictLogMethods: restrictLogMethods,
             overrideLogPrefix: overrideLogPrefix
