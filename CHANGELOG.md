@@ -1,10 +1,11 @@
 
-0.0.4 / 2014-01-10 
+0.0.4-sha.a415250 / 2014-01-10 
 ==================
 
- * Merge branch 'master' of github.com:lwhiteley/AngularLogExtender
- * release 0.0.4
+ * remove unecessary declaration
  * update submodule
+ * snapshot release
+ * release 0.0.4
 
 0.0.3-sha.665adf9 / 2014-01-10 
 ==================
