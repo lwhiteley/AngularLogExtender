@@ -1,28 +1,26 @@
 {
-  "name": "angular-logex",
-  "version": "0.0.6",
-  "main": "./dist/log-ex-unobtrusive.js",
-  
-  "dependencies": {
-    "angular": ">= 1.2.8"
+    "name": "angular-logex",
+    "version": "0.0.5-sha.89932e5",
+    "main": "./dist/log-ex-unobtrusive.js",
+    "dependencies": {
+        "angular": ">= 1.2.8"
     },
-    
-  "ignore": [
-    "**/.*",
-    "_*",
-    "node_modules",
-    "config",
-    "libs",
-    "test",
-    "sample_app",
-    "DEVELOP.MD",
-    "CHANGELOG.md",
-    "Gruntfile.js",
-    "browserstack.json",
-    "composer.json",
-    "package.json",
-    "src",
-    "coverage",
-    ".*"
-  ]
+    "ignore": [
+        "**/.*",
+        "_*",
+        "node_modules",
+        "config",
+        "libs",
+        "test",
+        "sample_app",
+        "DEVELOP.MD",
+        "CHANGELOG.md",
+        "Gruntfile.js",
+        "browserstack.json",
+        "composer.json",
+        "package.json",
+        "src",
+        "coverage",
+        ".*"
+    ]
 }

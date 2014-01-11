@@ -115,6 +115,14 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('bower_update', 'Update bower version', function (arg1) {
+        if(arguments.length === 0) {
+            util.updateBowerVersion(APP_VERSION.full);
+        }
+        else {
+            util.updateBowerVersion(arg1);
+        }
+    });
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -124,7 +132,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.registerTask('test', ['jshint', 'karma:unit']);
-    grunt.registerTask('dist', ['concat', 'jsbeautifier']);
+    grunt.registerTask('dist', ['concat', 'jsbeautifier', 'bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('default', ['jshint', 'karma:coverage', 'coveralls']);
