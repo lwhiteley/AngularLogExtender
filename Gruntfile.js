@@ -112,6 +112,11 @@ module.exports = function (grunt) {
             changelog: {
                 command: 'git changelog --tag <%= APP_VERSION.full %>'
             }
+        },
+        jsonlint: {
+            sample: {
+                src: [ 'package.json', 'bower.json' ]
+            }
         }
     });
 
@@ -123,6 +128,8 @@ module.exports = function (grunt) {
             util.updateBowerVersion(arg1);
         }
     });
+
+    grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -131,8 +138,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-jsbeautifier');
-    grunt.registerTask('test', ['jshint', 'karma:unit']);
-    grunt.registerTask('dist', ['concat', 'jsbeautifier', 'bower_update']);
+    grunt.registerTask('test', ['jshint', 'jsonlint', 'karma:unit']);
+    grunt.registerTask('dist', ['test', 'concat', 'jsbeautifier', 'bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('default', ['jshint', 'karma:coverage', 'coveralls']);
