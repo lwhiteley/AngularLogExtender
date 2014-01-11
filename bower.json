@@ -15,7 +15,7 @@
     "libs",
     "test",
     "sample_app",
-    "CNAME",
+    "DEVELOP.MD",
     "CHANGELOG.md",
     "Gruntfile.js",
     "browserstack.json",
