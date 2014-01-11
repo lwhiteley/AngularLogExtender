@@ -5,8 +5,8 @@ describe('arrayToObject Spec', function () {
 
     it('should return an object literal with array props as keys', function () {
         var params = ['log', 'info', 'warn', 'debug'],
-            vals = arrToObject(params);
+            values = arrToObject(params);
         params.unshift('getInstance');
-        expect(Object.keys(vals)).toEqual(params);
+        expect(Object.keys(values)).toEqual(params);
     });
 });
