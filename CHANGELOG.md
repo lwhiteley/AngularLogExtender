@@ -1,7 +1,29 @@
 
-0.0.3-sha.f6846fb / 2014-01-07 
+0.0.3-sha.665adf9 / 2014-01-10 
 ==================
 
+ * Update Documentation
+ * Update Documentation
+ * Update Documentation
+ * Update Documentation
+ * Update Documentation
+ * Remove constant reference
+ * Shorten module name to log.ex.uo
+ * Replace plain text with constant references
+ * Update documentation to give a more accurate description of the module
+ * Update Documentation
+ * Update Documentation to showcase added configurations
+ * Update Documentation to showcase constants
+ * Update Documentation and add logMethod constant for external use
+ * updated config for lcov
+ * more context
+ * new dist
+ * remove readme dup
+ * fixed readme issue
+ * updated documentation
+ * update submodule
+ * update submodule
+ * generated changelog generated distributed version
  * added the functionality for supporting toggling of methods
  * remove allowedMethods
  * remove allowMethods override
