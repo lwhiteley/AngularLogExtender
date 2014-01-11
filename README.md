@@ -185,7 +185,6 @@ These are:
 ```
 ##Future Implementations
 
-1. More configurations are being considered such as disabling timestamp to offer more customizations for a developers needs
-2. remove the need to reassign $log instance
+1. remove the need to reassign $log instance
 
 

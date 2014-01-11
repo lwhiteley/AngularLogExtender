@@ -1,4 +1,19 @@
 
+0.0.6-sha.c52a8fd / 2014-01-11 
+==================
+
+ * added jsonlint
+
+0.0.5-sha.329140e / 2014-01-11 
+==================
+
+ * Update Documentation to remove future implementation that was achieved
+ * connect bower to dist generation
+ * Update Documentation to showcase upcoming bower support
+ * Update bower ignore list
+ * Add bower support
+ * release 0.0.5
+
 0.0.4-sha.a415250 / 2014-01-10 
 ==================
 

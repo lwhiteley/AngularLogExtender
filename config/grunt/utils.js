@@ -41,5 +41,10 @@ module.exports = {
             var hash = shell.exec('git rev-parse --short HEAD', {silent: true}).output.replace('\n', '');
             return 'sha.'+hash;
         }
+    },
+    updateBowerVersion : function (arg) {
+        var bower = JSON.parse(fs.readFileSync('bower.json', 'UTF-8'));
+        bower.version = arg;
+        fs.writeFileSync('bower.json', JSON.stringify(bower, null, 4), 'UTF-8');
     }
 };
