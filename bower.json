@@ -1,0 +1,28 @@
+{
+  "name": "angular-log-ex",
+  "version": "0.0.5",
+  "main": "./dist/log-ex-unobtrusive.js",
+  
+  "dependencies": {
+    "angular": ">= 1.2.8"
+    },
+    
+  "ignore": [
+    "**/.*",
+    "_*",
+    "node_modules",
+    "config",
+    "libs",
+    "test",
+    "sample_app",
+    "CNAME",
+    "CHANGELOG.md",
+    "Gruntfile.js",
+    "browserstack.json",
+    "composer.json",
+    "package.json",
+    "src",
+    "coverage",
+    ".*"
+  ]
+}
