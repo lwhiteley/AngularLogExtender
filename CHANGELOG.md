@@ -1,4 +1,12 @@
 
+0.0.4-sha.a415250 / 2014-01-10 
+==================
+
+ * remove unecessary declaration
+ * update submodule
+ * snapshot release
+ * release 0.0.4
+
 0.0.3-sha.665adf9 / 2014-01-10 
 ==================
 
