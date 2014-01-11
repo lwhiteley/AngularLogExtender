@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.4-sha.d4c9720
+ * Log Unobtrusive Extension v0.0.4-sha.80718b1
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -26,16 +26,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         var enableGlobally = false;
 
-        // methods as object [constant]
-        var lm = {
-            log: 'log',
-            info: 'info',
-            warn: 'warn',
-            error: 'error',
-            debug: 'debug'
-        };
         // default log methods available
-        var defaultLogMethods = [lm.log, lm.info, lm.warn, lm.debug, lm.error, 'getInstance'];
+        var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
         /**
          * publicly allowed methods for the extended $log object.
@@ -359,7 +351,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.4-sha.d4c9720',
+                version: '0.0.4-sha.80718b1',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

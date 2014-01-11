@@ -6,16 +6,8 @@
 
         var enableGlobally = false;
 
-        // methods as object [constant]
-        var lm = {
-            log: 'log',
-            info: 'info',
-            warn: 'warn',
-            error: 'error',
-            debug: 'debug'
-        };
         // default log methods available
-        var defaultLogMethods = [lm.log, lm.info, lm.warn, lm.debug, lm.error, 'getInstance'];
+        var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
        
         /**
          * publicly allowed methods for the extended $log object.
