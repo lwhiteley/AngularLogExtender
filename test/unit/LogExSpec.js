@@ -104,7 +104,7 @@ describe('$log: logEx unit tests', function () {
             logEx = exposeSafeLog(ngLog);
         });
 
-        it('should return an extended log object when the orignal angular log is passed with getInstance undefined', function () {
+        it('should return an extended log object when the original angular log is passed with getInstance undefined', function () {
             expect(logEx).toBeDefined();
             expect(logEx.getInstance).toBeUndefined();
             expect(logEx.log).toBeDefined();
@@ -113,10 +113,9 @@ describe('$log: logEx unit tests', function () {
             expect(logEx.info).toBeDefined();
             expect(logEx.error).toBeDefined();
             expect(logEx.isEnabled).toBeFalsy();
-            expect(logEx.setGlobalDebugFlag).toBeFalsy();
         });
 
-        it('should return an extended log object when the orignal angular log is passed with getInstance defined', function () {
+        it('should return an extended log object when the original angular log is passed with getInstance defined', function () {
             angular.extend(logEx, {
                 getInstance : function () {
                     return "something";
@@ -130,7 +129,6 @@ describe('$log: logEx unit tests', function () {
             expect(logEx.info).toBeDefined();
             expect(logEx.error).toBeDefined();
             expect(logEx.isEnabled).toBeFalsy();
-            expect(logEx.setGlobalDebugFlag).toBeFalsy();
         });
 
     });
@@ -154,7 +152,7 @@ describe('$log: logEx unit tests', function () {
         });
 
         describe('prepareLogFn function Spec - global enabled flag is false', function () {
-            it('should not callapply when no params are sent', function () {
+            it('should not call apply when no params are sent', function () {
                 var exFn = prepareLogFn(null);
                 exFn();
                 expect(logFn.apply).not.toHaveBeenCalled();
