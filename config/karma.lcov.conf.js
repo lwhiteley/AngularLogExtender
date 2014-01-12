@@ -1,28 +1,18 @@
+var files = require('./files');
+
 module.exports = function (config) {
     config.set({
         basePath: '../',
         frameworks: ['jasmine'],
-        files: [
-            'libs/angular/angular.js',
-            'libs/angular/angular-mocks.js',
-            'libs/angular/datespy.js',
-            'test/helpers/globals.js',
-            'src/declarations.js',
-            'src/enhanceObj/*.js',
-            'src/eLogger/logger.js',
-            'src/eLogger/globals.js',
-            'src/extras/*.js',
-            'src/providerFunc/*.js',
-            'test/unit/*.js'
-        ],
-        exclude : ['src/enhanceObj/globals.js'],
+        files: files.getAngularFiles('1.2').concat(files.libs, files.tests('1.2')),
+        exclude : files.exclusions,
         autoWatch: true,
         browsers: ['Chrome'],
         junitReporter: {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
         },
-        reporters: ['dots', 'coverage'],
+        reporters: files.reporters,
         preprocessors: {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries

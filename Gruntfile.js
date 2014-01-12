@@ -1,4 +1,5 @@
 var util = require('./config/grunt/utils.js');
+var files = require('./config/files');
 
 module.exports = function (grunt) {
 
@@ -69,7 +70,34 @@ module.exports = function (grunt) {
                 singleRun: true,
                 browsers: ['PhantomJS']
             },
-            unit: {
+            '1.0.x': {
+                options :  {
+                    files: files.getAngularFiles('1.0').concat(files.libs, files.tests('1.0'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            '1.1.x': {
+                options :  {
+                    files: files.getAngularFiles('1.1').concat(files.libs, files.tests('1.1'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            '1.1.2': {
+                options :  {
+                    files: files.getAngularFiles('1.1.2').concat(files.libs, files.tests('1.1.2'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            '1.2.x': {
+                options :  {
+                    files: files.getAngularFiles('1.2').concat(files.libs, files.tests('1.2'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            latest: {
+                options :  {
+                    files: files.getAngularFiles().concat(files.libs, files.tests('1.2'))
+                },
                 configFile: 'config/karma.conf.js'
             },
             coverage: {
@@ -138,9 +166,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-jsbeautifier');
-    grunt.registerTask('test', ['jshint', 'jsonlint', 'karma:unit']);
+    grunt.registerTask('test', ['jshint', 'jsonlint', 'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest']);
     grunt.registerTask('dist', ['test', 'concat', 'jsbeautifier', 'bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
-    grunt.registerTask('default', ['jshint', 'karma:coverage', 'coveralls']);
+    grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
 };
