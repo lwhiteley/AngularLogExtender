@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.af8bd36
+ * Log Unobtrusive Extension v0.0.6-sha.dff2983
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -38,6 +38,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var allowedMethods = defaultLogMethods;
 
+
+        var colorifySupportedBrowsers = ['chrome'];
+
         /**
          * Trims whitespace at the beginning and/or end of a string
          * @param value - string to be trimmed
@@ -64,6 +67,24 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var isValidString = function(value) {
             return (angular.isString(value) && trimString(value) !== "");
+        };
+
+        var isSubString = function(sub, full) {
+            if (angular.isString(sub) && angular.isString(full)) {
+                if (full.toLowerCase().indexOf(sub.toLowerCase()) != -1) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        var isColorifySupported = function(userAgent) {
+            for (var i = 0; i < colorifySupportedBrowsers.length; i++) {
+                if (isSubString(colorifySupportedBrowsers[i], userAgent)) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         /**
@@ -351,7 +372,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.af8bd36',
+                version: '0.0.6-sha.dff2983',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
