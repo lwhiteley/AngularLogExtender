@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.dff2983
+ * Log Unobtrusive Extension v0.0.6-sha.5998283
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -24,7 +24,11 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         // Used the $injector defined to retrieve the $filterProvider
         var $filter = $injector.get('$filter');
 
+        // used to enable logging globally
         var enableGlobally = false;
+
+        // current browser user agent
+        var userAgent = navigator.userAgent;
 
         // default log methods available
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
@@ -39,7 +43,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var allowedMethods = defaultLogMethods;
 
 
-        var colorifySupportedBrowsers = ['chrome'];
+        var colorifySupportedBrowsers = ['chrome', 'firefox'];
 
         /**
          * Trims whitespace at the beginning and/or end of a string
@@ -69,6 +73,11 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return (angular.isString(value) && trimString(value) !== "");
         };
 
+        /**
+         * checks if @param1 is a substring of @param2
+         * @param sub
+         * @param full
+         **/
         var isSubString = function(sub, full) {
             if (angular.isString(sub) && angular.isString(full)) {
                 if (full.toLowerCase().indexOf(sub.toLowerCase()) != -1) {
@@ -78,13 +87,29 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return false;
         };
 
-        var isColorifySupported = function(userAgent) {
+        /**
+         * checks if the browsr is a part of the supported browser list
+         * @param userAgent
+         **/
+        var isColorifySupported = function() {
             for (var i = 0; i < colorifySupportedBrowsers.length; i++) {
                 if (isSubString(colorifySupportedBrowsers[i], userAgent)) {
                     return true;
                 }
             }
             return false;
+        };
+
+        /**
+         * takes a string a returns an array as parameters
+         * if browser is supported
+         * @param message
+         * @param colorCSS
+         **/
+        var colorify = function(message, colorCSS) {
+            var isSupported = isColorifySupported(navigator.userAgent),
+                canProcess = isSupported && angular.isString(colorCSS) && angular.isString(message);
+            return canProcess ? (["%c" + message, colorCSS]) : [message];
         };
 
         /**
@@ -372,7 +397,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.dff2983',
+                version: '0.0.6-sha.5998283',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

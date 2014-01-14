@@ -4,7 +4,11 @@
         // Used the $injector defined to retrieve the $filterProvider
         var $filter = $injector.get( '$filter' );
 
+        // used to enable logging globally
         var enableGlobally = false;
+
+        // current browser user agent
+        var userAgent = navigator.userAgent;
 
         // default log methods available
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
@@ -19,7 +23,7 @@
         var allowedMethods = defaultLogMethods;
 
         
-        var colorifySupportedBrowsers = ['chrome'];  
+        var colorifySupportedBrowsers = ['chrome', 'firefox'];  
 
         /**
          * Trims whitespace at the beginning and/or end of a string
@@ -47,8 +51,13 @@
          */
         var isValidString = function (value) {
             return (angular.isString(value) && trimString(value) !== "");
-        }; 
-    
+        };
+
+       /**
+       * checks if @param1 is a substring of @param2
+       * @param sub 
+       * @param full 
+       **/
        var isSubString = function(sub, full){
            if(angular.isString(sub) && angular.isString(full)){
               if(full.toLowerCase().indexOf(sub.toLowerCase()) != -1){
@@ -57,14 +66,30 @@
            }
            return false;
         };
-           
-       var isColorifySupported = function(userAgent){
+
+       /**
+       * checks if the browsr is a part of the supported browser list
+       * @param userAgent 
+       **/
+       var isColorifySupported = function(){
            for (var i=0; i < colorifySupportedBrowsers.length; i++){ 
                if(isSubString(colorifySupportedBrowsers[i], userAgent)){
                   return true;
                }
             }
            return false;
+        };
+
+        /**
+       * takes a string a returns an array as parameters
+       * if browser is supported
+       * @param message 
+       * @param colorCSS 
+       **/
+        var colorify  = function( message, colorCSS ){
+            var isSupported   = isColorifySupported(navigator.userAgent),
+                canProcess = isSupported && angular.isString(colorCSS) && angular.isString(message);
+            return canProcess ? ( ["%c" + message, colorCSS] ) :  [message] ;
         };
 
         /**
