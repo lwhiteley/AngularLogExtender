@@ -48,7 +48,7 @@ describe('util Functions spec', function () {
             expect(result.length).toBe(1);
         });
         
-        it('should return array with 2 items when browser is not supported', function () {
+        it('should return array with 2 items when browser is supported and params are valid', function () {
             var message = 'chromeAgent';
             var colorCSS = 'background: #222; color: #bada55';
             userAgent = chromeAgent;
