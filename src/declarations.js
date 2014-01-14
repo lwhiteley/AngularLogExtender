@@ -14,7 +14,7 @@
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
        
         // list of browsers that support colorify
-        var colorifySupportedBrowsers = ['chrome'];  
+        var colorifySupportedBrowsers = ['chrome', 'firefox'];  
 
         /**
          * publicly allowed methods for the extended $log object.
@@ -92,12 +92,13 @@
         /**
        * takes a string a returns an array as parameters
        * if browser is supported
+       * expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
        * @param message 
        * @param colorCSS 
        **/
         var colorify  = function( message, colorCSS ){
             var isSupported   = isColorifySupported(navigator.userAgent),
-                canProcess = isSupported && angular.isString(colorCSS) && angular.isString(message);
+                canProcess = isSupported && angular.isString(colorCSS) && isSubString(':', colorCSS) && angular.isString(message);
             return canProcess ? ( ["%c" + message, colorCSS] ) :  [message] ;
         };
 

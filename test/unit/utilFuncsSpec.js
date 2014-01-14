@@ -39,6 +39,15 @@ describe('util Functions spec', function () {
             expect(result.length).toBe(1);
         });
         
+        it('should return array with param1 as arg 0 when no colons are in css string', function () {
+            var message = 3;
+            var colorCSS = 'null';
+            var result = colorify(message, colorCSS);
+            expect(angular.isArray(result)).toBe(true);
+            expect(result[0]).toEqual(message);
+            expect(result.length).toBe(1);
+        });
+        
         it('should return array with param1 as only item in array when browser is not supported', function () {
             var message = 'chromeAgent';
             var colorCSS = 'background: #222; color: #bada55';

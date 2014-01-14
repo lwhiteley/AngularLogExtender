@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.2749268
+ * Log Unobtrusive Extension v0.0.6-sha.05a1033
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -34,7 +34,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
         // list of browsers that support colorify
-        var colorifySupportedBrowsers = ['chrome'];
+        var colorifySupportedBrowsers = ['chrome', 'firefox'];
 
         /**
          * publicly allowed methods for the extended $log object.
@@ -112,12 +112,13 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         /**
          * takes a string a returns an array as parameters
          * if browser is supported
+         * expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
          * @param message
          * @param colorCSS
          **/
         var colorify = function(message, colorCSS) {
             var isSupported = isColorifySupported(navigator.userAgent),
-                canProcess = isSupported && angular.isString(colorCSS) && angular.isString(message);
+                canProcess = isSupported && angular.isString(colorCSS) && isSubString(':', colorCSS) && angular.isString(message);
             return canProcess ? (["%c" + message, colorCSS]) : [message];
         };
 
@@ -406,7 +407,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.2749268',
+                version: '0.0.6-sha.05a1033',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
