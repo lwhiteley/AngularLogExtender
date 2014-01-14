@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.5998283
+ * Log Unobtrusive Extension v0.0.6-sha.2749268
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -33,6 +33,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         // default log methods available
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
+        // list of browsers that support colorify
+        var colorifySupportedBrowsers = ['chrome'];
+
         /**
          * publicly allowed methods for the extended $log object.
          * this give the developer the option of using special features
@@ -41,9 +44,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {string[]}
          */
         var allowedMethods = defaultLogMethods;
-
-
-        var colorifySupportedBrowsers = ['chrome', 'firefox'];
 
         /**
          * Trims whitespace at the beginning and/or end of a string
@@ -55,6 +55,15 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
         };
+
+        /**
+         * Return a string value with the object type passed in as a param
+         * @param val {*}
+         **/
+        var itypeof = function(val) {
+            return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
+        };
+
         /**
          * checks if a variable is of @type {boolean}
          * @param value
@@ -397,7 +406,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.5998283',
+                version: '0.0.6-sha.2749268',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

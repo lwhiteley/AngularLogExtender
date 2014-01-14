@@ -102,4 +102,22 @@ describe('util Functions spec', function () {
         });
        
     });
+    
+    describe('itypeof Spec ', function () {
+        it('should return string description of object type', function () {
+            var message = '{0}';
+            var result = itypeof(message);
+            expect(result).toEqual('string');
+            
+            result = itypeof({message: 'this is object'});
+            expect(result).toEqual('object');
+            
+            result = itypeof(true);
+            expect(result).toEqual('boolean');
+            
+            result = itypeof(1);
+            expect(result).toEqual('number');
+        });
+        
+    });
 });

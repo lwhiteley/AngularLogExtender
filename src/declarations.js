@@ -13,6 +13,9 @@
         // default log methods available
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
        
+        // list of browsers that support colorify
+        var colorifySupportedBrowsers = ['chrome'];  
+
         /**
          * publicly allowed methods for the extended $log object.
          * this give the developer the option of using special features
@@ -21,9 +24,6 @@
          * @type {string[]}
          */
         var allowedMethods = defaultLogMethods;
-
-        
-        var colorifySupportedBrowsers = ['chrome', 'firefox'];  
 
         /**
          * Trims whitespace at the beginning and/or end of a string
@@ -35,6 +35,15 @@
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
         };
+
+        /**
+        * Return a string value with the object type passed in as a param
+        * @param val {*}
+        **/
+        var itypeof = function (val) {
+            return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g,"").toLowerCase();
+        };
+
         /**
          * checks if a variable is of @type {boolean}
          * @param value
