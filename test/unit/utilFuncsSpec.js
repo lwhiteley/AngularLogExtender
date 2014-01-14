@@ -21,7 +21,7 @@ describe('util Functions spec', function () {
        
     describe('colorify Spec, returns array to be used as log method args ', function () {
         var colorPrefix = "%c";
-        it('should return array with param1 as arg 0 when browser is not supported', function () {
+        it('should return array with param1 as only item in array when browser is not supported', function () {
             var message = 'chromeAgent';
             var colorCSS = 'background: #222; color: #bada55';
             var result = colorify(message, 'chromeagent is found');
@@ -30,7 +30,7 @@ describe('util Functions spec', function () {
             expect(result.length).toBe(1);
         });
         
-         it('should return array with param1 as arg 0 when neither params are strings', function () {
+         it('should return array with param1 as only item in array when neither params are strings', function () {
             var message = 3;
             var colorCSS = null;
             var result = colorify(message, colorCSS);
@@ -39,8 +39,8 @@ describe('util Functions spec', function () {
             expect(result.length).toBe(1);
         });
         
-        it('should return array with param1 as arg 0 when no colons are in css string', function () {
-            var message = 3;
+        it('should return array with param1 as only item in array when no colons are in css string', function () {
+            var message = 'this is a message to log';
             var colorCSS = 'null';
             var result = colorify(message, colorCSS);
             expect(angular.isArray(result)).toBe(true);
@@ -48,7 +48,7 @@ describe('util Functions spec', function () {
             expect(result.length).toBe(1);
         });
         
-        it('should return array with param1 as only item in array when browser is not supported', function () {
+        it('should return array with 2 items when browser is not supported', function () {
             var message = 'chromeAgent';
             var colorCSS = 'background: #222; color: #bada55';
             userAgent = chromeAgent;

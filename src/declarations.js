@@ -97,7 +97,7 @@
        * @param colorCSS 
        **/
         var colorify  = function( message, colorCSS ){
-            var isSupported   = isColorifySupported(navigator.userAgent),
+            var isSupported   = isColorifySupported(),
                 canProcess = isSupported && angular.isString(colorCSS) && isSubString(':', colorCSS) && angular.isString(message);
             return canProcess ? ( ["%c" + message, colorCSS] ) :  [message] ;
         };
