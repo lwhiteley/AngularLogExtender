@@ -6,7 +6,7 @@
  * @param useOverride
  * @returns {Function}
  */
-var prepareLogFn = function (logFn, className, override, useOverride) {
+var prepareLogFn = function (logFn, className, override, useOverride, colorCss, activateTemplate) {
     var enhancedLogFn = function () {
         var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
         if (activate) {
@@ -29,14 +29,13 @@ var prepareLogFn = function (logFn, className, override, useOverride) {
  */
 var _$log = createLogObj($log, allowedMethods);
 
-
 /**
  * Support to generate class-specific logger instance with/without className or override
  * @param {string=} className - Name of object in which $log.<function> calls is invoked.
  * @param {boolean=} override - activates/deactivates component level logging
  * @returns {*} $log instance
  */
-var getInstance = function (/*{string=}**/className, /**{boolean=}*/override) {
+var getInstance = function (/*{string=}*/className, /*{boolean=}*/override, /*{string=}*/colorCss, /*{boolean=}*/activateTemplate) {
     if (isBoolean(className)) {
         override = className;
         className = null;
@@ -48,5 +47,5 @@ var getInstance = function (/*{string=}**/className, /**{boolean=}*/override) {
     var useOverride = processUseOverride(override);
     override = processOverride(override);
     printOverrideLogs(_$log, useOverride, override, className, enabled);
-    return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride]);
+    return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, colorCss, activateTemplate]);
 };

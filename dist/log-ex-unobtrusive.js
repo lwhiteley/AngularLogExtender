@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.8a06b8c
+ * Log Unobtrusive Extension v0.0.6-sha.aff560b
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -94,6 +94,38 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                 }
             }
             return false;
+        };
+
+        /**
+         * supplant is a string templating engine that replaces patterns
+         * in a string with values from a template object
+         * @param template
+         * @param values
+         * @param pattern
+         **/
+        var supplant = function(template, values, pattern) {
+            var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
+            var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
+            if (criteria1 || criteria2) {
+                return Array.prototype.slice.call(arguments);
+            }
+
+            pattern = pattern || /\{([^\{\}]*)\}/g;
+
+            return template.replace(pattern, function(a, b) {
+                var p = b.split('.'),
+                    r = values;
+
+                try {
+                    for (var s in p) {
+                        r = r[p[s]];
+                    }
+                } catch (e) {
+                    r = a;
+                }
+
+                return (typeof r === 'string' || typeof r === 'number') ? r : a;
+            });
         };
 
         /**
@@ -265,7 +297,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param useOverride
                          * @returns {Function}
                          */
-                        var prepareLogFn = function(logFn, className, override, useOverride) {
+                        var prepareLogFn = function(logFn, className, override, useOverride, colorCss, activateTemplate) {
                             var enhancedLogFn = function() {
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 if (activate) {
@@ -288,14 +320,13 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          */
                         var _$log = createLogObj($log, allowedMethods);
 
-
                         /**
                          * Support to generate class-specific logger instance with/without className or override
                          * @param {string=} className - Name of object in which $log.<function> calls is invoked.
                          * @param {boolean=} override - activates/deactivates component level logging
                          * @returns {*} $log instance
                          */
-                        var getInstance = function( /*{string=}**/ className, /**{boolean=}*/ override) {
+                        var getInstance = function( /*{string=}*/ className, /*{boolean=}*/ override, /*{string=}*/ colorCss, /*{boolean=}*/ activateTemplate) {
                             if (isBoolean(className)) {
                                 override = className;
                                 className = null;
@@ -307,7 +338,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                             var useOverride = processUseOverride(override);
                             override = processOverride(override);
                             printOverrideLogs(_$log, useOverride, override, className, enabled);
-                            return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride]);
+                            return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, colorCss, activateTemplate]);
                         };
 
 
@@ -407,7 +438,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.8a06b8c',
+                version: '0.0.6-sha.aff560b',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

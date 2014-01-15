@@ -76,6 +76,38 @@
            return false;
         };
 
+        /**
+       * supplant is a string templating engine that replaces patterns 
+       * in a string with values from a template object
+       * @param template 
+       * @param values 
+       * @param pattern
+       **/
+        var supplant =  function( template, values, pattern ) {
+            var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
+            var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
+            if(criteria1 || criteria2) {
+                return  Array.prototype.slice.call(arguments);
+            }
+        
+            pattern = pattern || /\{([^\{\}]*)\}/g;
+        
+            return template.replace(pattern, function(a, b) {
+                var p = b.split('.'),
+                    r = values;
+        
+                try {
+                    for (var s in p) {
+                        r = r[p[s]];
+                    }
+                } catch(e){
+                    r = a;
+                }
+        
+                return (typeof r === 'string' || typeof r === 'number') ? r : a;
+            });
+        };
+
        /**
        * checks if the browsr is a part of the supported browser list
        * @param userAgent 
