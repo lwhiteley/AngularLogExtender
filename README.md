@@ -205,6 +205,11 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log.log('Advanced Log Extender Example: Use Case {example}', {example: 6}); 
 }]);
 ```
+######Output:
+```
+Dec-08-2013-1:00:47PM >>  CONFIG: LOGGING ENABLED GLOBALLY
+Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Case 6
+```
 
 Currently, Only numbers and strings will be pushed into the template string.
 
