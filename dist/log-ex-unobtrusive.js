@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.1225587
+ * Log Unobtrusive Extension v0.0.6-sha.a13f1c9
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -57,7 +57,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * Return a string value with the object type passed in as a param
+         * The itypeof operator returns a string indicating the type of the unevaluated operand.
          * @param val {*}
          **/
         var itypeof = function(val) {
@@ -102,7 +102,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param useTemplate
          * @param args
          **/
-        var canTemplate = function(useTemplate, args) {
+        var validateTemplateInputs = function(useTemplate, args) {
             return isBoolean(useTemplate) && useTemplate && args.length == 2;
         };
         /**
@@ -154,7 +154,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * checks if the log arguments array is of length 1 and the element is a string
          * @param args
          **/
-        var canColorize = function(args) {
+        var validateColorizeInputs = function(args) {
 
             return (args.length == 1 &&
                 angular.isString(args[0]));
@@ -321,12 +321,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 if (activate) {
                                     var args = Array.prototype.slice.call(arguments);
                                     var prefix = getLogPrefix(className);
-                                    if (canTemplate(useTemplate, args)) {
+                                    if (validateTemplateInputs(useTemplate, args)) {
                                         var data = (supplant.apply(null, args));
                                         data = angular.isString(data) ? [data] : data;
                                         args = data;
                                     }
-                                    if (angular.isString(colorCss) && canColorize(args)) {
+                                    if (angular.isString(colorCss) && validateColorizeInputs(args)) {
                                         args = colorify(args[0], colorCss, prefix);
                                     } else {
                                         args.unshift(prefix);
@@ -466,7 +466,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.1225587',
+                version: '0.0.6-sha.a13f1c9',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

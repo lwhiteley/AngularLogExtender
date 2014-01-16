@@ -37,7 +37,7 @@
         };
 
         /**
-        * Return a string value with the object type passed in as a param
+        * The itypeof operator returns a string indicating the type of the unevaluated operand.
         * @param val {*}
         **/
         var itypeof = function (val) {
@@ -82,7 +82,7 @@
        * @param useTemplate 
        * @param args 
        **/
-        var canTemplate = function(useTemplate, args){
+        var validateTemplateInputs = function(useTemplate, args){
             return isBoolean(useTemplate) && useTemplate && args.length == 2; 
         };
         /**
@@ -134,7 +134,7 @@
        * checks if the log arguments array is of length 1 and the element is a string
        * @param args 
        **/
-        var canColorize = function(args){
+        var validateColorizeInputs = function(args){
             
             return (args.length == 1 && 
                         angular.isString(args[0]));

@@ -73,7 +73,7 @@ describe('prepareLogFn function Spec', function () {
         });
         
         it('should call colorify when colorCss is a string but canColorize returns false', function () {
-            spyOn(window, 'canColorize').andCallFake(function() {
+            spyOn(window, 'validateColorizeInputs').andCallFake(function() {
                 return false;
             });
             var exFn = prepareLogFn(logFn, "", true, true, "css:jj;");
@@ -82,7 +82,7 @@ describe('prepareLogFn function Spec', function () {
         });
         
         it('should call colorify when colorCss is a string ', function () {
-            spyOn(window, 'canColorize').andCallFake(function() {
+            spyOn(window, 'validateColorizeInputs').andCallFake(function() {
                 return true;
             });
             var exFn = prepareLogFn(logFn, "", true, true, "css:jj;");
@@ -112,7 +112,7 @@ describe('prepareLogFn function Spec', function () {
         });
         
         it('should call supplant when useTemplate is a boolean and canTemplate returns false ', function () {
-            spyOn(window, 'canTemplate').andCallFake(function() {
+            spyOn(window, 'validateTemplateInputs').andCallFake(function() {
                 return false;
             });
             var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
@@ -121,7 +121,7 @@ describe('prepareLogFn function Spec', function () {
         });
         
         it('should call supplant when useTemplate is a boolean and canTemplate returns true ', function () {
-            spyOn(window, 'canTemplate').andCallFake(function() {
+            spyOn(window, 'validateTemplateInputs').andCallFake(function() {
                 return true;
             });
             var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);

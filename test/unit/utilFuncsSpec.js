@@ -27,7 +27,7 @@ describe('util Functions spec', function () {
             var colorCSS = 'background: #222; color: #bada55';
             var result = colorify(message, 'chromeagent is found', prefix);
             expect(angular.isArray(result)).toBe(true);
-            expect(result[0]).toEqual( message);
+            expect(result[0]).toBe( message);
             expect(result.length).toBe(1);
         });
         
@@ -37,7 +37,7 @@ describe('util Functions spec', function () {
             var prefix = "log pre >> ";
             var result = colorify(message, colorCSS, prefix);
             expect(angular.isArray(result)).toBe(true);
-            expect(result[0]).toEqual(message);
+            expect(result[0]).toBe(message);
             expect(result.length).toBe(1);
         });
         
@@ -47,7 +47,7 @@ describe('util Functions spec', function () {
             var prefix = "log pre >> ";
             var result = colorify(message, colorCSS, prefix);
             expect(angular.isArray(result)).toBe(true);
-            expect(result[0]).toEqual(message);
+            expect(result[0]).toBe(message);
             expect(result.length).toBe(1);
         });
         
@@ -58,8 +58,8 @@ describe('util Functions spec', function () {
             var prefix = "log pre >> ";
             var result = colorify(message, colorCSS, prefix);
             expect(angular.isArray(result)).toBe(true);
-            expect(result[0]).toEqual(colorPrefix + prefix + message);
-            expect(result[1]).toEqual(colorCSS);
+            expect(result[0]).toBe(colorPrefix + prefix + message);
+            expect(result[1]).toBe(colorCSS);
             expect(result.length).toBe(2);
         });
         
@@ -131,19 +131,19 @@ describe('util Functions spec', function () {
        
         it('should return true when arg has 1 element that is a string', function () {
             var args = ['colorize'];
-            var result = canColorize(args);
+            var result = validateColorizeInputs(args);
             expect(result).toBe(true);
         });
         
         it('should return false when arg has multiple elements ', function () {
             var args = ['colorize', 'args to much'];
-            var result = canColorize(args);
+            var result = validateColorizeInputs(args);
             expect(result).toBe(false);
         });
         
         it('should return false when arg has 1 element that is not a string', function () {
             var args = [['colorize']];
-            var result = canColorize(args);
+            var result = validateColorizeInputs(args);
             expect(result).toBe(false);
         });
        
@@ -154,26 +154,26 @@ describe('util Functions spec', function () {
         it('should return false when useTemplate is false', function () {
             var args = ['colorize', ''];
             var useTemplate = false;
-            var result = canTemplate(useTemplate, args);
+            var result = validateTemplateInputs(useTemplate, args);
             expect(result).toBe(false);
         });
         
         it('should return false when useTemplate is true but args length is not equal to 2', function () {
             var args = ['colorize'];
             var useTemplate = true;
-            var result = canTemplate(useTemplate, args);
+            var result = validateTemplateInputs(useTemplate, args);
             expect(result).toBe(false);
             
             args = ['colorize', '', ''];
             useTemplate = true;
-            result = canTemplate(useTemplate, args);
+            result = validateTemplateInputs(useTemplate, args);
             expect(result).toBe(false);
         });
         
         it('should return true when useTemplate is true and args length is equal to 2', function () {
             var a = ['colorize', 'hghh'];
             var useTemplate = true;
-            var result = canTemplate(useTemplate, a);
+            var result = validateTemplateInputs(useTemplate, a);
             expect(result).toBe(true);
         });
        
@@ -183,16 +183,16 @@ describe('util Functions spec', function () {
         it('should return string description of object type', function () {
             var message = '{0}';
             var result = itypeof(message);
-            expect(result).toEqual('string');
+            expect(result).toBe('string');
             
             result = itypeof({message: 'this is object'});
-            expect(result).toEqual('object');
+            expect(result).toBe('object');
             
             result = itypeof(true);
-            expect(result).toEqual('boolean');
+            expect(result).toBe('boolean');
             
             result = itypeof(1);
-            expect(result).toEqual('number');
+            expect(result).toBe('number');
         });
         
     });

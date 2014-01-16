@@ -14,12 +14,12 @@ var prepareLogFn = function (logFn, className, override, useOverride, colorCss, 
         if (activate) {
             var args = Array.prototype.slice.call(arguments);
             var prefix = getLogPrefix(className);
-            if(canTemplate(useTemplate, args)){
+            if(validateTemplateInputs(useTemplate, args)){
                 var data = (supplant.apply(null, args));
                 data = angular.isString(data) ? [data] : data;
                 args = data;
             }
-            if(angular.isString(colorCss) && canColorize(args)){
+            if(angular.isString(colorCss) && validateColorizeInputs(args)){
                 args = colorify(args[0], colorCss, prefix) ; 
             }else{  
                 args.unshift(prefix);
