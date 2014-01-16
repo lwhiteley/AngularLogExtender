@@ -130,6 +130,10 @@
            return false;
         };
 
+        /**
+       * checks if the log arguments array is of length 1 and the element is a string
+       * @param args 
+       **/
         var canColorize = function(args){
             
             return (args.length == 1 && 
