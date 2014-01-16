@@ -15,7 +15,9 @@ var prepareLogFn = function (logFn, className, override, useOverride, colorCss, 
             var args = Array.prototype.slice.call(arguments);
             var prefix = getLogPrefix(className);
             if(canTemplate(useTemplate, args)){
-                args = [ supplant.apply(null, args) ];
+                var data = (supplant.apply(null, args));
+                data = angular.isString(data) ? [data] : data;
+                args = data;
             }
             if(angular.isString(colorCss) && canColorize(args)){
                 args = colorify(args[0], colorCss, prefix) ; 

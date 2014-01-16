@@ -94,7 +94,7 @@ describe('prepareLogFn function Spec', function () {
     describe('prepareLogFn function Spec - global enabled flag is true, with template engine', function () {
         beforeEach(function () {
             $log.enableLog(true);
-            spyOn(window, 'supplant');
+            spyOn(window, 'supplant').andCallThrough();
         });
         afterEach(function () {
             $log.enableLog(false);
