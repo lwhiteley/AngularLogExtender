@@ -77,7 +77,7 @@
         };
 
         /**
-       * this method checks if useTemplat is truthy and 
+       * this method checks if useTemplate is truthy and 
        * if the log arguments array is equal to 2 
        * @param useTemplate 
        * @param args 
