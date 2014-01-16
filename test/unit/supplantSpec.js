@@ -2,7 +2,14 @@
 
 describe('supplant spec, takes a string and an object respectively ', function () {
     
-    it('should return populated string with template object values', function () {
+    it('should return populated string with template object values with custom pattern', function () {
+        var r = {who: 'sjsjd', email: "user@cp.com"};
+        var result = supplant('{email} - {who}', r, /\{([^\{\}]*)\}/g);
+        var expected = '' + r.email + ' - ' + r.who;
+        expect(result).toEqual(expected);
+    });
+    
+     it('should return populated string with template object values without custom pattern', function () {
         var r = {who: 'sjsjd', email: "user@cp.com"};
         var result = supplant('{email} - {who}', r);
         var expected = '' + r.email + ' - ' + r.who;
