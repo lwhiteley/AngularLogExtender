@@ -99,7 +99,7 @@
                 return  Array.prototype.slice.call(arguments);
             }
         
-            pattern = pattern || /\{([^\{\}]*)\}/g;
+            pattern = angular.isString(pattern) ? pattern : /\{([^\{\}]*)\}/g;
         
             return template.replace(pattern, function(a, b) {
                 var p = b.split('.'),
