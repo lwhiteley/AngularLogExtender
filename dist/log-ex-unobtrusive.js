@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.aff560b
+ * Log Unobtrusive Extension v0.0.6-sha.1ebca16
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -141,6 +141,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return false;
         };
 
+        var canColorize = function(args) {
+
+            return (args.length == 1 &&
+                angular.isString(args[0]));
+        };
+
         /**
          * takes a string a returns an array as parameters
          * if browser is supported
@@ -148,10 +154,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param message
          * @param colorCSS
          **/
-        var colorify = function(message, colorCSS) {
+        var colorify = function(message, colorCSS, prefix) {
+            prefix = (angular.isString(prefix) ? prefix : '');
             var isSupported = isColorifySupported(),
                 canProcess = isSupported && angular.isString(colorCSS) && isSubString(':', colorCSS) && angular.isString(message);
-            return canProcess ? (["%c" + message, colorCSS]) : [message];
+            var output = canProcess ? ('' + prefix + message) : message;
+            return canProcess ? (["%c" + output, colorCSS]) : [output];
         };
 
         /**
@@ -295,6 +303,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param className - name of the $controller class
                          * @param override
                          * @param useOverride
+                         * @param colorCss
+                         * @param activateTemplate
                          * @returns {Function}
                          */
                         var prepareLogFn = function(logFn, className, override, useOverride, colorCss, activateTemplate) {
@@ -302,8 +312,16 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 if (activate) {
                                     var args = Array.prototype.slice.call(arguments);
-                                    var formatMessage = getLogPrefix(className);
-                                    args.unshift(formatMessage);
+                                    var prefix = getLogPrefix(className);
+                                    //            if(isBoolean(activateTemplate) && activateTemplate){
+                                    //                
+                                    //            }
+                                    if (angular.isString(colorCss) && canColorize(args)) {
+                                        args = colorify(args[0], colorCss, prefix);
+                                    } else {
+                                        args.unshift(prefix);
+                                    }
+
                                     if (logFn) logFn.apply(null, args);
                                 }
                             };
@@ -438,7 +456,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.aff560b',
+                version: '0.0.6-sha.1ebca16',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

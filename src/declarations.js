@@ -121,6 +121,12 @@
            return false;
         };
 
+        var canColorize = function(args){
+            
+            return (args.length == 1 && 
+                        angular.isString(args[0]));
+        };
+
         /**
        * takes a string a returns an array as parameters
        * if browser is supported
@@ -128,10 +134,12 @@
        * @param message 
        * @param colorCSS 
        **/
-        var colorify  = function( message, colorCSS ){
+        var colorify  = function( message, colorCSS, prefix ){
+            prefix = (angular.isString(prefix) ? prefix : '') ;
             var isSupported   = isColorifySupported(),
                 canProcess = isSupported && angular.isString(colorCSS) && isSubString(':', colorCSS) && angular.isString(message);
-            return canProcess ? ( ["%c" + message, colorCSS] ) :  [message] ;
+            var output = canProcess ? ('' + prefix + message) : message;
+            return canProcess ? ( ["%c" + output, colorCSS] ) :  [output] ;
         };
 
         /**

@@ -57,5 +57,30 @@ describe('prepareLogFn function Spec', function () {
             expect(logFn.apply).toHaveBeenCalled();
         });
     });
+    
+    describe('prepareLogFn function Spec - global enabled flag is true, with colorCss', function () {
+        var color ;
+        beforeEach(function () {
+            $log.enableLog(true);
+            spyOn(window, 'colorify');
+            spyOn(window, 'canColorize').andCallFake(function() {
+                return true;
+            });
+        });
+        afterEach(function () {
+            $log.enableLog(false);
+        });
+        it('should not call colorify when no colorCss is not a string ', function () {
+            var exFn = prepareLogFn(logFn, "", false, true, null, false);
+            exFn();
+            expect(colorify).not.toHaveBeenCalled();
+        });
+        it('should call colorify when  colorCss is a string ', function () {
+            var exFn = prepareLogFn(logFn, "", true, true, "css:jj;");
+            exFn();
+            expect(colorify).toHaveBeenCalled();
+            //expect(color).toBe(true);
+        });
+    });
 
 });

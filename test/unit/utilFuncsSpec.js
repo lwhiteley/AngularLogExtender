@@ -23,17 +23,19 @@ describe('util Functions spec', function () {
         var colorPrefix = "%c";
         it('should return array with param1 as only item in array when browser is not supported', function () {
             var message = 'chromeAgent';
+            var prefix = "log pre >> ";
             var colorCSS = 'background: #222; color: #bada55';
-            var result = colorify(message, 'chromeagent is found');
+            var result = colorify(message, 'chromeagent is found', prefix);
             expect(angular.isArray(result)).toBe(true);
-            expect(result[0]).toEqual(message);
+            expect(result[0]).toEqual( message);
             expect(result.length).toBe(1);
         });
         
          it('should return array with param1 as only item in array when neither params are strings', function () {
             var message = 3;
             var colorCSS = null;
-            var result = colorify(message, colorCSS);
+            var prefix = "log pre >> ";
+            var result = colorify(message, colorCSS, prefix);
             expect(angular.isArray(result)).toBe(true);
             expect(result[0]).toEqual(message);
             expect(result.length).toBe(1);
@@ -42,13 +44,26 @@ describe('util Functions spec', function () {
         it('should return array with param1 as only item in array when no colons are in css string', function () {
             var message = 'this is a message to log';
             var colorCSS = 'null';
-            var result = colorify(message, colorCSS);
+            var prefix = "log pre >> ";
+            var result = colorify(message, colorCSS, prefix);
             expect(angular.isArray(result)).toBe(true);
             expect(result[0]).toEqual(message);
             expect(result.length).toBe(1);
         });
         
         it('should return array with 2 items when browser is supported and params are valid', function () {
+            var message = 'chromeAgent';
+            var colorCSS = 'background: #222; color: #bada55';
+            userAgent = chromeAgent;
+            var prefix = "log pre >> ";
+            var result = colorify(message, colorCSS, prefix);
+            expect(angular.isArray(result)).toBe(true);
+            expect(result[0]).toEqual(colorPrefix + prefix + message);
+            expect(result[1]).toEqual(colorCSS);
+            expect(result.length).toBe(2);
+        });
+        
+        it('should return array with 2 items when browser is supported and params are valid without prefix', function () {
             var message = 'chromeAgent';
             var colorCSS = 'background: #222; color: #bada55';
             userAgent = chromeAgent;
@@ -107,6 +122,28 @@ describe('util Functions spec', function () {
             
            userAgent = safariAgent;
             result = isColorifySupported();
+            expect(result).toBe(false);
+        });
+       
+    });
+    
+    describe('canColorize Spec ', function () {
+       
+        it('should return true when arg has 1 element that is a string', function () {
+            args = ['colorize'];
+            var result = canColorize(args);
+            expect(result).toBe(true);
+        });
+        
+        it('should return false when arg has multiple elements ', function () {
+            args = ['colorize', 'args to much'];
+            var result = canColorize(args);
+            expect(result).toBe(false);
+        });
+        
+        it('should return false when arg has 1 element that is not a string', function () {
+            args = [['colorize']];
+            var result = canColorize(args);
             expect(result).toBe(false);
         });
        

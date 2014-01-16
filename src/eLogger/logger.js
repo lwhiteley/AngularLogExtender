@@ -4,6 +4,8 @@
  * @param className - name of the $controller class
  * @param override
  * @param useOverride
+ * @param colorCss
+ * @param activateTemplate
  * @returns {Function}
  */
 var prepareLogFn = function (logFn, className, override, useOverride, colorCss, activateTemplate) {
@@ -11,8 +13,16 @@ var prepareLogFn = function (logFn, className, override, useOverride, colorCss, 
         var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
         if (activate) {
             var args = Array.prototype.slice.call(arguments);
-            var formatMessage = getLogPrefix(className);
-            args.unshift(formatMessage);
+            var prefix = getLogPrefix(className);
+//            if(isBoolean(activateTemplate) && activateTemplate){
+//                
+//            }
+            if(angular.isString(colorCss) && canColorize(args)){
+                args = colorify(args[0], colorCss, prefix) ; 
+            }else{  
+                args.unshift(prefix);
+            }
+                
             if(logFn) logFn.apply(null, args);
         }
     };
