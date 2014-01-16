@@ -152,11 +152,6 @@
             var separator = " >> ";
             var format = "MMM-dd-yyyy-h:mm:ssa";
             var now = $filter('date')(new Date(), format);
-            if (!isValidString(className)) {
-                formatMessage = "" + now + separator;
-            } else {
-                formatMessage = "" + now + "::" + className + separator;
-            }
-            return formatMessage;
+            return "" + now + ( !angular.isString(className) ? "" : "::" + className) + separator;
         };
 

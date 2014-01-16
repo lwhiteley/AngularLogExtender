@@ -66,13 +66,13 @@ describe('prepareLogFn function Spec', function () {
         afterEach(function () {
             $log.enableLog(false);
         });
-        it('should not call colorify when no colorCss is not a string ', function () {
+        it('should not call colorify when colorCss is not a string ', function () {
             var exFn = prepareLogFn(logFn, "", true, true, null, false);
             exFn();
             expect(colorify).not.toHaveBeenCalled();
         });
         
-        it('should call colorify when  colorCss is a string but canColorize returns false', function () {
+        it('should call colorify when colorCss is a string but canColorize returns false', function () {
             spyOn(window, 'canColorize').andCallFake(function() {
                 return false;
             });
@@ -81,7 +81,7 @@ describe('prepareLogFn function Spec', function () {
             expect(colorify).not.toHaveBeenCalled();
         });
         
-        it('should call colorify when  colorCss is a string ', function () {
+        it('should call colorify when colorCss is a string ', function () {
             spyOn(window, 'canColorize').andCallFake(function() {
                 return true;
             });

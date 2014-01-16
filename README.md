@@ -83,7 +83,7 @@ app.config(['logExProvider', function(logExProvider) {
         var separator = " >> ";
         var format = "MMMM-dd-yyyy-h:mm:ssa";
         var now = $filter('date')(new Date(), format);
-        return "" + now + (className === null ? "" : "::" + className) + separator;
+        return "" + now + (!angular.isString(className) ? "" : "::" + className) + separator;
     });
 }]);
 ```
@@ -173,6 +173,26 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods(['error']);
 }]);
 ```
+###Use Case 5 Colour your log outputs
+Coloring you log outputs is now possible with AngularLogExtender. Just pass a css style as the third parameter 
+of the `getInstance()` method. currently, only logs with one parameter of type string will be parsed with the specified styles.
+The following shows you how.
+#####Eg.
+```javascript
+app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+      $log = $log.getInstance('CoreController', true, 'color: #990099; background: #FFFFCC;');
+      $log.log("Advanced Log Extender Example: Use Case 5"); 
+}]);
+```
+
+Some good styles you can use are:
+
+```javascript
+'color: #990099; background: #FFFFCC;'
+'background: #222; color: #bada55'
+```
+You can come up with your own as well :) !
+
 ####NB.
 These examples only show the use of $log.log(), however, the other $log methods were left in tact and can be used as well.
 
