@@ -173,7 +173,7 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods(['error']);
 }]);
 ```
-###Use Case 5 Colour your log outputs
+###Use Case 5 Color your log outputs
 Coloring you log outputs is now possible with AngularLogExtender. Just pass a css style as the third parameter 
 of the `getInstance()` method. currently, only logs with one parameter of type string will be parsed with the specified styles.
 The following shows you how.
@@ -189,7 +189,7 @@ Some good styles you can use are:
 
 ```javascript
 'color: #990099; background: #FFFFCC;'
-'background: #222; color: #bada55'
+'background: #222; color: #bada55;'
 ```
 You can come up with your own as well :) !
 
@@ -203,8 +203,5 @@ These are:
 3. $log.error()
 4. $log.debug()
 ```
-##Future Implementations
-
-1. remove the need to reassign $log instance
 
 
