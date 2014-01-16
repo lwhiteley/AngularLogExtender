@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.f898225
+ * Log Unobtrusive Extension v0.0.6-sha.961cddc
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -96,6 +96,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return false;
         };
 
+
+        var canTemplate = function(useTemplate, args) {
+            return isBoolean(useTemplate) && useTemplate && args.length == 2;
+        };
         /**
          * supplant is a string templating engine that replaces patterns
          * in a string with values from a template object
@@ -302,15 +306,15 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param activateTemplate
                          * @returns {Function}
                          */
-                        var prepareLogFn = function(logFn, className, override, useOverride, colorCss, activateTemplate) {
+                        var prepareLogFn = function(logFn, className, override, useOverride, colorCss, useTemplate) {
                             var enhancedLogFn = function() {
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 if (activate) {
                                     var args = Array.prototype.slice.call(arguments);
                                     var prefix = getLogPrefix(className);
-                                    //            if(isBoolean(activateTemplate) && activateTemplate){
-                                    //                
-                                    //            }
+                                    if (canTemplate(useTemplate, args)) {
+                                        args = [supplant.apply(null, args)];
+                                    }
                                     if (angular.isString(colorCss) && canColorize(args)) {
                                         args = colorify(args[0], colorCss, prefix);
                                     } else {
@@ -339,7 +343,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param {boolean=} override - activates/deactivates component level logging
                          * @returns {*} $log instance
                          */
-                        var getInstance = function( /*{string=}*/ className, /*{boolean=}*/ override, /*{string=}*/ colorCss, /*{boolean=}*/ activateTemplate) {
+                        var getInstance = function( /*{string=}*/ className, /*{boolean=}*/ override, /*{string=}*/ colorCss, /*{boolean=}*/ useTemplate) {
                             if (isBoolean(className)) {
                                 override = className;
                                 className = null;
@@ -351,7 +355,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                             var useOverride = processUseOverride(override);
                             override = processOverride(override);
                             printOverrideLogs(_$log, useOverride, override, className, enabled);
-                            return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, colorCss, activateTemplate]);
+                            return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, colorCss, useTemplate]);
                         };
 
 
@@ -451,7 +455,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.f898225',
+                version: '0.0.6-sha.961cddc',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

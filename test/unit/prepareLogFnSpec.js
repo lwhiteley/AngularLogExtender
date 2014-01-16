@@ -90,5 +90,44 @@ describe('prepareLogFn function Spec', function () {
             expect(colorify).toHaveBeenCalled();
         });
     });
+    
+    describe('prepareLogFn function Spec - global enabled flag is true, with template engine', function () {
+        beforeEach(function () {
+            $log.enableLog(true);
+            spyOn(window, 'supplant');
+        });
+        afterEach(function () {
+            $log.enableLog(false);
+        });
+        it('should not call supplant when useTemplate is false ', function () {
+            var exFn = prepareLogFn(logFn, "", true, true, null, false);
+            exFn();
+            expect(supplant).not.toHaveBeenCalled();
+        });
+        
+        it('should not call supplant when useTemplate is set ', function () {
+            var exFn = prepareLogFn(logFn, "", true, true, null);
+            exFn();
+            expect(supplant).not.toHaveBeenCalled();
+        });
+        
+        it('should call supplant when useTemplate is a boolean and canTemplate returns false ', function () {
+            spyOn(window, 'canTemplate').andCallFake(function() {
+                return false;
+            });
+            var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
+            exFn();
+            expect(supplant).not.toHaveBeenCalled();
+        });
+        
+        it('should call supplant when useTemplate is a boolean and canTemplate returns true ', function () {
+            spyOn(window, 'canTemplate').andCallFake(function() {
+                return true;
+            });
+            var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
+            exFn();
+            expect(supplant).toHaveBeenCalled();
+        });
+    });
 
 });

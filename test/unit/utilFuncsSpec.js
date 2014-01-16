@@ -130,21 +130,51 @@ describe('util Functions spec', function () {
     describe('canColorize Spec ', function () {
        
         it('should return true when arg has 1 element that is a string', function () {
-            args = ['colorize'];
+            var args = ['colorize'];
             var result = canColorize(args);
             expect(result).toBe(true);
         });
         
         it('should return false when arg has multiple elements ', function () {
-            args = ['colorize', 'args to much'];
+            var args = ['colorize', 'args to much'];
             var result = canColorize(args);
             expect(result).toBe(false);
         });
         
         it('should return false when arg has 1 element that is not a string', function () {
-            args = [['colorize']];
+            var args = [['colorize']];
             var result = canColorize(args);
             expect(result).toBe(false);
+        });
+       
+    });
+    
+    describe('canTemplate Spec ', function () {
+       
+        it('should return false when useTemplate is false', function () {
+            var args = ['colorize', ''];
+            var useTemplate = false;
+            var result = canTemplate(useTemplate, args);
+            expect(result).toBe(false);
+        });
+        
+        it('should return false when useTemplate is true but args length is not equal to 2', function () {
+            var args = ['colorize'];
+            var useTemplate = true;
+            var result = canTemplate(useTemplate, args);
+            expect(result).toBe(false);
+            
+            args = ['colorize', '', ''];
+            useTemplate = true;
+            result = canTemplate(useTemplate, args);
+            expect(result).toBe(false);
+        });
+        
+        it('should return true when useTemplate is true and args length is equal to 2', function () {
+            var a = ['colorize', 'hghh'];
+            var useTemplate = true;
+            var result = canTemplate(useTemplate, a);
+            expect(result).toBe(true);
         });
        
     });

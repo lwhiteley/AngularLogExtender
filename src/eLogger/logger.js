@@ -8,15 +8,15 @@
  * @param activateTemplate
  * @returns {Function}
  */
-var prepareLogFn = function (logFn, className, override, useOverride, colorCss, activateTemplate) {
+var prepareLogFn = function (logFn, className, override, useOverride, colorCss, useTemplate) {
     var enhancedLogFn = function () {
         var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
         if (activate) {
             var args = Array.prototype.slice.call(arguments);
             var prefix = getLogPrefix(className);
-//            if(isBoolean(activateTemplate) && activateTemplate){
-//                
-//            }
+            if(canTemplate(useTemplate, args)){
+                args = [ supplant.apply(null, args) ];
+            }
             if(angular.isString(colorCss) && canColorize(args)){
                 args = colorify(args[0], colorCss, prefix) ; 
             }else{  
@@ -45,7 +45,7 @@ var _$log = createLogObj($log, allowedMethods);
  * @param {boolean=} override - activates/deactivates component level logging
  * @returns {*} $log instance
  */
-var getInstance = function (/*{string=}*/className, /*{boolean=}*/override, /*{string=}*/colorCss, /*{boolean=}*/activateTemplate) {
+var getInstance = function (/*{string=}*/className, /*{boolean=}*/override, /*{string=}*/colorCss, /*{boolean=}*/useTemplate) {
     if (isBoolean(className)) {
         override = className;
         className = null;
@@ -57,5 +57,5 @@ var getInstance = function (/*{string=}*/className, /*{boolean=}*/override, /*{s
     var useOverride = processUseOverride(override);
     override = processOverride(override);
     printOverrideLogs(_$log, useOverride, override, className, enabled);
-    return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, colorCss, activateTemplate]);
+    return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, colorCss, useTemplate]);
 };

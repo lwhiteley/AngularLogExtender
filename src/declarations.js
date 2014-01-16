@@ -76,6 +76,10 @@
            return false;
         };
 
+        
+        var canTemplate = function(useTemplate, args){
+            return isBoolean(useTemplate) && useTemplate && args.length == 2; 
+        };
         /**
        * supplant is a string templating engine that replaces patterns 
        * in a string with values from a template object
