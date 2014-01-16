@@ -76,7 +76,12 @@
            return false;
         };
 
-        
+        /**
+       * this method checks if useTemplat is truthy and 
+       * if the log arguments array is equal to 2 
+       * @param useTemplate 
+       * @param args 
+       **/
         var canTemplate = function(useTemplate, args){
             return isBoolean(useTemplate) && useTemplate && args.length == 2; 
         };

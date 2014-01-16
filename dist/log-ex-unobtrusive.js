@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.961cddc
+ * Log Unobtrusive Extension v0.0.6-sha.f5aba9f
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -96,7 +96,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return false;
         };
 
-
+        /**
+         * this method checks if useTemplat is truthy and
+         * if the log arguments array is equal to 2
+         * @param useTemplate
+         * @param args
+         **/
         var canTemplate = function(useTemplate, args) {
             return isBoolean(useTemplate) && useTemplate && args.length == 2;
         };
@@ -455,7 +460,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.961cddc',
+                version: '0.0.6-sha.f5aba9f',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
