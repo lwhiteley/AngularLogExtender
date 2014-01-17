@@ -31,6 +31,8 @@ Add a script to your index.html:
 3. Enable/Disable Logging at a Component Level
 4. Customize the Log Prefix
 5. Enable/Disable Specific $log methods throughout the app
+6. Customize the color of your logs
+7. Use a template engine for your logs
 
 ##How to Use 
 
@@ -175,7 +177,8 @@ app.config(['logExProvider', function(logExProvider) {
 ```
 ###Use Case 5: Color your log outputs
 Coloring your log outputs is possible with AngularLogExtender. Just pass a css style as the third parameter 
-of the `getInstance()` method. currently, only logs with one parameter of type string will be parsed with the specified styles.
+of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
+Supported browsers are `Google Chrome` and `Mozilla Firefox`.
 The following example shows you how.
 #####Eg.
 ```javascript
@@ -196,12 +199,12 @@ You can come up with your own as well :) !
 ###Use Case 6: Use templates for string placeholders
 Templates can be used to replace string contents with matching propert names of an object. 
 Just pass a truthy boolean as the fourth parameter of the `getInstance()` method to activate the template engine.
-Logs must follow a specific format for this engine to recognize templates.
-The following example shows you how.
+Logs must follow a specific format for this engine to recognize templates. These logs will also be coloured once a custom colour is set.
+The following example shows you how. 
 #####Eg.
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
-      $log = $log.getInstance('CoreController', true, 'color: #990099; background: #FFFFCC;' , true );
+      $log = $log.getInstance('CoreController', true, 'color: #990099;' , true );
       $log.log('Advanced Log Extender Example: Use Case {example}', {example: 6}); 
 }]);
 ```
