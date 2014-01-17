@@ -87,6 +87,7 @@ var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/
             var params = [];
             angular.copy(aParams, params);
             params.unshift(oSrc[value]);
+            params[4] =  (params[4]) ? params[4] : defultLogMethodColors[value];
             res = func.apply(null, params);
         } else {
             res = oSrc[value];

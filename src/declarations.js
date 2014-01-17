@@ -15,6 +15,15 @@
        
         // list of browsers that support colorify
         var colorifySupportedBrowsers = ['chrome', 'firefox'];  
+        
+        // default colours for each log method
+        var defultLogMethodColors = {
+            log: 'color: green;',
+            info: 'color: #330000;',
+            warn: 'color: orange;',
+            debug: 'color: blue;',
+            error: 'color: red;'
+        };
 
         /**
          * publicly allowed methods for the extended $log object.
