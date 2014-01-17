@@ -11,7 +11,9 @@ http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorator
 
 ###Notes
 
-The prefered file to use is the log-ex-unobtrusive.js file. You can include the module to your AngularJs Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style.
+The prefered file to use is the log-ex-unobtrusive.js file. You can include the module to your AngularJs Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style. Log methods are now colour coded by default. 
+
+Supported browsers for Colorize are currently `Google Chrome` and `Mozilla Firefox`.
 
 Feel Free to make your own contributions to this module so we can make it better :)
 
@@ -176,9 +178,7 @@ app.config(['logExProvider', function(logExProvider) {
 }]);
 ```
 ###Use Case 5: Color your log outputs
-Coloring your log outputs is possible with AngularLogExtender. Just pass a css style as the third parameter 
-of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
-Supported browsers are `Google Chrome` and `Mozilla Firefox`.
+Override the color of all log methods of a specific log instance is possible with AngularLogExtender. Just pass a css style as the third parameter of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
 The following example shows you how.
 #####Eg.
 ```javascript
