@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.25f88bd
+ * Log Unobtrusive Extension v0.0.6-sha.98519e0
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -37,7 +37,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var colorifySupportedBrowsers = ['chrome', 'firefox'];
 
         // default colours for each log method
-        var defultLogMethodColors = {
+        var defaultLogMethodColors = {
             log: 'color: green;',
             info: 'color: #330000;',
             warn: 'color: orange;',
@@ -170,6 +170,15 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
+         * does minor validation to ensure css string is valid
+         * @param args
+         **/
+        var validateColorCssString = function(value) {
+
+            return (itypeof(value) === 'string' && isSubString(':', value));
+        };
+
+        /**
          * takes a string a returns an array as parameters
          * if browser is supported
          * expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
@@ -179,8 +188,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var colorify = function(message, colorCSS, prefix) {
             prefix = (itypeof(prefix) === 'string' ? prefix : '');
             var isSupported = isColorifySupported(),
-                canProcess = isSupported && itypeof(colorCSS) === 'string' &&
-                    isSubString(':', colorCSS) && itypeof(message) === 'string';
+                canProcess = isSupported && validateColorCssString(colorCSS) && itypeof(message) === 'string';
             var output = canProcess ? ('' + prefix + message) : message;
             return canProcess ? (["%c" + output, colorCSS]) : [output];
         };
@@ -298,7 +306,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 var params = [];
                                 angular.copy(aParams, params);
                                 params.unshift(oSrc[value]);
-                                params[4] = (params[4]) ? params[4] : defultLogMethodColors[value];
+                                //TODO: run a validateColorCssString here
+                                params[4] = (params[4]) ? params[4] : defaultLogMethodColors[value];
                                 res = func.apply(null, params);
                             } else {
                                 res = oSrc[value];
@@ -477,7 +486,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.25f88bd',
+                version: '0.0.6-sha.98519e0',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix

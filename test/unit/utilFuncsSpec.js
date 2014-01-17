@@ -196,4 +196,25 @@ describe('util Functions spec', function () {
         });
         
     });
+    
+    describe('validateColorCssString Spec ', function () {
+        it('should return false when string has no colons', function () {
+            var message = '{0}';
+            var result = validateColorCssString(message);
+            expect(result).toBe(false);
+        });
+        
+        it('should return false when colorcss is not a string', function () {
+            var message = null;
+            var result = validateColorCssString(message);
+            expect(result).toBe(false);
+        });
+        
+        it('should return true when colorcss has a colon', function () {
+            var message = 'color: red';
+            var result = validateColorCssString(message);
+            expect(result).toBe(true);
+        });
+        
+    });
 });

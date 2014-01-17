@@ -17,7 +17,7 @@
         var colorifySupportedBrowsers = ['chrome', 'firefox'];  
         
         // default colours for each log method
-        var defultLogMethodColors = {
+        var defaultLogMethodColors = {
             log: 'color: green;',
             info: 'color: #330000;',
             warn: 'color: orange;',
@@ -149,6 +149,15 @@
                         itypeof(args[0]) === 'string');
         };
 
+         /**
+       * does minor validation to ensure css string is valid 
+       * @param args 
+       **/
+        var validateColorCssString = function(value){
+            
+            return (itypeof(value) === 'string' && isSubString(':', value)) ;
+        };
+
         /**
        * takes a string a returns an array as parameters
        * if browser is supported
@@ -159,8 +168,7 @@
         var colorify  = function( message, colorCSS, prefix ){
             prefix = (itypeof(prefix) === 'string' ? prefix : '') ;
             var isSupported   = isColorifySupported(),
-                canProcess = isSupported && itypeof(colorCSS) === 'string' && 
-                                isSubString(':', colorCSS) && itypeof(message) === 'string';
+                canProcess = isSupported && validateColorCssString(colorCSS) && itypeof(message) === 'string';
             var output = canProcess ? ('' + prefix + message) : message;
             return canProcess ? ( ["%c" + output, colorCSS] ) :  [output] ;
         };
