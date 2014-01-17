@@ -16,10 +16,10 @@ var prepareLogFn = function (logFn, className, override, useOverride, colorCss, 
             var prefix = getLogPrefix(className);
             if(validateTemplateInputs(useTemplate, args)){
                 var data = (supplant.apply(null, args));
-                data = angular.isString(data) ? [data] : data;
+                data = (itypeof(data) === 'string') ? [data] : data;
                 args = data;
             }
-            if(angular.isString(colorCss) && validateColorizeInputs(args)){
+            if(itypeof(colorCss) === 'string' && validateColorizeInputs(args)){
                 args = colorify(args[0], colorCss, prefix) ; 
             }else{  
                 args.unshift(prefix);
@@ -51,7 +51,7 @@ var getInstance = function (/*{string=}*/className, /*{boolean=}*/override, /*{s
     if (isBoolean(className)) {
         override = className;
         className = null;
-    } else if (angular.isString(className)) {
+    } else if (itypeof(className) === 'string') {
         className = trimString(className);
     } else {
         className = null;

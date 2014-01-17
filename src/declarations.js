@@ -31,7 +31,7 @@
          * @returns {String} - returns an empty string if the value passed is not of type {String}
          */
         var trimString = function (value) {
-            if (angular.isString(value))
+            if (itypeof(value) === 'string')
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
         };
@@ -50,7 +50,7 @@
          * @returns {boolean}
          */
         var isBoolean = function (value) {
-            return typeof value == 'boolean';
+            return itypeof(value) === 'boolean';
         };
         /**
          * This method checks if a variable is of type {string}
@@ -59,7 +59,7 @@
          * @returns {*|Boolean|boolean}
          */
         var isValidString = function (value) {
-            return (angular.isString(value) && trimString(value) !== "");
+            return (itypeof(value) === 'string' && trimString(value) !== "");
         };
 
        /**
@@ -68,7 +68,7 @@
        * @param full 
        **/
        var isSubString = function(sub, full){
-           if(angular.isString(sub) && angular.isString(full)){
+           if(itypeof(sub) === 'string' && itypeof(full) === 'string'){
               if(full.toLowerCase().indexOf(sub.toLowerCase()) != -1){
                   return true;
               } 
@@ -137,7 +137,7 @@
         var validateColorizeInputs = function(args){
             
             return (args.length == 1 && 
-                        angular.isString(args[0]));
+                        itypeof(args[0]) === 'string');
         };
 
         /**
@@ -148,9 +148,10 @@
        * @param colorCSS 
        **/
         var colorify  = function( message, colorCSS, prefix ){
-            prefix = (angular.isString(prefix) ? prefix : '') ;
+            prefix = (itypeof(prefix) === 'string' ? prefix : '') ;
             var isSupported   = isColorifySupported(),
-                canProcess = isSupported && angular.isString(colorCSS) && isSubString(':', colorCSS) && angular.isString(message);
+                canProcess = isSupported && itypeof(colorCSS) === 'string' && 
+                                isSubString(':', colorCSS) && itypeof(message) === 'string';
             var output = canProcess ? ('' + prefix + message) : message;
             return canProcess ? ( ["%c" + output, colorCSS] ) :  [output] ;
         };
@@ -165,6 +166,6 @@
             var separator = " >> ";
             var format = "MMM-dd-yyyy-h:mm:ssa";
             var now = $filter('date')(new Date(), format);
-            return "" + now + ( !angular.isString(className) ? "" : "::" + className) + separator;
+            return "" + now + ( (itypeof(className) !== 'string') ? "" : "::" + className) + separator;
         };
 

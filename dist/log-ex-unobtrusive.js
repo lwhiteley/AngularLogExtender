@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.7778a5b
+ * Log Unobtrusive Extension v0.0.6-sha.bd953f8
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -51,7 +51,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {String} - returns an empty string if the value passed is not of type {String}
          */
         var trimString = function(value) {
-            if (angular.isString(value))
+            if (itypeof(value) === 'string')
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
         };
@@ -70,7 +70,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {boolean}
          */
         var isBoolean = function(value) {
-            return typeof value == 'boolean';
+            return itypeof(value) === 'boolean';
         };
         /**
          * This method checks if a variable is of type {string}
@@ -79,7 +79,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {*|Boolean|boolean}
          */
         var isValidString = function(value) {
-            return (angular.isString(value) && trimString(value) !== "");
+            return (itypeof(value) === 'string' && trimString(value) !== "");
         };
 
         /**
@@ -88,7 +88,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param full
          **/
         var isSubString = function(sub, full) {
-            if (angular.isString(sub) && angular.isString(full)) {
+            if (itypeof(sub) === 'string' && itypeof(full) === 'string') {
                 if (full.toLowerCase().indexOf(sub.toLowerCase()) != -1) {
                     return true;
                 }
@@ -157,7 +157,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var validateColorizeInputs = function(args) {
 
             return (args.length == 1 &&
-                angular.isString(args[0]));
+                itypeof(args[0]) === 'string');
         };
 
         /**
@@ -168,9 +168,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param colorCSS
          **/
         var colorify = function(message, colorCSS, prefix) {
-            prefix = (angular.isString(prefix) ? prefix : '');
+            prefix = (itypeof(prefix) === 'string' ? prefix : '');
             var isSupported = isColorifySupported(),
-                canProcess = isSupported && angular.isString(colorCSS) && isSubString(':', colorCSS) && angular.isString(message);
+                canProcess = isSupported && itypeof(colorCSS) === 'string' &&
+                    isSubString(':', colorCSS) && itypeof(message) === 'string';
             var output = canProcess ? ('' + prefix + message) : message;
             return canProcess ? (["%c" + output, colorCSS]) : [output];
         };
@@ -185,7 +186,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             var separator = " >> ";
             var format = "MMM-dd-yyyy-h:mm:ssa";
             var now = $filter('date')(new Date(), format);
-            return "" + now + (!angular.isString(className) ? "" : "::" + className) + separator;
+            return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
         };
 
 
@@ -323,10 +324,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                     var prefix = getLogPrefix(className);
                                     if (validateTemplateInputs(useTemplate, args)) {
                                         var data = (supplant.apply(null, args));
-                                        data = angular.isString(data) ? [data] : data;
+                                        data = (itypeof(data) === 'string') ? [data] : data;
                                         args = data;
                                     }
-                                    if (angular.isString(colorCss) && validateColorizeInputs(args)) {
+                                    if (itypeof(colorCss) === 'string' && validateColorizeInputs(args)) {
                                         args = colorify(args[0], colorCss, prefix);
                                     } else {
                                         args.unshift(prefix);
@@ -358,7 +359,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                             if (isBoolean(className)) {
                                 override = className;
                                 className = null;
-                            } else if (angular.isString(className)) {
+                            } else if (itypeof(className) === 'string') {
                                 className = trimString(className);
                             } else {
                                 className = null;
@@ -378,7 +379,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param $log
                          * @param function (with transformation rules)
                          **/
-                        angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false]));
+                        angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, null, false]));
 
                         /**
                          * Extend the $log with the {@see getInstance} method
@@ -466,7 +467,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.7778a5b',
+                version: '0.0.6-sha.bd953f8',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix
