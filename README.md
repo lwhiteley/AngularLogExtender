@@ -28,8 +28,6 @@ These are:
 5. $log.debug()  -  Brown
 ```
 
-
-
 Feel Free to make your own contributions to this module so we can make it better :)
 
 ###Install with bower:
@@ -50,6 +48,7 @@ Add a script to your index.html:
 5. Enable/Disable Specific $log methods throughout the app
 6. Customize the color of your logs
 7. Use a template engine for your logs
+8. Disable/Enable default coloring of logs
 
 ##How to Use 
 
@@ -104,6 +103,14 @@ app.config(['logExProvider', function(logExProvider) {
         var now = $filter('date')(new Date(), format);
         return "" + now + (!angular.isString(className) ? "" : "::" + className) + separator;
     });
+}]);
+```
+######3. Disable/Enable default coloring of logs
+
+If the default color system is not to your liking, its possible to disable it. The following shows you how to do so.
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    logExProvider.disableDefaultColors(true);
 }]);
 ```
 ##Advanced Use Cases
