@@ -14,7 +14,10 @@
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
        
         // list of browsers that support colorify
-        var colorifySupportedBrowsers = ['chrome', 'firefox'];  
+        var colorifySupportedBrowsers = ['chrome', 'firefox']; 
+
+        // flag to activate/deactivate default log method colors
+        var useDefaultColors = true;
         
         // default colours for each log method
         var defaultLogMethodColors = {
@@ -139,6 +142,9 @@
            return false;
         };
 
+        // stores flag to know if current browser is colorify supported
+        var isColorifySupportedBrowser = isColorifySupported();
+
         /**
        * checks if the log arguments array is of length 1 and the element is a string
        * @param args 
@@ -167,8 +173,7 @@
        **/
         var colorify  = function( message, colorCSS, prefix ){
             prefix = (itypeof(prefix) === 'string' ? prefix : '') ;
-            var isSupported   = isColorifySupported(),
-                canProcess = isSupported && validateColorCssString(colorCSS) && itypeof(message) === 'string';
+            var canProcess = isColorifySupportedBrowser && validateColorCssString(colorCSS) && itypeof(message) === 'string';
             var output = canProcess ? ('' + prefix + message) : message;
             return canProcess ? ( ["%c" + output, colorCSS] ) :  [output] ;
         };

@@ -17,6 +17,7 @@ describe('util Functions spec', function () {
     afterEach(function () {
         userAgent = tempAgent;
         colorifySupportedBrowsers = tempBrowsers;
+        isColorifySupportedBrowser = false;
     });
        
     describe('colorify Spec, returns array to be used as log method args ', function () {
@@ -55,6 +56,8 @@ describe('util Functions spec', function () {
             var message = 'chromeAgent';
             var colorCSS = 'background: #222; color: #bada55';
             userAgent = chromeAgent;
+            isColorifySupportedBrowser = true;
+            spyOn(window, 'isColorifySupported').andCallThrough().andReturn(true);
             var prefix = "log pre >> ";
             var result = colorify(message, colorCSS, prefix);
             expect(angular.isArray(result)).toBe(true);
@@ -67,6 +70,7 @@ describe('util Functions spec', function () {
             var message = 'chromeAgent';
             var colorCSS = 'background: #222; color: #bada55';
             userAgent = chromeAgent;
+            isColorifySupportedBrowser = true;
             var result = colorify(message, colorCSS);
             expect(angular.isArray(result)).toBe(true);
             expect(result[0]).toEqual(colorPrefix + message);
@@ -149,7 +153,7 @@ describe('util Functions spec', function () {
        
     });
     
-    describe('canTemplate Spec ', function () {
+    describe('validateTemplateInputs Spec ', function () {
        
         it('should return false when useTemplate is false', function () {
             var args = ['colorize', ''];

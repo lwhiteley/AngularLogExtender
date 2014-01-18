@@ -70,5 +70,26 @@ describe('Provider Func Spec', function () {
             expect(allowedMethods).not.toBe(logMethods);
         });
     });
+    
+    describe('disableDefaultColors Spec', function () {
+        
+        afterEach(function () {
+            useDefaultColors = true;
+        });
+        it('should keep useDefaultColors as true when input is not a boolean', function () {
+            disableDefaultColors(null);
+            expect(useDefaultColors).toBe(true);
+        });
+        
+        it('should keep useDefaultColors as true when input is false', function () {
+            disableDefaultColors(false);
+            expect(useDefaultColors).toBe(true);
+        });
+
+        it('should set useDefaultColors to false when true is passed', function () {
+            disableDefaultColors(true);
+            expect(useDefaultColors).toBe(false);
+        });
+    });
 
 });

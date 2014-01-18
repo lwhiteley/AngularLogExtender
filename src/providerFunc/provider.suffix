@@ -8,7 +8,8 @@
             version: '%VERSION%',
             enableLogging: enableLogging,
             restrictLogMethods: restrictLogMethods,
-            overrideLogPrefix: overrideLogPrefix
+            overrideLogPrefix: overrideLogPrefix,
+            disableDefaultColors: disableDefaultColors
         };
     };
 
@@ -27,5 +28,10 @@
     * Configure which log functions can be exposed at runtime
     */
     this.restrictLogMethods = restrictLogMethods;
+    
+    /**
+    * Turns off default coloring of logs
+    */
+    this.disableDefaultColors = disableDefaultColors;
     
 }]);

@@ -22,3 +22,7 @@ var overrideLogPrefix = function (logPrefix) {
         getLogPrefix = logPrefix;
     }
 };
+
+var disableDefaultColors = function (flag) {
+    useDefaultColors = (isBoolean(flag) && flag) ? false : true;
+};

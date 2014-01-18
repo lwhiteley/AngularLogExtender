@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.98519e0
+ * Log Unobtrusive Extension v0.0.6-sha.ff071e7
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -35,6 +35,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         // list of browsers that support colorify
         var colorifySupportedBrowsers = ['chrome', 'firefox'];
+
+        // flag to activate/deactivate default log method colors
+        var useDefaultColors = true;
 
         // default colours for each log method
         var defaultLogMethodColors = {
@@ -159,6 +162,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return false;
         };
 
+        // stores flag to know if current browser is colorify supported
+        var isColorifySupportedBrowser = isColorifySupported();
+
         /**
          * checks if the log arguments array is of length 1 and the element is a string
          * @param args
@@ -187,8 +193,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          **/
         var colorify = function(message, colorCSS, prefix) {
             prefix = (itypeof(prefix) === 'string' ? prefix : '');
-            var isSupported = isColorifySupported(),
-                canProcess = isSupported && validateColorCssString(colorCSS) && itypeof(message) === 'string';
+            var canProcess = isColorifySupportedBrowser && validateColorCssString(colorCSS) && itypeof(message) === 'string';
             var output = canProcess ? ('' + prefix + message) : message;
             return canProcess ? (["%c" + output, colorCSS]) : [output];
         };
@@ -306,8 +311,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 var params = [];
                                 angular.copy(aParams, params);
                                 params.unshift(oSrc[value]);
-                                //TODO: run a validateColorCssString here
-                                params[4] = (params[4]) ? params[4] : defaultLogMethodColors[value];
+                                if (isColorifySupportedBrowser && useDefaultColors) {
+                                    params[5] = validateColorCssString(params[5]) ? params[5] : defaultLogMethodColors[value];
+                                }
                                 res = func.apply(null, params);
                             } else {
                                 res = oSrc[value];
@@ -335,7 +341,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param activateTemplate
                          * @returns {Function}
                          */
-                        var prepareLogFn = function(logFn, className, override, useOverride, colorCss, useTemplate) {
+                        var prepareLogFn = function(logFn, className, override, useOverride, useTemplate, colorCss) {
                             var enhancedLogFn = function() {
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 if (activate) {
@@ -374,7 +380,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param {boolean=} override - activates/deactivates component level logging
                          * @returns {*} $log instance
                          */
-                        var getInstance = function( /*{string=}*/ className, /*{boolean=}*/ override, /*{string=}*/ colorCss, /*{boolean=}*/ useTemplate) {
+                        var getInstance = function( /*{string=}*/ className, /*{boolean=}*/ override, /*{boolean=}*/ useTemplate, /*{string=}*/ colorCss) {
                             if (isBoolean(className)) {
                                 override = className;
                                 className = null;
@@ -386,7 +392,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                             var useOverride = processUseOverride(override);
                             override = processOverride(override);
                             printOverrideLogs(_$log, useOverride, override, className, enabled);
-                            return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, colorCss, useTemplate]);
+                            return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, useTemplate, colorCss]);
                         };
 
 
@@ -398,7 +404,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param $log
                          * @param function (with transformation rules)
                          **/
-                        angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, null, false]));
+                        angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, false, null]));
 
                         /**
                          * Extend the $log with the {@see getInstance} method
@@ -479,6 +485,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                 getLogPrefix = logPrefix;
             }
         };
+
+        var disableDefaultColors = function(flag) {
+            useDefaultColors = (isBoolean(flag) && flag) ? false : true;
+        };
         /**
          * default $get method necessary for provider to work
          * not sure what to do with this yet
@@ -486,10 +496,11 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.98519e0',
+                version: '0.0.6-sha.ff071e7',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
-                overrideLogPrefix: overrideLogPrefix
+                overrideLogPrefix: overrideLogPrefix,
+                disableDefaultColors: disableDefaultColors
             };
         };
 
@@ -508,6 +519,11 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * Configure which log functions can be exposed at runtime
          */
         this.restrictLogMethods = restrictLogMethods;
+
+        /**
+         * Turns off default coloring of logs
+         */
+        this.disableDefaultColors = disableDefaultColors;
 
     }
 ]);

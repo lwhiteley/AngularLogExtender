@@ -177,13 +177,33 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods(['error']);
 }]);
 ```
-###Use Case 5: Color your log outputs
+###Use Case 5: Use the built in template engine
+Templates can be used to replace string contents with matching propert names of an object. 
+Just pass a truthy boolean as the fourth parameter of the `getInstance()` method to activate the template engine.
+Logs must follow a specific format for this engine to recognize templates. These logs will also be coloured once a custom colour is set.
+The following example shows you how. 
+#####Eg.
+```javascript
+app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+      $log = $log.getInstance('CoreController', true, true);
+      $log.log('Advanced Log Extender Example: Use Case {example}', {example: 6}); 
+}]);
+```
+######Output:
+```
+Dec-08-2013-1:00:47PM >>  CONFIG: LOGGING ENABLED GLOBALLY
+Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Case 6
+```
+
+Currently, Only numbers and strings will be pushed into the template string.
+
+###Use Case 6: Color your log outputs
 Override the color of all log methods of a specific log instance is possible with AngularLogExtender. Just pass a css style as the third parameter of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
 The following example shows you how.
 #####Eg.
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
-      $log = $log.getInstance('CoreController', true, 'color: #990099; background: #FFFFCC;');
+      $log = $log.getInstance('CoreController', true, false,'color: #990099; background: #FFFFCC;');
       $log.log("Advanced Log Extender Example: Use Case 5"); 
 }]);
 ```
@@ -195,26 +215,6 @@ Some good styles you can use are:
 'background: #222; color: #bada55;'
 ```
 You can come up with your own as well :) !
-
-###Use Case 6: Use templates for string placeholders
-Templates can be used to replace string contents with matching propert names of an object. 
-Just pass a truthy boolean as the fourth parameter of the `getInstance()` method to activate the template engine.
-Logs must follow a specific format for this engine to recognize templates. These logs will also be coloured once a custom colour is set.
-The following example shows you how. 
-#####Eg.
-```javascript
-app.controller('CoreController', ['$scope','$log', function($scope, $log) {
-      $log = $log.getInstance('CoreController', true, 'color: #990099;' , true );
-      $log.log('Advanced Log Extender Example: Use Case {example}', {example: 6}); 
-}]);
-```
-######Output:
-```
-Dec-08-2013-1:00:47PM >>  CONFIG: LOGGING ENABLED GLOBALLY
-Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Case 6
-```
-
-Currently, Only numbers and strings will be pushed into the template string.
 
 ####NB.
 These examples only show the use of $log.log(), however, the other $log methods were left in tact and can be used as well.

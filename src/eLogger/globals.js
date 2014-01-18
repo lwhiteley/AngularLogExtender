@@ -7,7 +7,7 @@ var enabled = false;
  * @param $log
  * @param function (with transformation rules) 
  **/
-angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, null, false]));
+angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, false, null]));
 
 /**
  * Extend the $log with the {@see getInstance} method

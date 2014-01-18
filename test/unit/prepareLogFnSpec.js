@@ -67,7 +67,7 @@ describe('prepareLogFn function Spec', function () {
             $log.enableLog(false);
         });
         it('should not call colorify when colorCss is not a string ', function () {
-            var exFn = prepareLogFn(logFn, "", true, true, null, false);
+            var exFn = prepareLogFn(logFn, "", true, true, false, null);
             exFn();
             expect(colorify).not.toHaveBeenCalled();
         });
@@ -76,7 +76,7 @@ describe('prepareLogFn function Spec', function () {
             spyOn(window, 'validateColorizeInputs').andCallFake(function() {
                 return false;
             });
-            var exFn = prepareLogFn(logFn, "", true, true, "css:jj;");
+            var exFn = prepareLogFn(logFn, "", true, true, false,"css:jj;");
             exFn();
             expect(colorify).not.toHaveBeenCalled();
         });
@@ -85,7 +85,7 @@ describe('prepareLogFn function Spec', function () {
             spyOn(window, 'validateColorizeInputs').andCallFake(function() {
                 return true;
             });
-            var exFn = prepareLogFn(logFn, "", true, true, "css:jj;");
+            var exFn = prepareLogFn(logFn, "", true, true, false,"css:jj;");
             exFn();
             expect(colorify).toHaveBeenCalled();
         });
@@ -111,23 +111,45 @@ describe('prepareLogFn function Spec', function () {
             expect(supplant).not.toHaveBeenCalled();
         });
         
-        it('should call supplant when useTemplate is a boolean and canTemplate returns false ', function () {
+        it('should call supplant when useTemplate is a boolean and validateTemplateInputs returns false ', function () {
             spyOn(window, 'validateTemplateInputs').andCallFake(function() {
                 return false;
             });
-            var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
+            var exFn = prepareLogFn(logFn, "", true, true, true, "css:jj;");
             exFn();
             expect(supplant).not.toHaveBeenCalled();
         });
         
-        it('should call supplant when useTemplate is a boolean and canTemplate returns true ', function () {
+        it('should call supplant when useTemplate is a boolean and validateTemplateInputs returns true ', function () {
             spyOn(window, 'validateTemplateInputs').andCallFake(function() {
                 return true;
             });
+            
+            var exFn = prepareLogFn(logFn, "", true, true, true, "css:jj;");
+            exFn();
+            expect(supplant).toHaveBeenCalled();
+        });
+        
+        
+    });
+    describe('prepareLogFn function Spec - when supplant returns a string ', function () {
+        beforeEach(function () {
+            $log.enableLog(true);
+            spyOn(window, 'supplant').andCallThrough().andReturn('fghfgh');
+        });
+        afterEach(function () {
+            $log.enableLog(false);
+        });
+        it('should call supplant when useTemplate is a boolean and validateTemplateInputs returns true ', function () {
+            spyOn(window, 'validateTemplateInputs').andCallFake(function() {
+                return true;
+            });
+            
             var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
             exFn();
             expect(supplant).toHaveBeenCalled();
         });
+        
     });
 
 });
