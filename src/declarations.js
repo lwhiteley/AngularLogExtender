@@ -22,9 +22,9 @@
         // default colours for each log method
         var defaultLogMethodColors = {
             log: 'color: green;',
-            info: 'color: #330000;',
-            warn: 'color: orange;',
-            debug: 'color: blue;',
+            info: 'color: blue',
+            warn: 'color: #CC9933;',
+            debug: 'color: #990033;',
             error: 'color: red;'
         };
 
