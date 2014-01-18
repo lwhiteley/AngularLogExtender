@@ -15,6 +15,21 @@ The prefered file to use is the log-ex-unobtrusive.js file. You can include the 
 
 Supported browsers for Colorize are currently `Google Chrome` and `Mozilla Firefox`.
 
+####NB.
+The following examples only show the use of $log.log(), however, all $log methods were left in tact and can be used as well.
+
+These are:
+```
+   Method           Default Color
+1. $log.log()    -  Green
+2. $log.warn()   -  Gold
+3. $log.info()   -  Blue
+4. $log.error()  -  Red
+5. $log.debug()  -  Brown
+```
+
+
+
 Feel Free to make your own contributions to this module so we can make it better :)
 
 ###Install with bower:
@@ -215,16 +230,3 @@ Some good styles you can use are:
 'background: #222; color: #bada55;'
 ```
 You can come up with your own as well :) !
-
-####NB.
-These examples only show the use of $log.log(), however, the other $log methods were left in tact and can be used as well.
-
-These are:
-```
-1. $log.warn()
-2. $log.info()
-3. $log.error()
-4. $log.debug()
-```
-
-

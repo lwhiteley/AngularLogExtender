@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.504f946
+ * Log Unobtrusive Extension v0.0.6-sha.e225feb
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -44,7 +44,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             log: 'color: green;',
             info: 'color: blue',
             warn: 'color: #CC9933;',
-            debug: 'color: #990033;',
+            debug: 'color: brown;',
             error: 'color: red;'
         };
 
@@ -496,7 +496,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.504f946',
+                version: '0.0.6-sha.e225feb',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,

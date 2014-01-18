@@ -24,7 +24,7 @@
             log: 'color: green;',
             info: 'color: blue',
             warn: 'color: #CC9933;',
-            debug: 'color: #990033;',
+            debug: 'color: brown;',
             error: 'color: red;'
         };
 
