@@ -33,7 +33,7 @@ Feel Free to make your own contributions to this module so we can make it better
 ###Install with bower:
 
 Now offers bower support.
-`bower install angular-logex`
+`bower install angular-logex --save`
 
 Add a script to your index.html:
 ```javascript
