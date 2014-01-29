@@ -143,8 +143,8 @@ describe('Log Object Create Method Spec', function () {
             };
             spyOn(window, 'validateColorCssString').andCallThrough();
             isColorifySupportedBrowser = (true);
-            
-            angular.forEach(allowedMethods, function(val, idx) {
+
+            angular.forEach(allowedMethods, function(val) {
                 utils.myLog[val] = defaultLogMethodColors[val];
             });
            
@@ -182,7 +182,7 @@ describe('Log Object Create Method Spec', function () {
             spyOn(window, 'validateColorCssString').andCallThrough();
             isColorifySupportedBrowser = (true);
             
-            angular.forEach(allowedMethods, function(val, idx) {
+            angular.forEach(allowedMethods, function(val) {
                 utils.myLog[val] = defaultLogMethodColors[val];
             });
            

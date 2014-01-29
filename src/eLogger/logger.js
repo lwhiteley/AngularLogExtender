@@ -1,11 +1,11 @@
 /**
  * Partial application to pre-capture a logger function
- * @param logFn     - $log instance
+ * @param logFn - $log instance
  * @param className - name of the $controller class
  * @param override
  * @param useOverride
  * @param colorCss
- * @param activateTemplate
+ * @param useTemplate
  * @returns {Function}
  */
 var prepareLogFn = function (logFn, className, override, useOverride, useTemplate, colorCss) {
@@ -43,11 +43,13 @@ var _$log = createLogObj($log, allowedMethods);
 
 /**
  * Support to generate class-specific logger instance with/without className or override
- * @param {string=} className - Name of object in which $log.<function> calls is invoked.
+ * @param {*} className - Name of object in which $log.<function> calls is invoked.
  * @param {boolean=} override - activates/deactivates component level logging
+ * @param {boolean=} useTemplate
+ * @param {String=} colorCss
  * @returns {*} $log instance
  */
-var getInstance = function (/*{string=}*/className, /*{boolean=}*/override,/*{boolean=}*/useTemplate, /*{string=}*/colorCss) {
+var getInstance = function (/*{*=}*/className, /*{boolean=}*/override,/*{boolean=}*/useTemplate, /*{String=}*/colorCss) {
     if (isBoolean(className)) {
         override = className;
         className = null;

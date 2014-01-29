@@ -8,7 +8,14 @@ describe('supplant spec, takes a string and an object respectively ', function (
         var expected = '' + r.email + ' - ' + r.who;
         expect(result).toEqual(expected);
     });
-    
+
+    it('should return the template if object properties are not in the value object', function () {
+        var r = {who: 'sjsjd', email: "user@cp.com"};
+        var template = '{user.email} - {user.who}';
+        var result = supplant(template, r, /\{([^\{\}]*)\}/g);
+        expect(result).toBe(template);
+    });
+
      it('should return populated string with template object values without custom pattern', function () {
         var r = {who: 'sjsjd', email: "user@cp.com"};
         var result = supplant('{email} - {who}', r);
@@ -20,7 +27,6 @@ describe('supplant spec, takes a string and an object respectively ', function (
         var r = {who: 'sjsjd', email: "user@cp.com"};
         var template = 'no templates are passed';
         var result = supplant(template, r);
-        var expected = '' + r.email + ' - ' + r.who;
         expect(result).toEqual(template);
     });
     
@@ -28,7 +34,6 @@ describe('supplant spec, takes a string and an object respectively ', function (
         var r = {who: 'sjsjd', email: "user@cp.com"};
         var template = '{emailWho} - {whoEmail}';
         var result = supplant(template, r);
-        var expected = '' + r.email + ' - ' + r.who;
         expect(result).toEqual(template);
     });
     
@@ -41,10 +46,8 @@ describe('supplant spec, takes a string and an object respectively ', function (
     });
         
     it('should return array of arguments when an object is not passed', function () {
-        var r = {who: 'sjsjd', email: "user@cp.com"};
         var template = '{email} - {who}';
         var result = supplant(template, '');
-        var expected = '' + r.email + ' - ' + r.who;
         expect(result).toEqual([template, '']);
     });
     
@@ -52,7 +55,6 @@ describe('supplant spec, takes a string and an object respectively ', function (
         var r = {who: 'sjsjd', email: "user@cp.com"};
         var template = '{email} - {whoEmail}';
         var result = supplant( r, template);
-        var expected = '' + r.email + ' - {whoEmail}';
         expect(result).toEqual([r, template]);
     });
 });
