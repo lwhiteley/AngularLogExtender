@@ -1,5 +1,3 @@
-
-
 describe('supplant spec, takes a string and an object respectively ', function () {
     
     it('should return populated string with template object values with custom pattern', function () {

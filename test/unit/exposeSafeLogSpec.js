@@ -1,9 +1,7 @@
 describe('exposeSafeLog function Spec', function () {
     var logEx, ngLog;
 
-
     //TODO : Debug functionality is not supported for angular versions lower than 1.1.2
-
     beforeEach(function () {
         ngLog = $injector.get('$log');
         logEx = exposeSafeLog(ngLog);
@@ -13,7 +11,6 @@ describe('exposeSafeLog function Spec', function () {
         expect(logEx).toBeDefined();
         expect(logEx.getInstance).toBeUndefined();
         expect(logEx.log).toBeDefined();
-//        expect(logEx.debug).toBeDefined();
         expect(logEx.warn).toBeDefined();
         expect(logEx.info).toBeDefined();
         expect(logEx.error).toBeDefined();
@@ -29,7 +26,6 @@ describe('exposeSafeLog function Spec', function () {
         expect(logEx).toBeDefined();
         expect(logEx.getInstance).toBeDefined();
         expect(logEx.log).toBeDefined();
-//        expect(logEx.debug).toBeDefined();
         expect(logEx.warn).toBeDefined();
         expect(logEx.info).toBeDefined();
         expect(logEx.error).toBeDefined();

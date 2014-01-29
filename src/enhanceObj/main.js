@@ -25,7 +25,7 @@ var processOverride = function (override) {
  * @returns {boolean}
  */
 var activateLogs = function (enabled, override) {
-    if(isBoolean(enabled) && isBoolean(override)){
+    if(isBoolean(enabled) && isBoolean(override)) {
         return override;
     }
     return false;
@@ -57,7 +57,7 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
  * @param arr
  * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
  */
-var arrToObject = function(arr) {
+var arrToObject = function (arr) {
     var result = {};
     if(angular.isArray(arr)) {
         result = { getInstance:angular.noop };
@@ -87,16 +87,14 @@ var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/
             var params = [];
             angular.copy(aParams, params);
             params.unshift(oSrc[value]);
-            if(isColorifySupportedBrowser && useDefaultColors){
+            if(isColorifySupportedBrowser && useDefaultColors) {
                 params[5] = validateColorCssString(params[5]) ? params[5] : defaultLogMethodColors[value];
             }
             res = func.apply(null, params);
         } else {
             res = oSrc[value];
         }
-//        console.log(angular.isUndefined(oMethods[value]), oMethods);
         resultSet[value] = angular.isUndefined(oMethods[value]) ? angular.noop : res;
     });
-//    console.log(resultSet);
     return resultSet;
 };

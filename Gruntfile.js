@@ -113,14 +113,6 @@ module.exports = function (grunt) {
                 coverage_dir: 'lcov'
             }
         },
-//        bump: {
-//            options: {
-//                files: ['package.json'],
-//                commit: false,
-//                createTag: false,
-//                push: false
-//            }
-//        },
         bump: {
             options: {
                 files: ['package.json'],

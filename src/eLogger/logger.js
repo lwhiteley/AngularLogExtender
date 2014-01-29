@@ -14,14 +14,14 @@ var prepareLogFn = function (logFn, className, override, useOverride, useTemplat
         if (activate) {
             var args = Array.prototype.slice.call(arguments);
             var prefix = getLogPrefix(className);
-            if(validateTemplateInputs(useTemplate, args)){
+            if(validateTemplateInputs(useTemplate, args)) {
                 var data = (supplant.apply(null, args));
                 data = (itypeof(data) === 'string') ? [data] : data;
                 args = data;
             }
-            if(itypeof(colorCss) === 'string' && validateColorizeInputs(args)){
-                args = colorify(args[0], colorCss, prefix) ; 
-            }else{  
+            if(itypeof(colorCss) === 'string' && validateColorizeInputs(args)) {
+                args = colorify(args[0], colorCss, prefix) ;
+            } else {
                 args.unshift(prefix);
             }
                 

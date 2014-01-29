@@ -81,13 +81,13 @@
          * @param full
          * @returns {boolean}
          */
-        var isSubString = function(sub, full){
-           if(itypeof(sub) === 'string' && itypeof(full) === 'string'){
-              if(full.toLowerCase().indexOf(sub.toLowerCase()) != -1){
-                  return true;
-              }
-           }
-           return false;
+        var isSubString = function(sub, full) {
+            if(itypeof(sub) === 'string' && itypeof(full) === 'string') {
+                if(full.toLowerCase().indexOf(sub.toLowerCase()) != -1) {
+                    return true;
+                }
+            }
+            return false;
         };
 
 
@@ -97,7 +97,7 @@
          * @param useTemplate
          * @param args
          */
-       var validateTemplateInputs = function(useTemplate, args){
+       var validateTemplateInputs = function(useTemplate, args) {
             return isBoolean(useTemplate) && useTemplate && args.length == 2;
        };
         /**
@@ -107,7 +107,7 @@
        * @param values
        * @param {RegExp=} pattern
        **/
-        var supplant =  function( template, values, /*{RegExp=}*/pattern ) {
+        var supplant =  function( template, values, /*{RegExp=}*/pattern) {
             var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
             var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
             if(criteria1 || criteria2) {
@@ -136,13 +136,13 @@
          * checks if the browser is a part of the supported browser list
          * @returns {boolean}
          */
-        var isColorifySupported = function(){
-           for (var i=0; i < colorifySupportedBrowsers.length; i++){
-               if(isSubString(colorifySupportedBrowsers[i], userAgent)){
-                  return true;
-               }
+        var isColorifySupported = function () {
+            for (var i=0; i < colorifySupportedBrowsers.length; i++) {
+                if(isSubString(colorifySupportedBrowsers[i], userAgent)) {
+                    return true;
+                }
             }
-           return false;
+            return false;
         };
 
         // stores flag to know if current browser is colorify supported
@@ -154,7 +154,7 @@
          * @param args
          * @returns {boolean}
          */
-        var validateColorizeInputs = function(args){
+        var validateColorizeInputs = function (args) {
             return (args.length == 1 &&
                         itypeof(args[0]) === 'string');
         };
@@ -164,10 +164,9 @@
          * @param value
          * @returns {boolean}
          */
-        var validateColorCssString = function(value){
+        var validateColorCssString = function (value) {
             return (itypeof(value) === 'string' && isSubString(':', value)) ;
         };
-
 
         /**
          * takes a string a returns an array as parameters
@@ -178,7 +177,7 @@
          * @param prefix
          * @returns {*[]}
          */
-        var colorify  = function( message, colorCSS, prefix ){
+        var colorify  = function (message, colorCSS, prefix) {
             prefix = (itypeof(prefix) === 'string' ? prefix : '') ;
             var canProcess = isColorifySupportedBrowser && validateColorCssString(colorCSS) && itypeof(message) === 'string';
             var output = canProcess ? ('' + prefix + message) : message;

@@ -4,7 +4,6 @@ module.exports = function (config) {
     config.set({
         basePath: '../',
         frameworks: ['jasmine'],
-//        files: files.getAngularFiles('1.2').concat(files.libs, files.tests),
         exclude : files.exclusions,
         autoWatch: true,
         browsers: ['Chrome'],

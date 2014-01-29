@@ -1,7 +1,3 @@
-/**
- * Created by ferron on 12/24/13.
- */
-
 describe('Log Object Create Method Spec', function () {
 
     it('should return an object of noop if an empty method array is passed', function () {
