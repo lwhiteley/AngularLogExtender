@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.99672a4
+ * Log Unobtrusive Extension v0.0.6-sha.74be057
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -188,7 +188,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return (itypeof(value) === 'string' && isSubString(':', value));
         };
 
-
         /**
          * takes a string a returns an array as parameters
          * if browser is supported
@@ -324,10 +323,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                             } else {
                                 res = oSrc[value];
                             }
-                            //        console.log(angular.isUndefined(oMethods[value]), oMethods);
                             resultSet[value] = angular.isUndefined(oMethods[value]) ? angular.noop : res;
                         });
-                        //    console.log(resultSet);
                         return resultSet;
                     };
                     /**
@@ -497,6 +494,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var disableDefaultColors = function(flag) {
             useDefaultColors = (isBoolean(flag) && flag) ? false : true;
         };
+
         /**
          * default $get method necessary for provider to work
          * not sure what to do with this yet
@@ -504,7 +502,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.99672a4',
+                version: '0.0.6-sha.74be057',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
