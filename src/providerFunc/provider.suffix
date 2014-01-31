@@ -16,38 +16,21 @@
         };
     };
 
-    /**
-    * used externally to enable/disable logging globally
-    * @param flag {boolean}
-    **/
+    
     this.enableLogging = enableLogging;
 
-    /**
-    * Modify the default log prefix
-    **/
+    
     this.overrideLogPrefix = overrideLogPrefix;
 
-    /**
-    * Configure which log functions can be exposed at runtime
-    */
     this.restrictLogMethods = restrictLogMethods;
     
-    /**
-    * Turns off default coloring of logs
-    */
+    
     this.disableDefaultColors = disableDefaultColors;
     
-    /**
-     * Used to set a custom color to a specific $log method
-     * @param methodName
-     * @param colorCss
-     */
+    
      this.setLogMethodColor = setLogMethodColor;
      
-     /**
-     * Used to set custom colors to multiple $log method
-     * @param overrides
-     */
+     
      this.overrideLogMethodColors = overrideLogMethodColors;
     
 }]);
