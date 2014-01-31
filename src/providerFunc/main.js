@@ -2,7 +2,7 @@
 
 /**
 * Used externally to enable/disable logging globally
-* @param flag - boolean that sets wheher logging is enabled/disabled
+* @param flag - boolean that sets whether logging is enabled/disabled
 */
 var enableLogging = function (flag) {
     enableGlobally = isBoolean(flag) ? flag : false;
@@ -33,7 +33,7 @@ var overrideLogPrefix = function (logPrefix) {
 
 /**
 * Turns off default coloring of logs
-* @param flag - boolean to configure disabling default log colors
+* @param flag - boolean that configures disabling default log colors
 */
 var disableDefaultColors = function (flag) {
     useDefaultColors = (isBoolean(flag) && flag) ? false : true;
