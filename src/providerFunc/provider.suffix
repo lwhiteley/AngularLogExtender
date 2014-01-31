@@ -10,7 +10,8 @@
             enableLogging: enableLogging,
             restrictLogMethods: restrictLogMethods,
             overrideLogPrefix: overrideLogPrefix,
-            disableDefaultColors: disableDefaultColors
+            disableDefaultColors: disableDefaultColors,
+            setLogMethodColor: setLogMethodColor
         };
     };
 
@@ -34,5 +35,12 @@
     * Turns off default coloring of logs
     */
     this.disableDefaultColors = disableDefaultColors;
+    
+    /**
+     * Used to set a custom color to a specific $log method
+     * @param methodName
+     * @param colorCss
+     */
+     this.setLogMethodColor = setLogMethodColor;
     
 }]);

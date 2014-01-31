@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.74be057
+ * Log Unobtrusive Extension v0.0.6-sha.59f4b20
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -468,10 +468,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         // Provider functions that will be exposed to allow overriding of default $logProvider functionality
 
-        /**
-         * Enables/disables global logging
-         * @param flag
-         */
         var enableLogging = function(flag) {
             enableGlobally = isBoolean(flag) ? flag : false;
         };
@@ -495,6 +491,15 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             useDefaultColors = (isBoolean(flag) && flag) ? false : true;
         };
 
+        var setLogMethodColor = function(methodName, colorCss) {
+            if (itypeof(methodName) === 'string' &&
+                defaultLogMethodColors.hasOwnProperty(methodName) &&
+                validateColorCssString(colorCss)) {
+
+                defaultLogMethodColors[methodName] = colorCss;
+            }
+        };
+
         /**
          * default $get method necessary for provider to work
          * not sure what to do with this yet
@@ -502,11 +507,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.74be057',
+                version: '0.0.6-sha.59f4b20',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
-                disableDefaultColors: disableDefaultColors
+                disableDefaultColors: disableDefaultColors,
+                setLogMethodColor: setLogMethodColor
             };
         };
 
@@ -530,6 +536,13 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * Turns off default coloring of logs
          */
         this.disableDefaultColors = disableDefaultColors;
+
+        /**
+         * Used to set a custom color to a specific $log method
+         * @param methodName
+         * @param colorCss
+         */
+        this.setLogMethodColor = setLogMethodColor;
 
     }
 ]);

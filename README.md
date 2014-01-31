@@ -105,9 +105,17 @@ app.config(['logExProvider', function(logExProvider) {
     });
 }]);
 ```
-######3. Disable/Enable default coloring of logs
+######3. Set custom color to a $log method
 
-If the default color system is not to your liking, its possible to disable it. The following shows you how to do so.
+If the default color of a specific $log method is not to your liking, its possible to override it. The following shows you how to do so.
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    logExProvider.setLogMethodColor('log', 'color:red;');
+}]);
+```
+######4. Disable/Enable default coloring of logs
+
+If the default colors are not to your liking, its possible to disable it. The following shows you how to do so.
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
     logExProvider.disableDefaultColors(true);

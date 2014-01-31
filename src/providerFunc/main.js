@@ -1,9 +1,5 @@
 // Provider functions that will be exposed to allow overriding of default $logProvider functionality
 
-/**
- * Enables/disables global logging
- * @param flag
- */
 var enableLogging = function (flag) {
     enableGlobally = isBoolean(flag) ? flag : false;
 };
@@ -25,4 +21,13 @@ var overrideLogPrefix = function (logPrefix) {
 
 var disableDefaultColors = function (flag) {
     useDefaultColors = (isBoolean(flag) && flag) ? false : true;
+};
+
+var setLogMethodColor = function(methodName, colorCss){
+    if(itypeof(methodName) === 'string' && 
+       defaultLogMethodColors.hasOwnProperty(methodName) && 
+       validateColorCssString(colorCss)){
+        
+        defaultLogMethodColors[methodName] = colorCss;
+    }
 };
