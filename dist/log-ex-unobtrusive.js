@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.9e8db3b
+ * Log Unobtrusive Extension v0.0.6-sha.2995d49
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -500,6 +500,14 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             }
         };
 
+        var overrideLogMethodColors = function(overrides) {
+            if (itypeof(overrides) === 'object') {
+                for (var prop in overrides) {
+                    setLogMethodColor(prop, overrides[prop]);
+                }
+            }
+        };
+
         /**
          * default $get method necessary for provider to work
          * not sure what to do with this yet
@@ -507,12 +515,13 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.9e8db3b',
+                version: '0.0.6-sha.2995d49',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
                 disableDefaultColors: disableDefaultColors,
-                setLogMethodColor: setLogMethodColor
+                setLogMethodColor: setLogMethodColor,
+                overrideLogMethodColors: overrideLogMethodColors
             };
         };
 
@@ -543,6 +552,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param colorCss
          */
         this.setLogMethodColor = setLogMethodColor;
+
+        /**
+         * Used to set custom colors to multiple $log method
+         * @param overrides
+         */
+        this.overrideLogMethodColors = overrideLogMethodColors;
 
     }
 ]);

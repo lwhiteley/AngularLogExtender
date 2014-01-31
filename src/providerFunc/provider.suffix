@@ -11,7 +11,8 @@
             restrictLogMethods: restrictLogMethods,
             overrideLogPrefix: overrideLogPrefix,
             disableDefaultColors: disableDefaultColors,
-            setLogMethodColor: setLogMethodColor
+            setLogMethodColor: setLogMethodColor,
+            overrideLogMethodColors: overrideLogMethodColors
         };
     };
 
@@ -42,5 +43,11 @@
      * @param colorCss
      */
      this.setLogMethodColor = setLogMethodColor;
+     
+     /**
+     * Used to set custom colors to multiple $log method
+     * @param overrides
+     */
+     this.overrideLogMethodColors = overrideLogMethodColors;
     
 }]);

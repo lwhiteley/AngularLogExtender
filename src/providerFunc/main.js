@@ -31,3 +31,11 @@ var setLogMethodColor = function(methodName, colorCss){
         defaultLogMethodColors[methodName] = colorCss;
     }
 };
+
+var overrideLogMethodColors = function(overrides){
+    if(itypeof(overrides) === 'object'){
+        for(var prop in overrides){
+            setLogMethodColor(prop, overrides[prop]);
+        }
+    }
+};
