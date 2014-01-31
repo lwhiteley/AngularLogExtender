@@ -2,19 +2,19 @@ describe('overrideLogMethodColor Spec', function () {
     var temp, testColors;
     beforeEach(function () {
         temp = defaultLogMethodColors;
-        
+
         defaultLogMethodColors = {
             log: 'black',
             error: 'indigo'
         };
-        
+
         testColors = defaultLogMethodColors;
     });
-    
+
     afterEach(function () {
         defaultLogMethodColors = temp;
     });
-    
+
     it('should not update any properties when overrides is not an object', function () {
         var override = 'not valid param';
         overrideLogMethodColors(override);
@@ -29,7 +29,7 @@ describe('overrideLogMethodColor Spec', function () {
         overrideLogMethodColors(override);
         expect(defaultLogMethodColors).toEqual(testColors);
     });
-    
+
     it('should not update valid properties when set in color overrides and css is not invalid ', function () {
         var override = {
             log: 'not a color',
@@ -39,7 +39,7 @@ describe('overrideLogMethodColor Spec', function () {
         expect(defaultLogMethodColors.log).toBe(testColors.log);
         expect(defaultLogMethodColors.error).toBe(testColors.error);
     });
-    
+
     it('should only update valid properties when set in color overrides with valid css', function () {
         var css = 'color:blue';
         var override = {
@@ -50,7 +50,7 @@ describe('overrideLogMethodColor Spec', function () {
         expect(defaultLogMethodColors.log).toBe(css);
         expect(defaultLogMethodColors.error).toBe(testColors.error);
     });
-    
+
     it('should update all valid properties when set in color overrides with valid css', function () {
         var css = 'color:blue';
         var css2 = 'color:red';
@@ -62,5 +62,5 @@ describe('overrideLogMethodColor Spec', function () {
         expect(defaultLogMethodColors.log).toBe(css);
         expect(defaultLogMethodColors.error).toBe(css2);
     });
-   
+
 });

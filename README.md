@@ -3,15 +3,17 @@ AngularLogExtender
 
 This is an extension of the Angular $log functionality. It uses the native $decorator to push the $log pass its capabilities and provide new functionality such as configuring the $log for different environments such as production and development.
 
-To view the blog this module was extended from and inspired by, go to 
+To view the blog this module was extended from and inspired by, go to
 http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
+
+Feel Free to make your own contributions to this module so we can make it better :)
 
 [![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
 [![Coverage Status](https://coveralls.io/repos/ferronrsmith/AngularLogExtender/badge.png)](https://coveralls.io/r/ferronrsmith/AngularLogExtender)
 
 ###Notes
 
-The prefered file to use is the log-ex-unobtrusive.js file. You can include the module to your AngularJs Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style. Log methods are now colour coded by default. 
+The prefered file to use is the log-ex-unobtrusive.js file. You can include the module to your AngularJs Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style. Log methods are now colour coded by default.
 
 Supported browsers for Colorize are currently `Google Chrome` and `Mozilla Firefox`.
 
@@ -27,8 +29,6 @@ These are:
 4. $log.error()  -  Red
 5. $log.debug()  -  Brown
 ```
-
-Feel Free to make your own contributions to this module so we can make it better :)
 
 ###Install with bower:
 
@@ -50,7 +50,8 @@ Add a script to your index.html:
 7. Use a template engine for your logs
 8. Disable/Enable default coloring of logs
 
-##How to Use 
+
+##How to Use
 
 ######Step 1. Add Module Dependency
 ```javascript
@@ -69,14 +70,14 @@ app.config(['logExProvider', function(logExProvider) {
 
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
-    $log.log("Simple Log Extender Example"); 
+    $log.log("Simple Log Extender Example");
 }]);
 ```
 ######Step 4. Load the web page and look in the Developer Console
 Sample Output
 ```
 Dec-08-2013-12:50:52PM >>  CONFIG: LOGGING ENABLED GLOBALLY
-Dec-08-2013-12:50:52PM >>  Simple Log Extender Example 
+Dec-08-2013-12:50:52PM >>  Simple Log Extender Example
 ```
 ##Advanced Configurations
 
@@ -131,12 +132,12 @@ app.config(['logExProvider', function(logExProvider) {
 ```
 ##Advanced Use Cases
 ###Use Case 1: Set Component Class Name
-This example can be used to know which component (controller, directive etc.) $log instances are being pushed from to the console. The new instance must be re-assigned to the $log object to take effect. This Advanced use case is always recommended to get more information from your application logs. 
+This example can be used to know which component (controller, directive etc.) $log instances are being pushed from to the console. The new instance must be re-assigned to the $log object to take effect. This Advanced use case is always recommended to get more information from your application logs.
 #####Example
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController');
-      $log.log("Advanced Log Extender Example: Use Case 1: Example"); 
+      $log.log("Advanced Log Extender Example: Use Case 1: Example");
 }]);
 ```
 ######Output:
@@ -152,7 +153,7 @@ This example is used to disable logging to the console from a specific component
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', false);
-      $log.log("Advanced Log Extender Example: Use Case 2: Eg 1"); 
+      $log.log("Advanced Log Extender Example: Use Case 2: Eg 1");
 }]);
 ```
 ######Output:
@@ -166,28 +167,28 @@ Setting the override without the class name
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance(false);
-      $log.log("Advanced Log Extender Example: Use Case 2: Eg 2 "); 
+      $log.log("Advanced Log Extender Example: Use Case 2: Eg 2 ");
 }]);
 ```
 ######Output:
 ```
 Dec-08-2013-1:08:34PM >>  CONFIG: LOGGING ENABLED GLOBALLY
-Dec-08-2013-1:08:34PM >> [OVERRIDE] LOGGING DISABLED - $log disabled for this instance 
+Dec-08-2013-1:08:34PM >> [OVERRIDE] LOGGING DISABLED - $log disabled for this instance
 ```
 
-###Use Case 3: Enable Logging within a specific Component 
-For this override to work, Debugging must be globally disabled. The practical use for this scenario is when you want to enable logging for a specific component in production to see the logs there. 
+###Use Case 3: Enable Logging within a specific Component
+For this override to work, Debugging must be globally disabled. The practical use for this scenario is when you want to enable logging for a specific component in production to see the logs there.
 #####Eg 1.
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', true);
-      $log.log("Advanced Log Extender Example: Use Case 3: Eg 1 "); 
+      $log.log("Advanced Log Extender Example: Use Case 3: Eg 1 ");
 }]);
 ```
 ######Output:
 ```
 Dec-08-2013-1:20:56PM >> [OVERRIDE] LOGGING ENABLED - $log enabled for CoreController
-Dec-08-2013-1:20:56PM::CoreController >>  Advanced Log Extender Example: Use Case 3: Eg 1 
+Dec-08-2013-1:20:56PM::CoreController >>  Advanced Log Extender Example: Use Case 3: Eg 1
 ```
 
 #####Eg 2.
@@ -195,7 +196,7 @@ Setting the override without the class name
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance(true);
-      $log.log("Advanced Log Extender Example: Use Case 3: Eg 2"); 
+      $log.log("Advanced Log Extender Example: Use Case 3: Eg 2");
 }]);
 ```
 ######Output:
@@ -205,7 +206,7 @@ Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 ```
 
 ###Use Case 4: Configure only specific methods to print to the console
-This scenario is helpful when you want to only allow specific types of log messages to be sent to the console in a 
+This scenario is helpful when you want to only allow specific types of log messages to be sent to the console in a
 particular environment. For eg. Say we want to only allow error logs to be seen in production, then the following configuration will
 produce this result.
 #####Eg 1.
@@ -216,15 +217,15 @@ app.config(['logExProvider', function(logExProvider) {
 }]);
 ```
 ###Use Case 5: Use the built in template engine
-Templates can be used to replace string contents with matching propert names of an object. 
+Templates can be used to replace string contents with matching propert names of an object.
 Just pass a truthy boolean as the fourth parameter of the `getInstance()` method to activate the template engine.
 Logs must follow a specific format for this engine to recognize templates. These logs will also be coloured once a custom colour is set.
-The following example shows you how. 
+The following example shows you how.
 #####Eg.
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', true, true);
-      $log.log('Advanced Log Extender Example: Use Case {example}', {example: 6}); 
+      $log.log('Advanced Log Extender Example: Use Case {example}', {example: 6});
 }]);
 ```
 ######Output:
@@ -242,7 +243,7 @@ The following example shows you how.
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
       $log = $log.getInstance('CoreController', true, false,'color: #990099; background: #FFFFCC;');
-      $log.log("Advanced Log Extender Example: Use Case 5"); 
+      $log.log("Advanced Log Extender Example: Use Case 5");
 }]);
 ```
 
@@ -252,4 +253,4 @@ Some good styles you can use are:
 'color: #990099; background: #FFFFCC;'
 'background: #222; color: #bada55;'
 ```
-You can come up with your own as well :) !
+You can also come up with your own styles as well :) !
