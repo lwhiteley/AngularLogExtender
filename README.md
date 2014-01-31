@@ -107,7 +107,7 @@ app.config(['logExProvider', function(logExProvider) {
 ```
 ######3. Set custom color to a $log method
 
-If the default color of a specific $log method is not to your liking, its possible to override it. The following shows you how to do so.
+If the default color of a specific $log method is not to your liking, its possible to override it. You just need the pass the method name and the css to the `setLogMethodColor` method. The following example shows you how to do so.
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
     logExProvider.setLogMethodColor('log', 'color:red;');
