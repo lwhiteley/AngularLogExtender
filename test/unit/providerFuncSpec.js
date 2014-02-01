@@ -29,9 +29,10 @@ describe('Provider Func Spec', function () {
     });
 
     describe('override log prefix Spec', function () {
-        var clock, sDateFormat;
+        var clock, sDateFormat, customLogPrefixFn;
 
         beforeEach(function () {
+            tempCustomPrefix = customLogPrefixFn ;
             sDateFormat = "May-02-2010-12:42:53PM >> ";
             clock = angular.mock.$mockDate();
             datespy.clock.create(new Date(2010, 4, 2, 12, 42, 53).getTime());
@@ -40,6 +41,7 @@ describe('Provider Func Spec', function () {
         afterEach(function () {
             clock.$restoreDate();
             logPrefixOverride = false;
+            customLogPrefixFn = tempCustomPrefix;
         });
 
         it('should return default formatter if function is not passed', function () {
