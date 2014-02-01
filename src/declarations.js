@@ -101,6 +101,7 @@
           var isBoolean = function (value) {
               return itypeof(value) === 'boolean';
           };
+
           /**
            * This method checks if a variable is of type {string}
            * and if the string is not an empty string
@@ -127,8 +128,8 @@
           };
 
           /**
-           * this method checks if useTemplate is truthy and
-           * if the log arguments array is equal to 2
+           * The following method checks if useTemplate value is true and
+           * if the log arguments array length is two
            * @param {boolean} useTemplate - flag that configures the usage of the template engine
            * @param {*[]} args - list of log arguments that should match pattern creating template strings
            * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
@@ -140,7 +141,7 @@
            * supplant is a string templating engine that replaces patterns
            * in a string with values from a template object
            * @param {string} template - string with patterns to be replaced by values
-           * @param {*{}} values - object with values to replace in template string
+           * @param {object} values - object with values to replace in template string
            * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
            * @returns {string} - returns formatted string if template and values match the required pattern
            */
@@ -170,7 +171,7 @@
           };
 
           /**
-           * Checks if the browser is a part of the supported browser list
+           * Checks if the current browser is a part of the supported browser list for adding colors
            * @returns {boolean} - returns true if the current browser supports colorify
            */
           var isColorifySupported = function () {
@@ -186,10 +187,11 @@
            * Stores flag to know if current browser is colorify supported
            * @type {boolean}
            */
+          //TODO: Need to refactor this into a self-invoking function
           var isColorifySupportedBrowser = isColorifySupported();
 
           /**
-           * checks if the log arguments array is of length 1 and the element is a string
+           * The following method checks if the log arguments array length is one and the element is a string
            * @param {*[]} args - unevaluated log method arguments array that should contain only one element of type {string}
            * @returns {boolean} - returns true if args match the above criteria
            */
@@ -199,7 +201,7 @@
           };
 
            /**
-           * does minor validation to ensure css string contains known keys
+           * The following method does partial validation to ensure css string contains known keys
            * @param {string} css - css string to be evaluated
            * @returns {boolean} - returns true if string contains any supported keys
            */
@@ -208,7 +210,7 @@
           };
 
           /**
-           * does minor validation to ensure css string is valid
+           * The following method does partial validation to ensure css string is valid
            * @param {string} value - css string to be evaluated
            * @returns {boolean} - returns true if string has css format
            */
@@ -218,13 +220,12 @@
           };
 
           /**
-           * takes a string a returns an array as parameters
-           * if browser is supported
-           * expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
+           * The following takes a string a returns an array as parameter if browser is supported
+           * e.g. Expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
            * @param {string} message - string to be coloured
            * @param {string} colorCSS - css string to apply to message
            * @param {string} prefix - log prefix to be prepended to message
-           * @returns {*[]} - returns colorify formated array if all inputs are valid else returns array with the original message
+           * @returns {*[]} - returns colorify formatted array if all inputs are valid else returns array with the original message
            */
           var colorify = function (message, colorCSS, prefix) {
               prefix = (itypeof(prefix) === 'string' ? prefix : '');
@@ -235,6 +236,7 @@
 
           /**
            * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
+           * @see overrideLogPrefix to override the logPrefix
            * @param {string=} className - name of the component class ($controller, $service etc.)
            * @returns {string} - formatted string that will be prepended to log outputs
            */
@@ -255,7 +257,6 @@
             if((!isBoolean(useDefaultPrefix) || !useDefaultPrefix) &&
                 isBoolean(logPrefixOverride) && logPrefixOverride &&
                 angular.isFunction(customLogPrefixFn)){
-
                 prefix = customLogPrefixFn(className);
             }else{
                 prefix = defaultLogPrefixFn(className);

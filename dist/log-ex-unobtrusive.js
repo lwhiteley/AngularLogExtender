@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.d879432
+ * Log Unobtrusive Extension v0.0.6-sha.0886ae8
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -121,6 +121,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var isBoolean = function(value) {
             return itypeof(value) === 'boolean';
         };
+
         /**
          * This method checks if a variable is of type {string}
          * and if the string is not an empty string
@@ -147,8 +148,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * this method checks if useTemplate is truthy and
-         * if the log arguments array is equal to 2
+         * The following method checks if useTemplate value is true and
+         * if the log arguments array length is two
          * @param {boolean} useTemplate - flag that configures the usage of the template engine
          * @param {*[]} args - list of log arguments that should match pattern creating template strings
          * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
@@ -160,7 +161,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * supplant is a string templating engine that replaces patterns
          * in a string with values from a template object
          * @param {string} template - string with patterns to be replaced by values
-         * @param {*{}} values - object with values to replace in template string
+         * @param {object} values - object with values to replace in template string
          * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
          * @returns {string} - returns formatted string if template and values match the required pattern
          */
@@ -190,7 +191,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * Checks if the browser is a part of the supported browser list
+         * Checks if the current browser is a part of the supported browser list for adding colors
          * @returns {boolean} - returns true if the current browser supports colorify
          */
         var isColorifySupported = function() {
@@ -206,10 +207,11 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * Stores flag to know if current browser is colorify supported
          * @type {boolean}
          */
+        //TODO: Need to refactor this into a self-invoking function
         var isColorifySupportedBrowser = isColorifySupported();
 
         /**
-         * checks if the log arguments array is of length 1 and the element is a string
+         * The following method checks if the log arguments array length is one and the element is a string
          * @param {*[]} args - unevaluated log method arguments array that should contain only one element of type {string}
          * @returns {boolean} - returns true if args match the above criteria
          */
@@ -219,7 +221,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * does minor validation to ensure css string contains known keys
+         * The following method does partial validation to ensure css string contains known keys
          * @param {string} css - css string to be evaluated
          * @returns {boolean} - returns true if string contains any supported keys
          */
@@ -228,7 +230,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * does minor validation to ensure css string is valid
+         * The following method does partial validation to ensure css string is valid
          * @param {string} value - css string to be evaluated
          * @returns {boolean} - returns true if string has css format
          */
@@ -238,13 +240,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * takes a string a returns an array as parameters
-         * if browser is supported
-         * expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
+         * The following takes a string a returns an array as parameter if browser is supported
+         * e.g. Expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
          * @param {string} message - string to be coloured
          * @param {string} colorCSS - css string to apply to message
          * @param {string} prefix - log prefix to be prepended to message
-         * @returns {*[]} - returns colorify formated array if all inputs are valid else returns array with the original message
+         * @returns {*[]} - returns colorify formatted array if all inputs are valid else returns array with the original message
          */
         var colorify = function(message, colorCSS, prefix) {
             prefix = (itypeof(prefix) === 'string' ? prefix : '');
@@ -255,6 +256,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         /**
          * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
+         * @see overrideLogPrefix to override the logPrefix
          * @param {string=} className - name of the component class ($controller, $service etc.)
          * @returns {string} - formatted string that will be prepended to log outputs
          */
@@ -275,7 +277,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             if ((!isBoolean(useDefaultPrefix) || !useDefaultPrefix) &&
                 isBoolean(logPrefixOverride) && logPrefixOverride &&
                 angular.isFunction(customLogPrefixFn)) {
-
                 prefix = customLogPrefixFn(className);
             } else {
                 prefix = defaultLogPrefixFn(className);
@@ -312,7 +313,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                     };
 
                     /**
-                     * This method checks if the global enabled flag and the override flag are set as type {boolean}
+                     * The following method checks if the global enabled flag and the override flag are set as type {boolean}
                      * variables. If both are set it returns the value of the override flag to control $log outputs
                      * @param {boolean} enabled - global flag that activates/deactivates logging
                      * @param {boolean} override - flag that overrides the global enabled flag
@@ -326,11 +327,13 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                     };
 
                     /**
-                     * This method handles printing out a message to indicate if a $log instance is using an override
-                     * if logging is disabled globally & an override of true is set,
+                     * The following method handles printing a message to the console indicating
+                     * if a $log instance is using an override.
+                     * If logging is disabled globally & an override of true is set,
                      * then a message will be displayed for the specific $log instance
                      * if logging is enabled globally & an override of false is set,
                      * then a message will be displayed for the specific $log instance
+                     * @private for internal use only
                      * @param _$log - $log instance
                      * @param useOverride - flag that defines logic to regard using the override
                      * @param _override - flag that overrides the global enabled flag
@@ -348,6 +351,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
                     /**
                      * Converts an array to a object literal
+                     * @private for internal use only
                      * @param {*[]} arr - array to be transformed to object literal
                      * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
                      */
@@ -365,14 +369,14 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                     };
 
                     /**
-                     * This generic method builds $log objects for different uses around the module
-                     * and AngularJS app. It gives the capability to specify which methods to expose
-                     * when using the $log object in different sections of the app.
+                     * General purpose method for building $log objects.
+                     * This method also provides the capability to specify the log methods to expose
+                     * @private for internal use only
                      * @param {Object} oSrc - $log instance
                      * @param {Array=} aMethods - list of $log methods
                      * @param {Function=} func - function that defines rules for custom $log instance
                      * @param {Array=} aParams - parameters to be used in prepareLogFn
-                     * @returns {*{}} - returns a $log instance
+                     * @returns {Object} - returns a $log instance
                      */
                     var createLogObj = function(oSrc, aMethods, /**{Function=}*/ func, /**{*Array=}*/ aParams) {
                         var resultSet = {},
@@ -404,7 +408,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                         /**
                          * Partial application to pre-capture a logger function
                          * @param {Function} logFn - $log method
-                         * @param {boolean} className - name of the component class ($controller, $service etc.)
+                         * @param {*} className - name of the component class ($controller, $service etc.)
                          * @param {boolean} override - flag that overrides the global enable flag
                          * @param {boolean} useOverride - flag that defines logic to consider using the override
                          * @param {string} colorCss - css styles for coloring log methods
@@ -594,7 +598,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         /**
          * Used to set custom colors to multiple $log method
-         * @param {*{}} overrides - object that defines log method color overrides
+         * @param {object} overrides - object that defines log method color overrides
          */
         var overrideLogMethodColors = function(overrides) {
             if (itypeof(overrides) === 'object') {
@@ -622,7 +626,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.d879432',
+                version: '0.0.6-sha.0886ae8',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,

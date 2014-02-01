@@ -55,7 +55,7 @@ var setLogMethodColor = function (methodName, colorCss) {
 
 /**
  * Used to set custom colors to multiple $log method
- * @param {*{}} overrides - object that defines log method color overrides
+ * @param {object} overrides - object that defines log method color overrides
  */
 var overrideLogMethodColors = function (overrides) {
     if (itypeof(overrides) === 'object') {

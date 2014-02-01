@@ -1,7 +1,7 @@
 /**
  * Partial application to pre-capture a logger function
  * @param {Function} logFn - $log method
- * @param {boolean} className - name of the component class ($controller, $service etc.)
+ * @param {*} className - name of the component class ($controller, $service etc.)
  * @param {boolean} override - flag that overrides the global enable flag
  * @param {boolean} useOverride - flag that defines logic to consider using the override
  * @param {string} colorCss - css styles for coloring log methods

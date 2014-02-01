@@ -20,7 +20,7 @@ var processOverride = function (override) {
 };
 
 /**
- * This method checks if the global enabled flag and the override flag are set as type {boolean}
+ * The following method checks if the global enabled flag and the override flag are set as type {boolean}
  * variables. If both are set it returns the value of the override flag to control $log outputs
  * @param {boolean} enabled - global flag that activates/deactivates logging
  * @param {boolean} override - flag that overrides the global enabled flag
@@ -34,11 +34,13 @@ var activateLogs = function (enabled, override) {
 };
 
 /**
- * This method handles printing out a message to indicate if a $log instance is using an override
- * if logging is disabled globally & an override of true is set,
+ * The following method handles printing a message to the console indicating
+ * if a $log instance is using an override.
+ * If logging is disabled globally & an override of true is set,
  * then a message will be displayed for the specific $log instance
  * if logging is enabled globally & an override of false is set,
  * then a message will be displayed for the specific $log instance
+ * @private for internal use only
  * @param _$log - $log instance
  * @param useOverride - flag that defines logic to regard using the override
  * @param _override - flag that overrides the global enabled flag
@@ -56,6 +58,7 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
 
 /**
  * Converts an array to a object literal
+ * @private for internal use only
  * @param {*[]} arr - array to be transformed to object literal
  * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
  */
@@ -71,14 +74,14 @@ var arrToObject = function (arr) {
 };
 
 /**
- * This generic method builds $log objects for different uses around the module
- * and AngularJS app. It gives the capability to specify which methods to expose
- * when using the $log object in different sections of the app.
+ * General purpose method for building $log objects.
+ * This method also provides the capability to specify the log methods to expose
+ * @private for internal use only
  * @param {Object} oSrc - $log instance
  * @param {Array=} aMethods - list of $log methods
  * @param {Function=} func - function that defines rules for custom $log instance
  * @param {Array=} aParams - parameters to be used in prepareLogFn
- * @returns {*{}} - returns a $log instance
+ * @returns {Object} - returns a $log instance
  */
 var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/aParams) {
     var resultSet = {},
