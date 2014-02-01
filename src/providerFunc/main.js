@@ -26,7 +26,7 @@ var restrictLogMethods = function (arrMethods) {
 var overrideLogPrefix = function (logPrefix) {
     if (angular.isFunction(logPrefix)) {
         // TODO : Validation of the function to ensure it's of the correct format etc
-        // TODO : Might want to allow memoization of the default functionality and allow easy toggling of custom vs default
+        // TODO : Might want to allow memorization of the default functionality and allow easy toggling of custom vs default
         getLogPrefix = logPrefix;
     }
 };

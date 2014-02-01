@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.70c16e3
+ * Log Unobtrusive Extension v0.0.6-sha.d625d36
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -24,22 +24,40 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         // Used the $injector defined to retrieve the $filterProvider
         var $filter = $injector.get('$filter');
 
-        // used to enable logging globally
+        /**
+         * Used to enable logging globally
+         * @type {boolean}
+         */
         var enableGlobally = false;
 
-        // current browser user agent
+        /**
+         * current browser's user agent
+         * @type {string}
+         */
         var userAgent = navigator.userAgent;
 
-        // default log methods available
+        /**
+         * default log methods available
+         * @type {string[]}
+         */
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
 
-        // list of browsers that support colorify
+        /**
+         * list of browsers that support colorify
+         * @type {string[]}
+         */
         var colorifySupportedBrowsers = ['chrome', 'firefox'];
 
-        // flag to activate/deactivate default log method colors
+        /**
+         * flag to activate/deactivate default log method colors
+         * @type {boolean}
+         */
         var useDefaultColors = true;
 
-        // default colours for each log method
+        /**
+         * default colours for each log method
+         * @type {object}
+         */
         var defaultLogMethodColors = {
             log: 'color: green;',
             info: 'color: blue',
@@ -70,16 +88,17 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         /**
          * The itypeof operator returns a string indicating the type of the unevaluated operand.
-         * @param val {*}
-         **/
+         * @param val {*} - object to be evaluated
+         * @returns {String} -  returns a string with the type of the evaluated operand
+         */
         var itypeof = function(val) {
             return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
         };
 
         /**
          * checks if a variable is of @type {boolean}
-         * @param value
-         * @returns {boolean}
+         * @param value - object to be evaluated
+         * @returns {boolean} - returns true if evaluated object is a boolean
          */
         var isBoolean = function(value) {
             return itypeof(value) === 'boolean';
@@ -87,19 +106,18 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         /**
          * This method checks if a variable is of type {string}
          * and if the string is not an empty string
-         * @param value
-         * @returns {*|Boolean|boolean}
+         * @param value - object to be evaluated
+         * @returns {*|Boolean|boolean} - returns true if string is not null or empty
          */
         var isValidString = function(value) {
             return (itypeof(value) === 'string' && trimString(value) !== "");
         };
 
-
         /**
          * checks if @param1 is a substring of @param2
-         * @param sub
-         * @param full
-         * @returns {boolean}
+         * @param sub - partial string that may be a sub string
+         * @param full - full string that may have the unevaluated substring
+         * @returns {boolean} - returns true if a substring is found in the ful string
          */
         var isSubString = function(sub, full) {
             if (itypeof(sub) === 'string' && itypeof(full) === 'string') {
@@ -110,12 +128,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return false;
         };
 
-
         /**
          * this method checks if useTemplate is truthy and
          * if the log arguments array is equal to 2
-         * @param useTemplate
-         * @param args
+         * @param useTemplate - boolean that configures the usage of the template engine
+         * @param args - array of log arguments that should match pattern creating template strings
+         * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
          */
         var validateTemplateInputs = function(useTemplate, args) {
             return isBoolean(useTemplate) && useTemplate && args.length == 2;
@@ -123,10 +141,11 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         /**
          * supplant is a string templating engine that replaces patterns
          * in a string with values from a template object
-         * @param template
-         * @param values
-         * @param {RegExp=} pattern
-         **/
+         * @param template - string with patterns to be replaced by values
+         * @param values - object with values to replace in template string
+         * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
+         * @returns {string} - returns formated string if template and values match the required pattern
+         */
         var supplant = function(template, values, /*{RegExp=}*/ pattern) {
             var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
             var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
@@ -153,8 +172,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * checks if the browser is a part of the supported browser list
-         * @returns {boolean}
+         * Checks if the browser is a part of the supported browser list
+         * @returns {boolean} - returns true if the current browser supports colorify
          */
         var isColorifySupported = function() {
             for (var i = 0; i < colorifySupportedBrowsers.length; i++) {
@@ -165,14 +184,17 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             return false;
         };
 
-        // stores flag to know if current browser is colorify supported
+        /**
+         * Stores flag to know if current browser is colorify supported
+         * @type {boolean}
+         */
         var isColorifySupportedBrowser = isColorifySupported();
 
 
         /**
          * checks if the log arguments array is of length 1 and the element is a string
-         * @param args
-         * @returns {boolean}
+         * @param args - unevaluated log method arguments array that should contain only one element of type {string}
+         * @returns {boolean} - returns true if args match the above criteria
          */
         var validateColorizeInputs = function(args) {
             return (args.length == 1 &&
@@ -181,8 +203,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         /**
          * does minor validation to ensure css string is valid
-         * @param value
-         * @returns {boolean}
+         * @param value - css string to be evaluated
+         * @returns {boolean} - returns true if string has css format
          */
         var validateColorCssString = function(value) {
             return (itypeof(value) === 'string' && isSubString(':', value));
@@ -192,10 +214,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * takes a string a returns an array as parameters
          * if browser is supported
          * expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
-         * @param message
-         * @param colorCSS
-         * @param prefix
-         * @returns {*[]}
+         * @param message - string to be coloured
+         * @param colorCSS - css string to apply to message
+         * @param prefix - log prefix to be prepended to message
+         * @returns {*[]} - returns colorify formated array if all inputs are valid else returns array with the original message
          */
         var colorify = function(message, colorCSS, prefix) {
             prefix = (itypeof(prefix) === 'string' ? prefix : '');
@@ -215,8 +237,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                 now = $filter('date')(new Date(), format);
             return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
         };
-
-
         // Register our $log decorator with AngularJS $provider
         //scroll down to the Configuration section to set the log settings
         $provide.decorator('$log', ["$delegate",
@@ -494,7 +514,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var overrideLogPrefix = function(logPrefix) {
             if (angular.isFunction(logPrefix)) {
                 // TODO : Validation of the function to ensure it's of the correct format etc
-                // TODO : Might want to allow memoization of the default functionality and allow easy toggling of custom vs default
+                // TODO : Might want to allow memorization of the default functionality and allow easy toggling of custom vs default
                 getLogPrefix = logPrefix;
             }
         };
@@ -540,7 +560,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.70c16e3',
+                version: '0.0.6-sha.d625d36',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
