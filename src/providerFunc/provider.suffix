@@ -17,6 +17,7 @@
         };
     };
 
+    // add methods to $provider
     this.enableLogging = enableLogging;
     this.overrideLogPrefix = overrideLogPrefix;
     this.restrictLogMethods = restrictLogMethods;

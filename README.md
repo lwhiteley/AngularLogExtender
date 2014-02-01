@@ -6,6 +6,7 @@ This is an extension of the Angular $log functionality. It uses the native $deco
 To view the blog this module was extended from and inspired by, go to
 http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
 
+If you wish to contribute, Please read the `Develop.md` file
 Feel Free to make your own contributions to this module so we can make it better :)
 
 [![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
@@ -49,6 +50,7 @@ Add a script to your index.html:
 6. Customize the color of your logs
 7. Use a template engine for your logs
 8. Disable/Enable default coloring of logs
+9. Toggle between th Default log prefix and custom log prefix
 
 
 ##How to Use

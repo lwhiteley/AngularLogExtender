@@ -188,7 +188,6 @@
            */
           var isColorifySupportedBrowser = isColorifySupported();
 
-
           /**
            * checks if the log arguments array is of length 1 and the element is a string
            * @param {*[]} args - unevaluated log method arguments array that should contain only one element of type {string}
