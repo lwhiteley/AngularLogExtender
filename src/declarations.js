@@ -205,7 +205,7 @@
            * @returns {boolean} - returns true if string has css format
            */
           var validateColorCssString = function (value) {
-              return (itypeof(value) === 'string' && isSubString(':', value));
+              return (itypeof(value) === 'string' && isSubString(':', value) && trimString(value).length > 6);
           };
 
           /**
