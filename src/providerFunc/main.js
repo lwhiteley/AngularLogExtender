@@ -2,7 +2,7 @@
 
 /**
  * Used externally to enable/disable logging globally
- * @param flag - boolean that sets whether logging is enabled/disabled
+ * @param {boolean} flag - flag that sets whether logging is enabled/disabled
  */
 var enableLogging = function (flag) {
     enableGlobally = isBoolean(flag) ? flag : false;
@@ -10,7 +10,7 @@ var enableLogging = function (flag) {
 
 /**
  * Configure which log functions can be exposed at runtime
- * @param arrMethods - array list of methods that can be used
+ * @param {*[]} arrMethods - list of methods that can be used
  */
 var restrictLogMethods = function (arrMethods) {
     if (angular.isArray(arrMethods)) {
@@ -21,7 +21,7 @@ var restrictLogMethods = function (arrMethods) {
 
 /**
  * Modify the default log prefix
- * @param logPrefix - function that defines the rule for a custom log prefix
+ * @param {Function} logPrefix - function that defines the rule for a custom log prefix
  */
 var overrideLogPrefix = function (logPrefix) {
     if (angular.isFunction(logPrefix)) {
@@ -33,7 +33,7 @@ var overrideLogPrefix = function (logPrefix) {
 
 /**
  * Turns off default coloring of logs
- * @param flag - boolean that configures disabling default log colors
+ * @param {boolean} flag - flag that configures disabling default log colors
  */
 var disableDefaultColors = function (flag) {
     useDefaultColors = (isBoolean(flag) && flag) ? false : true;
@@ -41,8 +41,8 @@ var disableDefaultColors = function (flag) {
 
 /**
  * Used to set a custom color to a specific $log method
- * @param methodName - method name of the log method to assign a custom color
- * @param colorCss - css string that defines what colour to be set for the specified log method
+ * @param {String} methodName - method name of the log method to assign a custom color
+ * @param {String} colorCss - css string that defines what colour to be set for the specified log method
  */
 var setLogMethodColor = function (methodName, colorCss) {
     if (itypeof(methodName) === 'string' &&
@@ -55,7 +55,7 @@ var setLogMethodColor = function (methodName, colorCss) {
 
 /**
  * Used to set custom colors to multiple $log method
- * @param overrides - object that defines log method color overrides
+ * @param {*{}} overrides - object that defines log method color overrides
  */
 var overrideLogMethodColors = function (overrides) {
     if (itypeof(overrides) === 'object') {

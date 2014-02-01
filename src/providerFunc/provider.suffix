@@ -1,8 +1,8 @@
 
     /**
-    * default $get method necessary for provider to work
-    * not sure what to do with this yet
-    **/
+    * Default $get method necessary for provider to work
+    * @type {Function}
+    */
     this.$get = function(){
         return {
             name: '%APP_NAME%',
@@ -16,21 +16,11 @@
         };
     };
 
-    
     this.enableLogging = enableLogging;
-
-    
     this.overrideLogPrefix = overrideLogPrefix;
-
     this.restrictLogMethods = restrictLogMethods;
-    
-    
     this.disableDefaultColors = disableDefaultColors;
-    
-    
-     this.setLogMethodColor = setLogMethodColor;
-     
-     
-     this.overrideLogMethodColors = overrideLogMethodColors;
-    
+    this.setLogMethodColor = setLogMethodColor;
+    this.overrideLogMethodColors = overrideLogMethodColors;
+
 }]);

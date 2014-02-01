@@ -1,6 +1,6 @@
 /**
 * Contains functionality for transforming the AngularJS $log
 * returns extended $log object
-* @param $log {Object}
+* @param $log {Object} - original angular $log to be enhanced
 **/
 var enhanceLogger = function ($log) {

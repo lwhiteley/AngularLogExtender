@@ -57,7 +57,7 @@
 
           /**
            * Trims whitespace at the beginning and/or end of a string
-           * @param value - string to be trimmed
+           * @param {String} value - string to be trimmed
            * @returns {String} - returns an empty string if the value passed is not of type {String}
            */
           var trimString = function (value) {
@@ -68,7 +68,7 @@
 
           /**
            * The itypeof operator returns a string indicating the type of the unevaluated operand.
-           * @param val {*} - object to be evaluated
+           * @param {*} val - object to be evaluated
            * @returns {String} -  returns a string with the type of the evaluated operand
            */
           var itypeof = function (val) {
@@ -77,7 +77,7 @@
 
           /**
            * checks if a variable is of @type {boolean}
-           * @param value - object to be evaluated
+           * @param {boolean} value - flag to be evaluated
            * @returns {boolean} - returns true if evaluated object is a boolean
            */
           var isBoolean = function (value) {
@@ -86,7 +86,7 @@
           /**
            * This method checks if a variable is of type {string}
            * and if the string is not an empty string
-           * @param value - object to be evaluated
+           * @param {string} value - string to be evaluated
            * @returns {*|Boolean|boolean} - returns true if string is not null or empty
            */
           var isValidString = function (value) {
@@ -95,8 +95,8 @@
 
           /**
            * checks if @param1 is a substring of @param2
-           * @param sub - partial string that may be a sub string
-           * @param full - full string that may have the unevaluated substring
+           * @param {string} sub - partial string that may be a sub string
+           * @param {string} full - full string that may have the unevaluated substring
            * @returns {boolean} - returns true if a substring is found in the ful string
            */
           var isSubString = function (sub, full) {
@@ -111,8 +111,8 @@
           /**
            * this method checks if useTemplate is truthy and
            * if the log arguments array is equal to 2
-           * @param useTemplate - boolean that configures the usage of the template engine
-           * @param args - array of log arguments that should match pattern creating template strings
+           * @param {boolean} useTemplate - flag that configures the usage of the template engine
+           * @param {*[]} args - list of log arguments that should match pattern creating template strings
            * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
            */
           var validateTemplateInputs = function (useTemplate, args) {
@@ -121,10 +121,10 @@
           /**
            * supplant is a string templating engine that replaces patterns
            * in a string with values from a template object
-           * @param template - string with patterns to be replaced by values
-           * @param values - object with values to replace in template string
+           * @param {string} template - string with patterns to be replaced by values
+           * @param {*{}} values - object with values to replace in template string
            * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
-           * @returns {string} - returns formated string if template and values match the required pattern
+           * @returns {string} - returns formatted string if template and values match the required pattern
            */
           var supplant = function (template, values, /*{RegExp=}*/ pattern) {
               var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
@@ -173,7 +173,7 @@
 
           /**
            * checks if the log arguments array is of length 1 and the element is a string
-           * @param args - unevaluated log method arguments array that should contain only one element of type {string}
+           * @param {*[]} args - unevaluated log method arguments array that should contain only one element of type {string}
            * @returns {boolean} - returns true if args match the above criteria
            */
           var validateColorizeInputs = function (args) {
@@ -183,7 +183,7 @@
 
           /**
            * does minor validation to ensure css string is valid
-           * @param value - css string to be evaluated
+           * @param {string} value - css string to be evaluated
            * @returns {boolean} - returns true if string has css format
            */
           var validateColorCssString = function (value) {
@@ -194,9 +194,9 @@
            * takes a string a returns an array as parameters
            * if browser is supported
            * expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
-           * @param message - string to be coloured
-           * @param colorCSS - css string to apply to message
-           * @param prefix - log prefix to be prepended to message
+           * @param {string} message - string to be coloured
+           * @param {string} colorCSS - css string to apply to message
+           * @param {string} prefix - log prefix to be prepended to message
            * @returns {*[]} - returns colorify formated array if all inputs are valid else returns array with the original message
            */
           var colorify = function (message, colorCSS, prefix) {
@@ -208,8 +208,8 @@
 
           /**
            * This method is responsible for generating the prefix of all extended $log messages pushed to the console
-           * @param {string=} className - $controller name
-           * @returns {string} - formatted string
+           * @param {string=} className - name of the component class ($controller, $service etc.)
+           * @returns {string} - formatted string that will be prepended to log outputs
            */
           var getLogPrefix = function ( /**{String=}*/ className) {
               var separator = " >> ",
