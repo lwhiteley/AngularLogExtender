@@ -12,7 +12,8 @@
             overrideLogPrefix: overrideLogPrefix,
             disableDefaultColors: disableDefaultColors,
             setLogMethodColor: setLogMethodColor,
-            overrideLogMethodColors: overrideLogMethodColors
+            overrideLogMethodColors: overrideLogMethodColors,
+            useDefaultLogPrefix: useDefaultLogPrefix
         };
     };
 
@@ -22,5 +23,5 @@
     this.disableDefaultColors = disableDefaultColors;
     this.setLogMethodColor = setLogMethodColor;
     this.overrideLogMethodColors = overrideLogMethodColors;
-
+    this.useDefaultLogPrefix = useDefaultLogPrefix;
 }]);

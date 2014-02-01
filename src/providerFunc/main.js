@@ -26,8 +26,8 @@ var restrictLogMethods = function (arrMethods) {
 var overrideLogPrefix = function (logPrefix) {
     if (angular.isFunction(logPrefix)) {
         // TODO : Validation of the function to ensure it's of the correct format etc
-        // TODO : Might want to allow memorization of the default functionality and allow easy toggling of custom vs default
-        getLogPrefix = logPrefix;
+        customLogPrefixFn = logPrefix;
+        logPrefixOverride = true;
     }
 };
 
@@ -62,5 +62,15 @@ var overrideLogMethodColors = function (overrides) {
         angular.forEach(overrides, function(colorCss, method){
             setLogMethodColor(method, colorCss);
         });
+    }
+};
+
+/**
+ * Used to force default log prefix functionality
+ * @param {boolean} flag - when passed true, it forces log-ex to use the default log prefix
+ */
+var useDefaultLogPrefix = function (flag) {
+    if(isBoolean(flag)){
+        useDefaultPrefix = flag;
     }
 };

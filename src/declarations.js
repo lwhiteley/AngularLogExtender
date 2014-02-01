@@ -10,6 +10,24 @@
            */
           var enableGlobally = false;
 
+           /**
+           * Used to activate logPrefix overriding
+           * @type {boolean}
+           */
+          var logPrefixOverride = false;
+
+           /**
+           * Used to force log-ex to use the default log prefix rules
+           * @type {boolean}
+           */
+          var useDefaultPrefix = false;
+
+           /**
+           * Used to store custom log prefix rules
+           * @type {null | Function}
+           */
+          var customLogPrefixFn = null;
+
           /**
            * current browser's user agent
            * @type {string}
@@ -207,13 +225,31 @@
           };
 
           /**
-           * This method is responsible for generating the prefix of all extended $log messages pushed to the console
+           * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
            * @param {string=} className - name of the component class ($controller, $service etc.)
            * @returns {string} - formatted string that will be prepended to log outputs
            */
-          var getLogPrefix = function ( /**{String=}*/ className) {
+          var defaultLogPrefixFn = function ( /**{String=}*/ className) {
               var separator = " >> ",
                   format = "MMM-dd-yyyy-h:mm:ssa",
                   now = $filter('date')(new Date(), format);
               return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
           };
+
+         /**
+         * This method is responsible for generating the prefix of all extended $log messages pushed to the console
+         * @param {string=} className - name of the component class ($controller, $service etc.)
+         * @returns {string} - formatted string that will be prepended to log outputs
+         */
+        var getLogPrefix = function( /**{String=}*/ className) {
+            var prefix = '';
+            if((!isBoolean(useDefaultPrefix) || !useDefaultPrefix) &&
+                isBoolean(logPrefixOverride) && logPrefixOverride &&
+                angular.isFunction(customLogPrefixFn)){
+
+                prefix = customLogPrefixFn(className);
+            }else{
+                prefix = defaultLogPrefixFn(className);
+            }
+            return prefix;
+        };

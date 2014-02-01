@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.6-sha.254f616
+ * Log Unobtrusive Extension v0.0.6-sha.a8699e9
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -29,6 +29,24 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {boolean}
          */
         var enableGlobally = false;
+
+        /**
+         * Used to activate logPrefix overriding
+         * @type {boolean}
+         */
+        var logPrefixOverride = false;
+
+        /**
+         * Used to force log-ex to use the default log prefix rules
+         * @type {boolean}
+         */
+        var useDefaultPrefix = false;
+
+        /**
+         * Used to store custom log prefix rules
+         * @type {null | Function}
+         */
+        var customLogPrefixFn = null;
 
         /**
          * current browser's user agent
@@ -227,15 +245,33 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
+         * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
+         * @param {string=} className - name of the component class ($controller, $service etc.)
+         * @returns {string} - formatted string that will be prepended to log outputs
+         */
+        var defaultLogPrefixFn = function( /**{String=}*/ className) {
+            var separator = " >> ",
+                format = "MMM-dd-yyyy-h:mm:ssa",
+                now = $filter('date')(new Date(), format);
+            return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
+        };
+
+        /**
          * This method is responsible for generating the prefix of all extended $log messages pushed to the console
          * @param {string=} className - name of the component class ($controller, $service etc.)
          * @returns {string} - formatted string that will be prepended to log outputs
          */
         var getLogPrefix = function( /**{String=}*/ className) {
-            var separator = " >> ",
-                format = "MMM-dd-yyyy-h:mm:ssa",
-                now = $filter('date')(new Date(), format);
-            return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
+            var prefix = '';
+            if ((!isBoolean(useDefaultPrefix) || !useDefaultPrefix) &&
+                isBoolean(logPrefixOverride) && logPrefixOverride &&
+                angular.isFunction(customLogPrefixFn)) {
+
+                prefix = customLogPrefixFn(className);
+            } else {
+                prefix = defaultLogPrefixFn(className);
+            }
+            return prefix;
         };
         // Register our $log decorator with AngularJS $provider
         //scroll down to the Configuration section to set the log settings
@@ -520,8 +556,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var overrideLogPrefix = function(logPrefix) {
             if (angular.isFunction(logPrefix)) {
                 // TODO : Validation of the function to ensure it's of the correct format etc
-                // TODO : Might want to allow memorization of the default functionality and allow easy toggling of custom vs default
-                getLogPrefix = logPrefix;
+                customLogPrefixFn = logPrefix;
+                logPrefixOverride = true;
             }
         };
 
@@ -560,19 +596,31 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
+         * Used to force default log prefix functionality
+         * @param {boolean} flag - when passed true, it forces log-ex to use the default log prefix
+         */
+        var useDefaultLogPrefix = function(flag) {
+            if (isBoolean(flag)) {
+                useDefaultPrefix = flag;
+            }
+        };
+
+
+        /**
          * Default $get method necessary for provider to work
          * @type {Function}
          */
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.6-sha.254f616',
+                version: '0.0.6-sha.a8699e9',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
                 disableDefaultColors: disableDefaultColors,
                 setLogMethodColor: setLogMethodColor,
-                overrideLogMethodColors: overrideLogMethodColors
+                overrideLogMethodColors: overrideLogMethodColors,
+                useDefaultLogPrefix: useDefaultLogPrefix
             };
         };
 
@@ -582,6 +630,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.disableDefaultColors = disableDefaultColors;
         this.setLogMethodColor = setLogMethodColor;
         this.overrideLogMethodColors = overrideLogMethodColors;
-
+        this.useDefaultLogPrefix = useDefaultLogPrefix;
     }
 ]);

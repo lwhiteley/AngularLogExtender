@@ -14,7 +14,7 @@ describe('Provider Func Spec', function () {
             enableLogging(false);
             expect(enableGlobally).toBe(false);
         });
-        
+
         it('should set enableGlobally to false when input flag is not a boolean', function () {
             enableLogging('false');
             expect(enableGlobally).toBe(false);
@@ -25,7 +25,7 @@ describe('Provider Func Spec', function () {
             enableLogging(8);
             expect(enableGlobally).toBe(false);
         });
-        
+
     });
 
     describe('override log prefix Spec', function () {
@@ -39,11 +39,13 @@ describe('Provider Func Spec', function () {
 
         afterEach(function () {
             clock.$restoreDate();
+            logPrefixOverride = false;
         });
 
         it('should return default formatter if function is not passed', function () {
             overrideLogPrefix();
             expect(getLogPrefix()).toBe(sDateFormat);
+            expect(logPrefixOverride).toBe(false);
         });
 
         it('should not return default formatter if function is passed', function () {
@@ -54,6 +56,7 @@ describe('Provider Func Spec', function () {
             });
             expect(getLogPrefix()).toBe(format);
             expect(getLogPrefix()).not.toBe(sDateFormat);
+            expect(logPrefixOverride).toBe(true);
         });
     });
 
@@ -70,9 +73,9 @@ describe('Provider Func Spec', function () {
             expect(allowedMethods).not.toBe(logMethods);
         });
     });
-    
+
     describe('disableDefaultColors Spec', function () {
-        
+
         afterEach(function () {
             useDefaultColors = true;
         });
@@ -80,7 +83,7 @@ describe('Provider Func Spec', function () {
             disableDefaultColors(null);
             expect(useDefaultColors).toBe(true);
         });
-        
+
         it('should keep useDefaultColors as true when input is false', function () {
             disableDefaultColors(false);
             expect(useDefaultColors).toBe(true);
@@ -91,5 +94,5 @@ describe('Provider Func Spec', function () {
             expect(useDefaultColors).toBe(false);
         });
     });
-    
+
 });

@@ -130,6 +130,19 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.disableDefaultColors(true);
 }]);
 ```
+######6. Toggle between the default log prefix rules and your custom rules
+
+If you want to quickly toggle between using your custom log pefix rules and the default rules, te following example shows you how
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    logExProvider.useDefaultLogPrefix(true); //this forces log-ex to use the default rules
+}]);
+```
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    logExProvider.useDefaultLogPrefix(false); //this tells log-ex to use the custom rules (if set)
+}]);
+```
 ##Advanced Use Cases
 ###Use Case 1: Set Component Class Name
 This example can be used to know which component (controller, directive etc.) $log instances are being pushed from to the console. The new instance must be re-assigned to the $log object to take effect. This Advanced use case is always recommended to get more information from your application logs.
