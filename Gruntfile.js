@@ -150,10 +150,10 @@ module.exports = function (grunt) {
         },
         minified : {
           files: {
-            src: [
-            'dist/log-ex-unobtrusive.js'
-            ],
-            dest: 'dist/'
+                src: [
+                'dist/log-ex-unobtrusive.js'
+                ],
+                dest: 'dist/'
           },
           options : {
             sourcemap: true,
