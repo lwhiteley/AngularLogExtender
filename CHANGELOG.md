@@ -1,4 +1,68 @@
 
+0.0.6-sha.101ac4a / 2014-02-01 
+==================
+
+ * cleanup before release 0.0.7
+ * Update known keys return description
+ * Update readme and develop documentation
+ * Add knownKeys validation for colorCss
+ * edit test description
+ * Add length validation to colorCss validation
+ * edit overrideLogPrefixTest to return customLogPrefix to original state after test
+ * add memorization for default logprefix rules
+ * add clean task for coverage folder
+ * update grunt file with proper indent
+ * update clean config to support for multi clean config
+ * add minify process for module
+ * Add param descriptions
+ * Add param descriptions for declarations
+ * change for-in to foreach in overrideLogMethodColors method
+ * fix spelling and wording of descriptions
+ * move provider method descriptions to above method definitions
+ * Add overrideLogMEthodColors method and tests
+ * Move setLogMethodColor tests to a different file
+ * Update readme wording
+ * add setLogMethodColor and tests
+ * generate release
+ * CleanUp - fixed linting issues with methods - remove commented out code - remove unsued variables - fixed formatting of methods to match jslint standards
+ * - generate new release - fix grammer issues - added test case for supplant catch block - clean up formatting and parameter passing - correct param naming - set optional types for certain method
+ * update documentation
+ * update bower settings
+ * Update documentation with new config
+ * Update documentation
+ * Update default colors
+ * Update createlogobj method and spec
+ * Fix incorrect spelling and add util function
+ * Update documentation
+ * Add default colors for each log method
+ * Update documentation
+ * Update typeof references to use itypeof
+ * Add tests for supplant
+ * Update function names
+ * Add string check for supplant pattern
+ * update prepareLogFn method and spec
+ * Add function description for canColorizee
+ * Update documentation
+ * Fix spelling error
+ * Add function description for canTemplate
+ * Implement string template functionality
+ * Add documentation
+ * Add documentation for colorify
+ * Update prepareLogFn tests
+ * Enhance colorify method
+ * Add supplant method and spec
+ * Update colorify tests
+ * Update colorify tests
+ * Update colorify to validate css string
+ * Add itypeof method and tests
+ * add colorify method
+ * Update dist file
+ * Add methods for Colorify supported browser detection
+ * added  version testing
+ * test cleanup
+ * update changelog
+ * added jsonlint
+
 0.0.6-sha.c52a8fd / 2014-01-11 
 ==================
 
