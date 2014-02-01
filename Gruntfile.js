@@ -146,7 +146,8 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            dist: ['dist/']
+            dist: ['dist/'],
+            cover: ['coverage/']
         },
         minified : {
           files: {
@@ -183,7 +184,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-minified');
-    grunt.registerTask('test', ['jshint', 'jsonlint', 'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest']);
+    grunt.registerTask('test', ['clean:cover','jshint', 'jsonlint', 'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest']);
     grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minified' ,'concat:minify','bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
