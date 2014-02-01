@@ -128,7 +128,7 @@ describe('util Functions spec', function () {
 
     });
 
-    describe('canColorize Spec ', function () {
+    describe('validateColorizeInputs Spec ', function () {
 
         it('should return true when arg has 1 element that is a string', function () {
             var args = ['colorize'];
