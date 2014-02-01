@@ -23,3 +23,9 @@ Navigate to the project directory `personsal_git/log_ex_proj` and execute the `n
 > Use following grunt command to build a distributed version of application : `grunt dist`
 
 > NB: All files are checked for lint. Please ensure files are lint free
+
+##### Pull Requests
+
+> All pull requests should have the `develop` branch as the destination
+
+> Ensure new functionality or refactors are tested properly

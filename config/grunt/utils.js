@@ -1,15 +1,10 @@
-/**
- * Created by ferron on 12/22/13.
- */
-
 var fs = require('fs');
 var shell = require('shelljs');
 var grunt = require('grunt');
 var version;
 
 module.exports = {
-
-    getVersion: function(){
+    getVersion: function () {
         if (version) return version;
 
         var pkg = JSON.parse(fs.readFileSync('package.json', 'UTF-8'));

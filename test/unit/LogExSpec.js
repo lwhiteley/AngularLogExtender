@@ -96,42 +96,6 @@ describe('$log: logEx unit tests', function () {
         });
     });
 
-    describe('exposeSafeLog function Spec', function () {
-        var logEx;
-
-        beforeEach(function () {
-            ngLog = $injector.get('$log'); 
-            logEx = exposeSafeLog(ngLog);
-        });
-
-        it('should return an extended log object when the original angular log is passed with getInstance undefined', function () {
-            expect(logEx).toBeDefined();
-            expect(logEx.getInstance).toBeUndefined();
-            expect(logEx.log).toBeDefined();
-            expect(logEx.debug).toBeDefined();
-            expect(logEx.warn).toBeDefined();
-            expect(logEx.info).toBeDefined();
-            expect(logEx.error).toBeDefined();
-            expect(logEx.isEnabled).toBeFalsy();
-        });
-
-        it('should return an extended log object when the original angular log is passed with getInstance defined', function () {
-            angular.extend(logEx, {
-                getInstance : function () {
-                    return "something";
-                }
-            });
-            expect(logEx).toBeDefined();
-            expect(logEx.getInstance).toBeDefined();
-            expect(logEx.log).toBeDefined();
-            expect(logEx.debug).toBeDefined();
-            expect(logEx.warn).toBeDefined();
-            expect(logEx.info).toBeDefined();
-            expect(logEx.error).toBeDefined();
-            expect(logEx.isEnabled).toBeFalsy();
-        });
-
-    });
     describe('getLogPrefix function Spec', function () {
         it('should not contain a class separator if no class is passed  ', function () {
             expect(getLogPrefix(null)).not.toContain(classSep);
@@ -141,67 +105,5 @@ describe('$log: logEx unit tests', function () {
             expect(getLogPrefix(className)).toContain(classSep);
             expect(getLogPrefix(className)).toContain(className);
         });
-    });
-
-    describe('prepareLogFn function Spec', function () {
-        var logFn;
-        beforeEach(function () {
-            logFn = ngLog.log;
-            ngLog = $injector.get('$log');
-            spyOn(logFn, 'apply');
-        });
-
-        describe('prepareLogFn function Spec - global enabled flag is false', function () {
-            it('should not call apply when no params are sent', function () {
-                var exFn = prepareLogFn(null);
-                exFn();
-                expect(logFn.apply).not.toHaveBeenCalled();
-            });
-            it('should not call apply when override is false and useOverride is false', function () {
-                var exFn = prepareLogFn(logFn, "", false, false);
-                exFn();
-                expect(logFn.apply).not.toHaveBeenCalled();
-            });
-            it('should not call apply when  override is false and useOverride is true', function () {
-                var exFn = prepareLogFn(logFn, "", false, true);
-                exFn();
-                expect(logFn.apply).not.toHaveBeenCalled();
-            });
-            it('should  call apply when  override is true and useOverride is true', function () {
-                var exFn = prepareLogFn(logFn, "", true, true);
-                exFn();
-                expect(logFn.apply).toHaveBeenCalled();
-            });
-        });
-
-        describe('prepareLogFn function Spec - global enabled flag is true', function () {
-            beforeEach(function () {
-                $log.enableLog(true);
-            });
-            afterEach(function () {
-                $log.enableLog(false);
-            });
-            it('should  call apply when no params are sent', function () {
-                var exFn = prepareLogFn(null);
-                exFn();
-                expect(logFn.apply).not.toHaveBeenCalled();
-            });
-            it('should not call apply when override is false and useOverride is true', function () {
-                var exFn = prepareLogFn(logFn, "", false, true);
-                exFn();
-                expect(logFn.apply).not.toHaveBeenCalled();
-            });
-            it('should  call apply when override is false and useOverride is false', function () {
-                var exFn = prepareLogFn(logFn, "", false, false);
-                exFn();
-                expect(logFn.apply).toHaveBeenCalled();
-            });
-            it('should  call apply when  override is true and useOverride is true', function () {
-                var exFn = prepareLogFn(logFn, "", true, true);
-                exFn();
-                expect(logFn.apply).toHaveBeenCalled();
-            });
-        });
-
     });
 });

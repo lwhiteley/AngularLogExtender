@@ -1,31 +1,28 @@
+
     /**
-    * default $get method necessary for provider to work
-    * not sure what to do with this yet
-    **/
+    * Default $get method necessary for provider to work
+    * @type {Function}
+    */
     this.$get = function(){
         return {
             name: '%APP_NAME%',
             version: '%VERSION%',
             enableLogging: enableLogging,
             restrictLogMethods: restrictLogMethods,
-            overrideLogPrefix: overrideLogPrefix
+            overrideLogPrefix: overrideLogPrefix,
+            disableDefaultColors: disableDefaultColors,
+            setLogMethodColor: setLogMethodColor,
+            overrideLogMethodColors: overrideLogMethodColors,
+            useDefaultLogPrefix: useDefaultLogPrefix
         };
     };
 
-    /**
-    * used externally to enable/disable logging globally
-    * @param flag {boolean}
-    **/
+    // add methods to $provider
     this.enableLogging = enableLogging;
-
-    /**
-    * Modify the default log prefix
-    **/
     this.overrideLogPrefix = overrideLogPrefix;
-
-    /**
-    * Configure which log functions can be exposed at runtime
-    */
     this.restrictLogMethods = restrictLogMethods;
-    
+    this.disableDefaultColors = disableDefaultColors;
+    this.setLogMethodColor = setLogMethodColor;
+    this.overrideLogMethodColors = overrideLogMethodColors;
+    this.useDefaultLogPrefix = useDefaultLogPrefix;
 }]);

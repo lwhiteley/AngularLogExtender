@@ -12,17 +12,17 @@ describe('Log Prefix Spec', function() {
 	});
 
 	it('should output message with the date May-02-2010-12:42:53PM & separator ', function() {
-		expect(getLogPrefix(null)).toBe(formattedDate + " >> ");
+		expect(defaultLogPrefixFn(null)).toBe(formattedDate + " >> ");
 	});
 
 	it('should output message with the date May-02-2010-12:42:53PM, className, separator ', function() {
 		var $controller = "CoreController";
-		expect(getLogPrefix($controller)).toBe(formattedDate + "::" + $controller +" >> ");
+		expect(defaultLogPrefixFn($controller)).toBe(formattedDate + "::" + $controller +" >> ");
 	});
 
 	it('should output message with the date May-02-2010-12:42:53PM & separator when invalid string is passed', function() {
 		angular.forEach([false, true, 1, -1, new Date(), {}, null, undefined, []], function(value){
-			expect(getLogPrefix(value)).toBe(formattedDate + " >> ");
+			expect(defaultLogPrefixFn(value)).toBe(formattedDate + " >> ");
 		});
 	});
 

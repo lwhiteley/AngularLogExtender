@@ -14,7 +14,7 @@ describe('Provider Func Spec', function () {
             enableLogging(false);
             expect(enableGlobally).toBe(false);
         });
-        
+
         it('should set enableGlobally to false when input flag is not a boolean', function () {
             enableLogging('false');
             expect(enableGlobally).toBe(false);
@@ -25,13 +25,14 @@ describe('Provider Func Spec', function () {
             enableLogging(8);
             expect(enableGlobally).toBe(false);
         });
-        
+
     });
 
     describe('override log prefix Spec', function () {
-        var clock, sDateFormat;
+        var clock, sDateFormat, customLogPrefixFn;
 
         beforeEach(function () {
+            tempCustomPrefix = customLogPrefixFn ;
             sDateFormat = "May-02-2010-12:42:53PM >> ";
             clock = angular.mock.$mockDate();
             datespy.clock.create(new Date(2010, 4, 2, 12, 42, 53).getTime());
@@ -39,11 +40,14 @@ describe('Provider Func Spec', function () {
 
         afterEach(function () {
             clock.$restoreDate();
+            logPrefixOverride = false;
+            customLogPrefixFn = tempCustomPrefix;
         });
 
         it('should return default formatter if function is not passed', function () {
             overrideLogPrefix();
             expect(getLogPrefix()).toBe(sDateFormat);
+            expect(logPrefixOverride).toBe(false);
         });
 
         it('should not return default formatter if function is passed', function () {
@@ -54,6 +58,7 @@ describe('Provider Func Spec', function () {
             });
             expect(getLogPrefix()).toBe(format);
             expect(getLogPrefix()).not.toBe(sDateFormat);
+            expect(logPrefixOverride).toBe(true);
         });
     });
 
@@ -68,6 +73,27 @@ describe('Provider Func Spec', function () {
         it('should not return default formatter if function is passed', function () {
             restrictLogMethods(['log', 'info']);
             expect(allowedMethods).not.toBe(logMethods);
+        });
+    });
+
+    describe('disableDefaultColors Spec', function () {
+
+        afterEach(function () {
+            useDefaultColors = true;
+        });
+        it('should keep useDefaultColors as true when input is not a boolean', function () {
+            disableDefaultColors(null);
+            expect(useDefaultColors).toBe(true);
+        });
+
+        it('should keep useDefaultColors as true when input is false', function () {
+            disableDefaultColors(false);
+            expect(useDefaultColors).toBe(true);
+        });
+
+        it('should set useDefaultColors to false when true is passed', function () {
+            disableDefaultColors(true);
+            expect(useDefaultColors).toBe(false);
         });
     });
 

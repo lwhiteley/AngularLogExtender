@@ -1,4 +1,5 @@
 var util = require('./config/grunt/utils.js');
+var files = require('./config/files');
 
 module.exports = function (grunt) {
 
@@ -34,6 +35,13 @@ module.exports = function (grunt) {
                         .replace(/%DESCRIPTION%/g, APP_VERSION.description);
                 }
             },
+            minify:{
+                src: [
+                        'src/header.js',
+                        'dist/log-ex-unobtrusive.min.js'
+                     ],
+                dest: 'dist/log-ex-unobtrusive.min.js'
+            },
             dist: {
                 src: [
                     'src/header.js',
@@ -54,7 +62,7 @@ module.exports = function (grunt) {
                     'src/enhanceObj/globals.js',
                     'src/enhanceObj/obj.suffix',
                     // < ----------------
-                    
+
                     // < ----------------
                     'src/module.suffix',
                     // <--------- provider func start
@@ -69,7 +77,34 @@ module.exports = function (grunt) {
                 singleRun: true,
                 browsers: ['PhantomJS']
             },
-            unit: {
+            '1.0.x': {
+                options :  {
+                    files: files.getAngularFiles('1.0').concat(files.libs, files.tests('1.0'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            '1.1.x': {
+                options :  {
+                    files: files.getAngularFiles('1.1').concat(files.libs, files.tests('1.1'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            '1.1.2': {
+                options :  {
+                    files: files.getAngularFiles('1.1.2').concat(files.libs, files.tests('1.1.2'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            '1.2.x': {
+                options :  {
+                    files: files.getAngularFiles('1.2').concat(files.libs, files.tests('1.2'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            latest: {
+                options :  {
+                    files: files.getAngularFiles().concat(files.libs, files.tests('1.2'))
+                },
                 configFile: 'config/karma.conf.js'
             },
             coverage: {
@@ -85,14 +120,6 @@ module.exports = function (grunt) {
                 coverage_dir: 'lcov'
             }
         },
-//        bump: {
-//            options: {
-//                files: ['package.json'],
-//                commit: false,
-//                createTag: false,
-//                push: false
-//            }
-//        },
         bump: {
             options: {
                 files: ['package.json'],
@@ -117,6 +144,23 @@ module.exports = function (grunt) {
             sample: {
                 src: [ 'package.json', 'bower.json' ]
             }
+        },
+        clean: {
+            dist: ['dist/'],
+            cover: ['coverage/']
+        },
+        minified : {
+          files: {
+                src: [
+                'dist/log-ex-unobtrusive.js'
+                ],
+                dest: 'dist/'
+          },
+          options : {
+            sourcemap: true,
+            allinone: false,
+            ext: '.min.js'
+          }
         }
     });
 
@@ -129,6 +173,7 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-shell');
@@ -138,9 +183,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-jsbeautifier');
-    grunt.registerTask('test', ['jshint', 'jsonlint', 'karma:unit']);
-    grunt.registerTask('dist', ['test', 'concat', 'jsbeautifier', 'bower_update']);
+    grunt.loadNpmTasks('grunt-minified');
+    grunt.registerTask('test', ['clean:cover','jshint', 'jsonlint', 'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest']);
+    grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minified' ,'concat:minify','bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
-    grunt.registerTask('default', ['jshint', 'karma:coverage', 'coveralls']);
+    grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
 };

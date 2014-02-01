@@ -1,9 +1,9 @@
 {
     "name": "angular-logex",
-    "version": "0.0.6-sha.af8bd36",
+    "version": "0.0.6-sha.0886ae8",
     "main": "./dist/log-ex-unobtrusive.js",
     "dependencies": {
-        "angular": ">= 1.2.8"
+        "angular": ">= 1.1.2"
     },
     "ignore": [
         "**/.*",
@@ -13,7 +13,7 @@
         "libs",
         "test",
         "sample_app",
-        "DEVELOP.MD",
+        "DEVELOP.md",
         "CHANGELOG.md",
         "Gruntfile.js",
         "browserstack.json",
