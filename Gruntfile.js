@@ -35,6 +35,13 @@ module.exports = function (grunt) {
                         .replace(/%DESCRIPTION%/g, APP_VERSION.description);
                 }
             },
+            minify:{
+                src: [
+                        'src/header.js',
+                        'dist/log-ex-unobtrusive.min.js'
+                     ],
+                dest: 'dist/log-ex-unobtrusive.min.js'
+            },
             dist: {
                 src: [
                     'src/header.js',
@@ -55,7 +62,7 @@ module.exports = function (grunt) {
                     'src/enhanceObj/globals.js',
                     'src/enhanceObj/obj.suffix',
                     // < ----------------
-                    
+
                     // < ----------------
                     'src/module.suffix',
                     // <--------- provider func start
@@ -137,6 +144,20 @@ module.exports = function (grunt) {
             sample: {
                 src: [ 'package.json', 'bower.json' ]
             }
+        },
+        clean: ['dist/'],
+        minified : {
+          files: {
+            src: [
+            'dist/log-ex-unobtrusive.js'
+            ],
+            dest: 'dist/'
+          },
+          options : {
+            sourcemap: true,
+            allinone: false,
+            ext: '.min.js'
+          }
         }
     });
 
@@ -149,6 +170,7 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-shell');
@@ -158,8 +180,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-jsbeautifier');
+    grunt.loadNpmTasks('grunt-minified');
     grunt.registerTask('test', ['jshint', 'jsonlint', 'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest']);
-    grunt.registerTask('dist', ['test', 'concat', 'jsbeautifier', 'bower_update']);
+    grunt.registerTask('dist', ['test', 'clean','concat:dist', 'jsbeautifier', 'minified' ,'concat:minify','bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
