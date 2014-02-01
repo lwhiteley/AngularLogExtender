@@ -199,13 +199,23 @@
                   itypeof(args[0]) === 'string');
           };
 
+           /**
+           * does minor validation to ensure css string contains known keys
+           * @param {string} css - css string to be evaluated
+           * @returns {boolean} - returns true if string has css format
+           */
+          var containsColorCssKeys = function(css){
+              return isSubString('color', css) || isSubString('background', css) || isSubString('border', css);
+          };
+
           /**
            * does minor validation to ensure css string is valid
            * @param {string} value - css string to be evaluated
            * @returns {boolean} - returns true if string has css format
            */
           var validateColorCssString = function (value) {
-              return (itypeof(value) === 'string' && isSubString(':', value) && trimString(value).length > 6);
+              return (itypeof(value) === 'string' && isSubString(':', value) &&
+                      trimString(value).length > 6) && containsColorCssKeys(value);
           };
 
           /**

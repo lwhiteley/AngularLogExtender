@@ -197,7 +197,30 @@ describe('util Functions spec', function () {
         });
 
     });
+    describe('containsColorCssKeys Spec ', function () {
 
+      it('should return false when string has no known keys', function () {
+            var css = '{0}';
+            var result = containsColorCssKeys(css);
+            expect(result).toBe(false);
+        });
+        it('should return true when string contains color', function () {
+            var css = 'color';
+            var result = containsColorCssKeys(css);
+            expect(result).toBe(true);
+        });
+        it('should return true when string contains border', function () {
+            var css = 'border';
+            var result = containsColorCssKeys(css);
+            expect(result).toBe(true);
+        });
+        it('should return true when string contains background', function () {
+            var css = 'background';
+            var result = containsColorCssKeys(css);
+            expect(result).toBe(true);
+        });
+
+    });
     describe('validateColorCssString Spec ', function () {
         it('should return false when string has no colons', function () {
             var message = '{0}';
@@ -212,6 +235,11 @@ describe('util Functions spec', function () {
         });
         it('should return false when minimum length (> 6 chars) of trimmed string is not met', function () {
             var message = 'color:  ';
+            var result = validateColorCssString(message);
+            expect(result).toBe(false);
+        });
+        it('should return false when string has no known colorCss keys', function () {
+            var message = 'culah:  ';
             var result = validateColorCssString(message);
             expect(result).toBe(false);
         });
