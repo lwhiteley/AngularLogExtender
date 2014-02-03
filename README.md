@@ -92,6 +92,16 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods(['log', 'info']);
 }]);
 ```
+
+This configuration is helpful when you want to only allow specific types of log messages to be sent to the console in a
+particular environment. For eg. Say we want to only allow error logs to be seen in production, then the following configuration will
+produce this result.
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    logExProvider.enableLogging(true);
+    logExProvider.restrictLogMethods(['error']);
+}]);
+```
 ######2. Override Log Prefix - Log Prefix Formatter
 
 Add the logExProvider dependency to your AngularJS app to configure logging. Pass a custom function that accepts a `className` param to the `overrideLogPrefix` method
@@ -240,18 +250,7 @@ Dec-08-2013-1:20:56PM >> [OVERRIDE] LOGGING ENABLED - $log enabled for this inst
 Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 ```
 
-###Use Case 4: Configure only specific methods to print to the console
-This scenario is helpful when you want to only allow specific types of log messages to be sent to the console in a
-particular environment. For eg. Say we want to only allow error logs to be seen in production, then the following configuration will
-produce this result.
-#####Eg 1.
-```javascript
-app.config(['logExProvider', function(logExProvider) {
-    logExProvider.enableLogging(true);
-    logExProvider.restrictLogMethods(['error']);
-}]);
-```
-###Use Case 5: Use the built in template engine
+###Use Case 4: Use the built in template engine
 Templates can be used to replace string contents with matching propert names of an object.
 Just pass a truthy boolean as the fourth parameter of the `getInstance()` method to activate the template engine.
 Logs must follow a specific format for this engine to recognize templates. These logs will also be coloured once a custom colour is set.
@@ -271,7 +270,7 @@ Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Cas
 
 Currently, Only numbers and strings will be pushed into the template string.
 
-###Use Case 6: Color your log outputs
+###Use Case 5: Color your log outputs
 Override the color of all log methods of a specific log instance is possible with AngularLogExtender. Just pass a css style as the third parameter of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
 The following example shows you how.
 #####Eg.
