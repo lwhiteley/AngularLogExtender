@@ -149,8 +149,8 @@ app.config(['logExProvider', function(logExProvider) {
 ```
 ######7. Create custom $log instances with extra functionality
 
-The following snippet shows you the full use of a method `log-ex` provides with the $log when injected into your angular components ($controller, $directive, etc.). It should be reassigned to the $log object which creates a new instance specific to the component.
-The snippet explains what each parameter is used for. `Advanced Use Cases` were included to show you practical uses of the configurations.
+The following snippet shows you the full use of a method `log-ex` provides with the `$log` service when injected into your angular components ($controller, $directive, etc.). It should be reassigned to the `$log` service which creates a new instance specific to the component.
+`Advanced Use Cases` were included below to show you practical uses of the configurations. The snippet below explains what each parameter is used for.
 
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
