@@ -137,7 +137,9 @@ app.config(['logExProvider', function(logExProvider) {
 If you want to quickly toggle between using your custom log pefix rules and the default rules, te following example shows you how
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
-    logExProvider.useDefaultLogPrefix(true); //this forces log-ex to use the default rules
+    // this forces log-ex to use the default rules
+    // passing true in the function does the same thing
+    logExProvider.useDefaultLogPrefix();
 }]);
 ```
 ```javascript
