@@ -6,7 +6,8 @@ This is an extension of the Angular $log functionality. It uses the native $deco
 To view the blog this module was extended from and inspired by, go to
 http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
 
-If you wish to contribute, Please read the `Develop.md` file
+If you wish to contribute, Please read the `Develop.md` file.
+
 Feel Free to make your own contributions to this module so we can make it better :)
 
 [![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
@@ -14,7 +15,7 @@ Feel Free to make your own contributions to this module so we can make it better
 
 ###Notes
 
-The prefered file to use is the log-ex-unobtrusive.js file. You can include the module to your AngularJs Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style. Log methods are now colour coded by default.
+You can include the module in your AngularJS Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style. Log methods are now colour coded by default.
 
 Supported browsers for Colorize are currently `Google Chrome` and `Mozilla Firefox`.
 
@@ -50,8 +51,7 @@ Add a script to your index.html:
 6. Customize the color of your logs
 7. Use a template engine for your logs
 8. Disable/Enable default coloring of logs
-9. Toggle between th Default log prefix and custom log prefix
-
+9. Toggle between the Default log prefix and custom log prefix
 
 ##How to Use
 
@@ -138,7 +138,7 @@ If you want to quickly toggle between using your custom log pefix rules and the 
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
     // this forces log-ex to use the default rules
-    // passing true in the function does the same thing
+    // passing true as a parameter does the same thing. eg logExProvider.useDefaultLogPrefix(true);
     logExProvider.useDefaultLogPrefix();
 }]);
 ```
@@ -147,6 +147,24 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.useDefaultLogPrefix(false); //this tells log-ex to use the custom rules (if set)
 }]);
 ```
+######7. Create custom $log instances with extra functionality
+
+The following snippet shows you the full use of a method `log-ex` provides with the $log when injected into your angular components ($controller, $directive, etc.). It should be reassigned to the $log object which creates a new instance specific to the component.
+The snippet explains what each parameter is used for. `Advanced Use Cases` were included to show you practical uses of the configurations.
+
+```javascript
+app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+     /*
+     * @param {*} className - Name of object in which $log.<function> calls is invoked.
+     * @param {boolean=} override - activates/deactivates component level logging
+     * @param {boolean=} useTemplate - enables/disables the template engine
+     * @param {String=} colorCss - css styles for coloring/styling log outputs,
+     *                             will be applied to all log methods
+     */
+    $log = $log.getInstance(className, override, activteTemplates, colorCss);
+}]);
+```
+
 ##Advanced Use Cases
 ###Use Case 1: Set Component Class Name
 This example can be used to know which component (controller, directive etc.) $log instances are being pushed from to the console. The new instance must be re-assigned to the $log object to take effect. This Advanced use case is always recommended to get more information from your application logs.
