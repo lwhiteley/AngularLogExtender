@@ -1,16 +1,32 @@
 describe('useDefaultLogPrefix Spec', function () {
-
     var tempDefault;
     beforeEach(function () {
         tempDefault = useDefaultPrefix;
     });
     afterEach(function () {
-        useDefaultPrefix = null;
+        useDefaultPrefix = false;
     });
 
-    it('should not set useDefaultPrefix when flag is not a boolean', function () {
+    it('should not set useDefaultPrefix when flag is not of types boolean, null or undefined', function () {
+        useDefaultLogPrefix([null]);
+        expect(useDefaultPrefix).toBe(false);
+
+        useDefaultLogPrefix({});
+        expect(useDefaultPrefix).toBe(false);
+
+        useDefaultLogPrefix(76);
+        expect(useDefaultPrefix).toBe(false);
+    });
+
+    it('should set useDefaultPrefix to true when flag is null or undefined', function () {
         useDefaultLogPrefix(null);
-        expect(useDefaultPrefix).toBe(tempDefault);
+        expect(useDefaultPrefix).toBe(true);
+
+        useDefaultLogPrefix();
+        expect(useDefaultPrefix).toBe(true);
+
+        useDefaultLogPrefix(undefined);
+        expect(useDefaultPrefix).toBe(true);
     });
 
     it('should set useDefaultPrefix to false when false is passed as a flag', function () {
