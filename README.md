@@ -157,7 +157,7 @@ app.controller('CoreController', ['$scope','$log', function($scope, $log) {
      /*
      * @param {String=} className - Name of object in which $log.<function> calls are invoked.
      * @param {boolean=} override - activates/deactivates component level logging
-     * @param {boolean=} useTemplate - enables/disables the template engine
+     * @param {boolean=} activteTemplates - enables/disables the template engine
      * @param {String=} colorCss - css styles for coloring/styling log outputs,
      *                             will be applied to all log methods
      */
