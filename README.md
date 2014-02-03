@@ -155,7 +155,7 @@ The snippet explains what each parameter is used for. `Advanced Use Cases` were 
 ```javascript
 app.controller('CoreController', ['$scope','$log', function($scope, $log) {
      /*
-     * @param {*} className - Name of object in which $log.<function> calls is invoked.
+     * @param {String=} className - Name of object in which $log.<function> calls are invoked.
      * @param {boolean=} override - activates/deactivates component level logging
      * @param {boolean=} useTemplate - enables/disables the template engine
      * @param {String=} colorCss - css styles for coloring/styling log outputs,
