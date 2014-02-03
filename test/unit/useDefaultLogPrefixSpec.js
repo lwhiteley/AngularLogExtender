@@ -18,14 +18,9 @@ describe('useDefaultLogPrefix Spec', function () {
         expect(useDefaultPrefix).toBe(false);
     });
 
-    it('should set useDefaultPrefix to true when flag is null or undefined', function () {
-        useDefaultLogPrefix(null);
-        expect(useDefaultPrefix).toBe(true);
+    it('should set useDefaultPrefix to true when flag is not set', function () {
 
         useDefaultLogPrefix();
-        expect(useDefaultPrefix).toBe(true);
-
-        useDefaultLogPrefix(undefined);
         expect(useDefaultPrefix).toBe(true);
     });
 

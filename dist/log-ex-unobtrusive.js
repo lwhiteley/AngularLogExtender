@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.cfbf5ca
+ * Log Unobtrusive Extension v0.0.7-sha.3460410
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -624,7 +624,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param {boolean} flag - when passed true or flag is not set, it forces log-ex to use the default log prefix
          */
         var useDefaultLogPrefix = function(flag) {
-            if (flag === null || flag === undefined) {
+            if (angular.isUndefined(flag)) {
                 useDefaultPrefix = true;
             } else if (isBoolean(flag)) {
                 useDefaultPrefix = flag;
@@ -639,7 +639,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.cfbf5ca',
+                version: '0.0.7-sha.3460410',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
