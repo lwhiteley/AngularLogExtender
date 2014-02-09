@@ -271,7 +271,7 @@ Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Cas
 Currently, Only numbers and strings will be pushed into the template string.
 
 ###Use Case 5: Color your log outputs
-Override the color of all log methods of a specific log instance is possible with AngularLogExtender. Just pass a css style as the third parameter of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
+Override the color of all log methods of a specific log instance is possible with AngularLogExtender. Just pass a css style as the fourth parameter of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
 The following example shows you how.
 #####Eg.
 ```javascript
