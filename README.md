@@ -37,7 +37,7 @@ These are:
 Now offers bower support.
 `bower install angular-logex --save`
 
-Add a script to your index.html:
+Add the script to your index.html:
 ```javascript
 <script src="/bower_components/angular-logex/dist/log-ex-unobtrusive.js"></script>
 ```
