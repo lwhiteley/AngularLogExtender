@@ -252,7 +252,7 @@ Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 
 ###Use Case 4: Use the built in template engine
 Templates can be used to replace string contents with matching propert names of an object.
-Just pass a truthy boolean as the fourth parameter of the `getInstance()` method to activate the template engine.
+Just pass a truthy boolean as the third parameter of the `getInstance()` method to activate the template engine.
 Logs must follow a specific format for this engine to recognize templates. These logs will also be coloured once a custom colour is set.
 The following example shows you how.
 #####Eg.
