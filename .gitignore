@@ -14,3 +14,4 @@ node_modules/
 .idea/
 coverage/
 lcov/
+libs/bower/angular

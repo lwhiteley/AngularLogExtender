@@ -1,5 +1,6 @@
 module.exports = {
     libs: [
+        'libs/bower/lodash/dist/lodash.compat.js',
         'libs/datespy/datespy.js',
         'test/helpers/globals.js',
         'src/declarations.js',

@@ -3,7 +3,8 @@
     "version": "0.0.7-sha.7aac651",
     "main": "./dist/log-ex-unobtrusive.js",
     "dependencies": {
-        "angular": ">= 1.1.2"
+        "angular": ">= 1.1.2",
+        "lodash": ">= 2.4.1"
     },
     "ignore": [
         "**/.*",
