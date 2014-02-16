@@ -16,6 +16,7 @@
            */
           var logPrefixOverride = false;
 
+            //TODO: Log push config properties could be an onject literal
            /**
            * Used to enable backend log pushes
            * @type {Boolean}
