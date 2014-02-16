@@ -1,3 +1,4 @@
 [submodule "sample_app"]
 	path = sample_app
-	url = https://github.com/ferronrsmith/AngularLogExtender_AngularSeed
+	url = https://github.com/lwhiteley/AngularLogExtender_AngularSeed
+    branch = master
