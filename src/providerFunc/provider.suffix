@@ -14,7 +14,7 @@
             setLogMethodColor: setLogMethodColor,
             overrideLogMethodColors: overrideLogMethodColors,
             useDefaultLogPrefix: useDefaultLogPrefix,
-            enableLogPushSerice: enableLogPushSerice,
+            enableLogPushService: enableLogPushService,
             setAllowedLogPushMethods: setAllowedLogPushMethods,
             setLogPushApi: setLogPushApi,
             setLogPushInterval: setLogPushInterval,
@@ -30,7 +30,7 @@
     this.setLogMethodColor = setLogMethodColor;
     this.overrideLogMethodColors = overrideLogMethodColors;
     this.useDefaultLogPrefix = useDefaultLogPrefix;
-    this.enableLogPushSerice = enableLogPushSerice;
+    this.enableLogPushService = enableLogPushService;
     this.setAllowedLogPushMethods = setAllowedLogPushMethods;
     this.setLogPushApi = setLogPushApi;
     this.setLogPushInterval = setLogPushInterval;
