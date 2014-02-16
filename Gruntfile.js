@@ -141,9 +141,6 @@ module.exports = function (grunt) {
         shell: {
             changelog: {
                 command: 'git changelog --tag <%= APP_VERSION.full %>'
-            },
-            open:{
-                command: 'node sample_app/scripts/web-server'
             }
         },
         jsonlint: {
