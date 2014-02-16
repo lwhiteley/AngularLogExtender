@@ -11,7 +11,7 @@ module.exports = function (grunt) {
     // Time how long tasks take.
     require('time-grunt')(grunt);
     var port = process.env.PORT || 3000;
-    console.log('port: ', process.env.PORT);
+
     grunt.initConfig({
         APP_VERSION:APP_VERSION,
         pkg: grunt.file.readJSON('package.json'),
@@ -69,8 +69,6 @@ module.exports = function (grunt) {
                     // <------- extras End
                     'src/enhanceObj/globals.js',
                     'src/enhanceObj/obj.suffix',
-                    // < ----------------
-
                     // < ----------------
                     'src/module.suffix',
                     // <--------- provider func start
@@ -204,8 +202,8 @@ module.exports = function (grunt) {
         'jsonlint',
         'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest'
     ]);
-
-    grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minified' ,'concat:minify','bower_update']);
+    grunt.registerTask('minify', ['minified' ,'concat:minify']);
+    grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
