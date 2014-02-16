@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.97730f1
+ * Log Unobtrusive Extension v0.0.7-sha.6df6dec
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -20,9 +20,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         // Creates an injector function that can be used for retrieving services as well as for dependency injection
         var $injector = angular.injector(['ng']);
-
         // Used the $injector defined to retrieve the $filterProvider
         var $filter = $injector.get('$filter');
+        // Used the $injector defined to retrieve the $exceptionHandler
+        var $exceptionHandler = $injector.get('$exceptionHandler');
+        // Used the $injector defined to retrieve the $http
+        var $http = $injector.get('$http');
 
         /**
          * Used to enable logging globally
@@ -36,6 +39,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var logPrefixOverride = false;
 
+        //TODO: Log push config properties could be an object literal
         /**
          * Used to enable backend log pushes
          * @type {Boolean}
@@ -53,6 +57,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {number} in millisecnds
          */
         var logPushInterval = 3000;
+
+        /**
+         * default log methods available for backend log pushing
+         * @type {string[]}
+         */
+        var defaultLogPushMethods = ['error'];
 
         /**
          * Used to force log-ex to use the default log prefix rules
@@ -77,12 +87,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {string[]}
          */
         var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
-
-        /**
-         * default log methods available for backend log pushing
-         * @type {string[]}
-         */
-        var defaultLogPushMethods = ['error'];
 
         /**
          * list of browsers that support colorify
@@ -112,6 +116,27 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             warn: 'color: #CC9933;',
             debug: 'color: brown;',
             error: 'color: red;'
+        };
+
+        /**
+         * Log Message Model
+         * @type {object = LogMessage}
+         * @type {string} browser - current browser
+         * @prop {string} type - type of $log (method name)
+         * @prop {string} message - message being logged
+         * @prop {} cause - cause of error (if $log.error)
+         * @prop {} exceptionName - exception name of error (if $log.error)
+         * @prop {Error} data - exception object (if $log.error)
+         * @prop {} stack - stack trace of error (if $log.error)
+         */
+        var LogMessage = function(type, message, cause, exceptionName, data, stack) {
+            this.browser = userAgent;
+            this.type = type;
+            this.message = message;
+            this.cause = cause;
+            this.exceptionName = exceptionName;
+            this.data = data;
+            this.stack = stack;
         };
 
         /**
@@ -721,7 +746,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.97730f1',
+                version: '0.0.7-sha.6df6dec',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
@@ -729,7 +754,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                 setLogMethodColor: setLogMethodColor,
                 overrideLogMethodColors: overrideLogMethodColors,
                 useDefaultLogPrefix: useDefaultLogPrefix,
-                enableLogPushSerice: enableLogPushSerice,
+                enableLogPushService: enableLogPushService,
                 setAllowedLogPushMethods: setAllowedLogPushMethods,
                 setLogPushApi: setLogPushApi,
                 setLogPushInterval: setLogPushInterval,
@@ -745,7 +770,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.setLogMethodColor = setLogMethodColor;
         this.overrideLogMethodColors = overrideLogMethodColors;
         this.useDefaultLogPrefix = useDefaultLogPrefix;
-        this.enableLogPushSerice = enableLogPushSerice;
+        this.enableLogPushService = enableLogPushService;
         this.setAllowedLogPushMethods = setAllowedLogPushMethods;
         this.setLogPushApi = setLogPushApi;
         this.setLogPushInterval = setLogPushInterval;

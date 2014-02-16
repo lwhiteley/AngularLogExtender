@@ -1,8 +1,11 @@
            // Creates an injector function that can be used for retrieving services as well as for dependency injection
           var $injector = angular.injector(['ng']);
-
            // Used the $injector defined to retrieve the $filterProvider
           var $filter = $injector.get('$filter');
+           // Used the $injector defined to retrieve the $exceptionHandler
+          var $exceptionHandler = $injector.get('$exceptionHandler');
+           // Used the $injector defined to retrieve the $http
+          var $http = $injector.get('$http');
 
           /**
            * Used to enable logging globally
@@ -16,7 +19,7 @@
            */
           var logPrefixOverride = false;
 
-            //TODO: Log push config properties could be an onject literal
+            //TODO: Log push config properties could be an object literal
            /**
            * Used to enable backend log pushes
            * @type {Boolean}
@@ -34,6 +37,12 @@
            * @type {number} in millisecnds
            */
           var logPushInterval = 3000;
+
+          /**
+           * default log methods available for backend log pushing
+           * @type {string[]}
+           */
+          var defaultLogPushMethods = ['error'];
 
            /**
            * Used to force log-ex to use the default log prefix rules
@@ -58,12 +67,6 @@
            * @type {string[]}
            */
           var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
-
-          /**
-           * default log methods available for backend log pushing
-           * @type {string[]}
-           */
-          var defaultLogPushMethods = ['error'];
 
           /**
            * list of browsers that support colorify
@@ -93,6 +96,27 @@
               warn: 'color: #CC9933;',
               debug: 'color: brown;',
               error: 'color: red;'
+          };
+
+           /**
+           * Log Message Model
+           * @type {object = LogMessage}
+           * @type {string} browser - current browser
+           * @prop {string} type - type of $log (method name)
+           * @prop {string} message - message being logged
+           * @prop {} cause - cause of error (if $log.error)
+           * @prop {} exceptionName - exception name of error (if $log.error)
+           * @prop {Error} data - exception object (if $log.error)
+           * @prop {} stack - stack trace of error (if $log.error)
+           */
+          var LogMessage = function(type, message, cause, exceptionName, data, stack){
+              this.browser = userAgent;
+              this.type = type;
+              this.message = message;
+              this.cause = cause;
+              this.exceptionName = exceptionName;
+              this.data = data;
+              this.stack = stack;
           };
 
           /**
