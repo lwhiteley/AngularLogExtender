@@ -52,6 +52,12 @@
            */
           var useDefaultColors = true;
 
+           /**
+           * list of known keys used to style logs
+           * @type {string[]}
+           */
+          var cssKeys = ['color', 'background', 'font-size', 'border'];
+
           /**
            * default colours for each log method
            * @type {object}
@@ -205,9 +211,14 @@
            * @param {string} css - css string to be evaluated
            * @returns {boolean} - returns true if string contains any supported keys
            */
-          var containsColorCssKeys = function(css){
-              return isSubString('color', css) || isSubString('background', css) || isSubString('border', css);
-          };
+            var containsColorCssKeys = function(css){
+                for(var x = 0; x < cssKeys.length; x++){
+                    if(isSubString(cssKeys[x], css)){
+                        return true;
+                    }
+                }
+                return false;
+            };
 
           /**
            * The following method does partial validation to ensure css string is valid

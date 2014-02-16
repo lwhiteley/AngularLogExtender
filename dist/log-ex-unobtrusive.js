@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.7aac651
+ * Log Unobtrusive Extension v0.0.7-sha.c52c460
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -71,6 +71,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {boolean}
          */
         var useDefaultColors = true;
+
+        /**
+         * list of known keys used to style logs
+         * @type {string[]}
+         */
+        var cssKeys = ['color', 'background', 'font-size', 'border'];
 
         /**
          * default colours for each log method
@@ -226,7 +232,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {boolean} - returns true if string contains any supported keys
          */
         var containsColorCssKeys = function(css) {
-            return isSubString('color', css) || isSubString('background', css) || isSubString('border', css);
+            for (var x = 0; x < cssKeys.length; x++) {
+                if (isSubString(cssKeys[x], css)) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         /**
@@ -483,7 +494,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * Extends the $log object with the transformed native methods
                          * @param $log - $log instance
                          * @param {function} createLogObj -  defines transformation rules
-                         **/
+                         */
                         angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, false, null]));
 
                         /**
@@ -610,10 +621,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         /**
          * Used to force default log prefix functionality
-         * @param {boolean} flag - when passed true, it forces log-ex to use the default log prefix
+         * @param {boolean} flag - when passed true or flag is not set, it forces log-ex to use the default log prefix
          */
         var useDefaultLogPrefix = function(flag) {
-            if (isBoolean(flag)) {
+            if (angular.isUndefined(flag)) {
+                useDefaultPrefix = true;
+            } else if (isBoolean(flag)) {
                 useDefaultPrefix = flag;
             }
         };
@@ -626,7 +639,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.7aac651',
+                version: '0.0.7-sha.c52c460',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
