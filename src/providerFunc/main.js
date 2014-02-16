@@ -76,3 +76,62 @@ var useDefaultLogPrefix = function (flag) {
         useDefaultPrefix = flag;
     }
 };
+
+/**
+ * Used to enable log backend push functionality
+ * @param {boolean} flag - when passed true or flag is not set, it enables log backend push functionality
+ */
+var enableLogPushService = function (flag) {
+    if(angular.isUndefined(flag)){
+        logPushSericeEnabled = true;
+    }else if(isBoolean(flag)){
+        logPushSericeEnabled = flag;
+    }
+};
+
+/**
+ * Used to set specific $log method messages that will be pushed to the api
+ * @param {string []} value - allowed log methods for push service
+ */
+var setAllowedLogPushMethods = function (value) {
+    if(itypeof(value) === 'array'){
+        defaultLogPushMethods = value;
+    }
+};
+
+/**
+ * Used to set the interval in milliseconds at which to push logs to an api
+ * @param {number} value - interval in millis
+ */
+var setLogPushInterval = function (value) {
+    if(itypeof(value) === 'number'){
+        logPushInterval = value;
+    }
+};
+
+/**
+ * Used to set API url where logs will be pushed to
+ * @param {string} value - api url
+ */
+var setLogPushApi = function (value) {
+    if(itypeof(value) === 'string'){
+        logPushApi = value;
+    }
+};
+
+/**
+ * Used to set log push configurations in one method
+ * @param {object} value - config options
+ */
+var logPushConfig = function (value) {
+    if(itypeof(value) === 'object'){
+        if(value.hasOwnProperty('api')) setLogPushApi(value.api);
+        if(value.hasOwnProperty('interval')) setLogPushInterval(value.interval);
+        if(value.hasOwnProperty('methods')) setAllowedLogPushMethods(value.methods);
+        if(value.hasOwnProperty('enable')) {
+            enableLogPushService(value.enable);
+        }else{
+            enableLogPushService();
+        }
+    }
+};

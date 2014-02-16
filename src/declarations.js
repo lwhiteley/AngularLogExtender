@@ -17,6 +17,24 @@
           var logPrefixOverride = false;
 
            /**
+           * Used to enable backend log pushes
+           * @type {Boolean}
+           */
+          var logPushSericeEnabled = false;
+
+           /**
+           * api to push log messages
+           * @type {string}
+           */
+          var logPushApi = '';
+
+           /**
+           * log push interval
+           * @type {number} in millisecnds
+           */
+          var logPushInterval = 3000;
+
+           /**
            * Used to force log-ex to use the default log prefix rules
            * @type {boolean}
            */
@@ -39,6 +57,12 @@
            * @type {string[]}
            */
           var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance'];
+
+          /**
+           * default log methods available for backend log pushing
+           * @type {string[]}
+           */
+          var defaultLogPushMethods = ['error'];
 
           /**
            * list of browsers that support colorify
