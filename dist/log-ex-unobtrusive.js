@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.c52c460
+ * Log Unobtrusive Extension v0.0.7-sha.d31cf1c
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -639,7 +639,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.c52c460',
+                version: '0.0.7-sha.d31cf1c',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
