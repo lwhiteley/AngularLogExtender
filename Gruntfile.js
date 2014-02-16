@@ -8,8 +8,6 @@ module.exports = function (grunt) {
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
-    // Time how long tasks take.
-    require('time-grunt')(grunt);
     var port = process.env.PORT || 3000;
 
     grunt.initConfig({

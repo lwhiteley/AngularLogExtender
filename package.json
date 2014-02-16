@@ -33,7 +33,6 @@
     "grunt-minified": "0.0.6",
     "grunt-contrib-clean": "~0.5.0",
     "load-grunt-tasks": "~0.3.0",
-    "time-grunt": "~0.2.9",
     "express": "~3.4.8",
     "ejs": "~0.8.5",
     "async": "~0.2.10",
