@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.b88520e
+ * Log Unobtrusive Extension v0.0.7-sha.346c59f
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -232,12 +232,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
          * @returns {string} - returns formatted string if template and values match the required pattern
          */
-        var supplant = function(template, values, /*{RegExp=}*/ pattern, ovrrideConstraint) {
+        var supplant = function(template, values, /*{RegExp=}*/ pattern) {
             var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
             var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
-            var criteria3 = itypeof(ovrrideConstraint) !== 'boolean' ||
-                (itypeof(ovrrideConstraint) === 'boolean' && !ovrrideConstraint);
-            if ((criteria1 || criteria2) && criteria3) {
+            if ((criteria1 || criteria2)) {
                 return Array.prototype.slice.call(arguments);
             }
 
@@ -746,7 +744,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.b88520e',
+                version: '0.0.7-sha.346c59f',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
