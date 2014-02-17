@@ -83,9 +83,9 @@ var useDefaultLogPrefix = function (flag) {
  */
 var enableLogPushService = function (flag) {
     if(angular.isUndefined(flag)){
-        logPushServiceEnabled = true;
+        defaultLogPushConfig.enable = true;
     }else if(isBoolean(flag)){
-        logPushServiceEnabled = flag;
+        defaultLogPushConfig.enable = flag;
     }
 };
 
@@ -95,7 +95,7 @@ var enableLogPushService = function (flag) {
  */
 var setAllowedLogPushMethods = function (value) {
     if(itypeof(value) === 'array'){
-        defaultLogPushMethods = value;
+        defaultLogPushConfig.methods = value;
     }
 };
 
@@ -105,7 +105,7 @@ var setAllowedLogPushMethods = function (value) {
  */
 var setLogPushInterval = function (value) {
     if(itypeof(value) === 'number'){
-        logPushInterval = value;
+        defaultLogPushConfig.interval = value;
     }
 };
 
@@ -115,6 +115,6 @@ var setLogPushInterval = function (value) {
  */
 var setLogPushApi = function (value) {
     if(itypeof(value) === 'string'){
-        logPushApi = value;
+        defaultLogPushConfig.api = value;
     }
 };

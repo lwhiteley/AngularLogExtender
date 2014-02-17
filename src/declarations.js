@@ -19,30 +19,20 @@
            */
           var logPrefixOverride = false;
 
-            //TODO: Log push config properties could be an object literal
            /**
-           * Used to enable backend log pushes
-           * @type {Boolean}
+           * defaultLogPushConfig
+           * @type {object}
+           * @prop {Boolean} enable -  Used to enable backend log pushes
+           * @prop {string} api - url to push log messages
+           * @prop {number} interval - log push interval in millisecnds
+           * @prop {string[]} methods - default log methods available for backend log pushing
            */
-          var logPushServiceEnabled = false;
-
-           /**
-           * api to push log messages
-           * @type {string}
-           */
-          var logPushApi = '';
-
-           /**
-           * log push interval
-           * @type {number} in millisecnds
-           */
-          var logPushInterval = 3000;
-
-          /**
-           * default log methods available for backend log pushing
-           * @type {string[]}
-           */
-          var defaultLogPushMethods = ['error'];
+            var defaultLogPushConfig = {
+                interval: 3000,
+                enable: false,
+                api: '',
+                methods: ['error']
+            };
 
            /**
            * Used to force log-ex to use the default log prefix rules

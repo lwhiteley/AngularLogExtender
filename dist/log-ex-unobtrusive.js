@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.346c59f
+ * Log Unobtrusive Extension v0.0.7-sha.045a3b8
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -39,30 +39,20 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var logPrefixOverride = false;
 
-        //TODO: Log push config properties could be an object literal
         /**
-         * Used to enable backend log pushes
-         * @type {Boolean}
+         * defaultLogPushConfig
+         * @type {object}
+         * @prop {Boolean} enable -  Used to enable backend log pushes
+         * @prop {string} api - url to push log messages
+         * @prop {number} interval - log push interval in millisecnds
+         * @prop {string[]} methods - default log methods available for backend log pushing
          */
-        var logPushServiceEnabled = false;
-
-        /**
-         * api to push log messages
-         * @type {string}
-         */
-        var logPushApi = '';
-
-        /**
-         * log push interval
-         * @type {number} in millisecnds
-         */
-        var logPushInterval = 3000;
-
-        /**
-         * default log methods available for backend log pushing
-         * @type {string[]}
-         */
-        var defaultLogPushMethods = ['error'];
+        var defaultLogPushConfig = {
+            interval: 3000,
+            enable: false,
+            api: '',
+            methods: ['error']
+        };
 
         /**
          * Used to force log-ex to use the default log prefix rules
@@ -700,9 +690,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var enableLogPushService = function(flag) {
             if (angular.isUndefined(flag)) {
-                logPushServiceEnabled = true;
+                defaultLogPushConfig.enable = true;
             } else if (isBoolean(flag)) {
-                logPushServiceEnabled = flag;
+                defaultLogPushConfig.enable = flag;
             }
         };
 
@@ -712,7 +702,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var setAllowedLogPushMethods = function(value) {
             if (itypeof(value) === 'array') {
-                defaultLogPushMethods = value;
+                defaultLogPushConfig.methods = value;
             }
         };
 
@@ -722,7 +712,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var setLogPushInterval = function(value) {
             if (itypeof(value) === 'number') {
-                logPushInterval = value;
+                defaultLogPushConfig.interval = value;
             }
         };
 
@@ -732,7 +722,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var setLogPushApi = function(value) {
             if (itypeof(value) === 'string') {
-                logPushApi = value;
+                defaultLogPushConfig.api = value;
             }
         };
 
@@ -744,7 +734,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.346c59f',
+                version: '0.0.7-sha.045a3b8',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,

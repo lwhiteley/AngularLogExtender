@@ -1,36 +1,36 @@
-describe('enableLogPushSerice Spec', function () {
+describe('enableLogPushService Spec', function () {
     var templogPushServiceEnabled;
     beforeEach(function () {
-        templogPushServiceEnabled = logPushServiceEnabled;
+        templogPushServiceEnabled = defaultLogPushConfig.enable;
     });
     afterEach(function () {
-        logPushServiceEnabled = false;
+        defaultLogPushConfig.enable = false;
     });
 
-    it('should not set enableLogPushSerice when flag is not of types boolean, null or undefined', function () {
+    it('should not set enableLogPushService when flag is not of types boolean, null or undefined', function () {
         enableLogPushService([null]);
-        expect(logPushServiceEnabled).toBe(false);
+        expect(defaultLogPushConfig.enable).toBe(false);
 
         enableLogPushService({});
-        expect(logPushServiceEnabled).toBe(false);
+        expect(defaultLogPushConfig.enable).toBe(false);
 
         enableLogPushService(76);
-        expect(logPushServiceEnabled).toBe(false);
+        expect(defaultLogPushConfig.enable).toBe(false);
     });
 
-    it('should set enableLogPushSerice to true when flag is not set', function () {
+    it('should set enableLogPushService to true when flag is not set', function () {
 
         enableLogPushService();
-        expect(logPushServiceEnabled).toBe(true);
+        expect(defaultLogPushConfig.enable).toBe(true);
     });
 
-    it('should set enableLogPushSerice to false when false is passed as a flag', function () {
+    it('should set enableLogPushService to false when false is passed as a flag', function () {
         enableLogPushService(false);
-        expect(logPushServiceEnabled).toBe(false);
+        expect(defaultLogPushConfig.enable).toBe(false);
     });
 
-    it('should set enableLogPushSerice to false when false is passed as a flag', function () {
+    it('should set enableLogPushService to false when false is passed as a flag', function () {
         enableLogPushService(true);
-        expect(logPushServiceEnabled).toBe(true);
+        expect(defaultLogPushConfig.enable).toBe(true);
     });
 });
