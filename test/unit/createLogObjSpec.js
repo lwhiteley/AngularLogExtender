@@ -56,11 +56,11 @@ describe('Log Object Create Method Spec', function () {
 
             utils.resultSet = createLogObj(utils.myLog, allowedMethods, utils.myFunc, utils.arr);
         });
-        
+
         afterEach(function () {
             useDefaultColors = true;
         });
-        
+
         describe('Advanced Usage: createLogObject without defaultColors disabled', function () {
             beforeEach(function () {
                 useDefaultColors = false;
@@ -76,7 +76,7 @@ describe('Log Object Create Method Spec', function () {
                 expect(utils.myFunc.mostRecentCall.args).toEqual(utils.arr);
                 expect(validateColorCssString).not.toHaveBeenCalled();
             });
-    
+
             it('should call myFunc with utils.arr prefixed with idx', function () {
                angular.forEach(utils.myFunc.calls, function (value, idx) {
                    // avoid src propagation by creating a new array on each iteration
@@ -87,7 +87,7 @@ describe('Log Object Create Method Spec', function () {
                });
                 expect(validateColorCssString).not.toHaveBeenCalled();
             });
-    
+
             it('should have n arguments for call to myFunc', function () {
                 var main = [];
                 angular.forEach(allowedMethods, function(val, idx) {
@@ -99,18 +99,18 @@ describe('Log Object Create Method Spec', function () {
                 expect(utils.myFunc.argsForCall).toEqual(main);
                 expect(validateColorCssString).not.toHaveBeenCalled();
             });
-    
+
             it('should call myFunc method', function () {
                 expect(utils.myFunc).toHaveBeenCalled();
             });
-    
+
             it('should call myFunc n times', function () {
                 expect(utils.myFunc.callCount).toBe(allowedMethods.length);
                 expect(validateColorCssString).not.toHaveBeenCalled();
             });
-    
+
             it('should return resultSet with result of function invocation', function (){
-    
+
                 angular.forEach(utils.resultSet, function (val, method) {
                     // 15 in this case represent the total of the flatten array [1,2,3,4,5] := 1+2+3+4+5 = 15
                     expect(allowedMethods[val-15]).toBe(method);
@@ -118,14 +118,14 @@ describe('Log Object Create Method Spec', function () {
                 });
             });
         });
-        
+
     });
-    
+
     describe('Advanced Usage: createLogObject with defaultColors Enabled with non-valid css color', function () {
-       var utils;  
+       var utils;
        beforeEach(function () {
            useDefaultColors = true;
-           
+
             utils = {
                 myLog : {},
                 resultSet : {},
@@ -143,27 +143,27 @@ describe('Log Object Create Method Spec', function () {
             angular.forEach(allowedMethods, function(val) {
                 utils.myLog[val] = defaultLogMethodColors[val];
             });
-           
+
             utils.resultSet = createLogObj(utils.myLog, allowedMethods, utils.myFunc, utils.arr);
         });
-        
+
         afterEach(function () {
             isColorifySupportedBrowser = false;
         });
-       
+
         it('should have called validateColorCssString and set colorCss to default colors', function () {
             expect(validateColorCssString).toHaveBeenCalled();
             expect(utils.resultSet).toEqual(utils.myLog);
         });
-           
+
     });
-    
-    
+
+
     describe('Advanced Usage: createLogObject with defaultColors Enabled and valid css override is passed', function () {
-       var utils;  
+       var utils;
        beforeEach(function () {
            useDefaultColors = true;
-           
+
             utils = {
                 myLog : {},
                 resultSet : {},
@@ -177,22 +177,22 @@ describe('Log Object Create Method Spec', function () {
             };
             spyOn(window, 'validateColorCssString').andCallThrough();
             isColorifySupportedBrowser = (true);
-            
+
             angular.forEach(allowedMethods, function(val) {
                 utils.myLog[val] = defaultLogMethodColors[val];
             });
-           
+
             utils.resultSet = createLogObj(utils.myLog, allowedMethods, utils.myFunc, utils.arr);
         });
-        
+
         afterEach(function () {
             isColorifySupportedBrowser = false;
         });
-    
+
         it('should have called validateColorCssString ', function () {
             expect(validateColorCssString).toHaveBeenCalled();
         });
-        
+
         it('should have set colorCss override to all log methods', function () {
             expect(utils.resultSet).not.toEqual(utils.myLog);
             expect(utils.resultSet.log).toBe(utils.arr[4]);
@@ -201,6 +201,6 @@ describe('Log Object Create Method Spec', function () {
             expect(utils.resultSet.error).toBe(utils.arr[4]);
             expect(utils.resultSet.debug).toBe(utils.arr[4]);
         });
-           
+
     });
 });

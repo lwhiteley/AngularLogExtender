@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.045a3b8
+ * Log Unobtrusive Extension v0.0.7-sha.6979397
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -478,7 +478,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * @param {boolean} useTemplate - enables/disables the template engine
                          * @returns {Function} - returns function with specific rules for a log metod
                          */
-                        var prepareLogFn = function(logFn, className, override, useOverride, useTemplate, colorCss) {
+                        var prepareLogFn = function(logFn, className, override, useOverride, useTemplate, colorCss /*, type*/ ) {
                             var enhancedLogFn = function() {
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 var args = Array.prototype.slice.call(arguments);
@@ -734,7 +734,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.045a3b8',
+                version: '0.0.7-sha.6979397',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
