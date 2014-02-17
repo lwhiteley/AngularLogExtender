@@ -11,8 +11,8 @@
 var prepareLogFn = function (logFn, className, override, useOverride, useTemplate, colorCss) {
     var enhancedLogFn = function () {
         var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
+        var args = Array.prototype.slice.call(arguments);
         if (activate) {
-            var args = Array.prototype.slice.call(arguments);
             var prefix = getLogPrefix(className);
             if(validateTemplateInputs(useTemplate, args)) {
                 var data = (supplant.apply(null, args));
@@ -27,6 +27,7 @@ var prepareLogFn = function (logFn, className, override, useOverride, useTemplat
 
             if(logFn) logFn.apply(null, args);
         }
+        //addToLogPushQueue(args /*, type*/);
     };
 
     // Only needed to support angular-mocks expectations

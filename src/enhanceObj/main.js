@@ -95,6 +95,7 @@ var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/
             if(isColorifySupportedBrowser && useDefaultColors) {
                 params[5] = validateColorCssString(params[5]) ? params[5] : defaultLogMethodColors[value];
             }
+            //params.push(value); //adding method name to params
             res = func.apply(null, params);
         } else {
             res = oSrc[value];

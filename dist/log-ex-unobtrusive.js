@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.6df6dec
+ * Log Unobtrusive Extension v0.0.7-sha.b88520e
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -44,7 +44,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * Used to enable backend log pushes
          * @type {Boolean}
          */
-        var logPushSericeEnabled = false;
+        var logPushServiceEnabled = false;
 
         /**
          * api to push log messages
@@ -119,24 +119,36 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * Log Message Model
-         * @type {object = LogMessage}
-         * @type {string} browser - current browser
-         * @prop {string} type - type of $log (method name)
-         * @prop {string} message - message being logged
-         * @prop {} cause - cause of error (if $log.error)
-         * @prop {} exceptionName - exception name of error (if $log.error)
-         * @prop {Error} data - exception object (if $log.error)
-         * @prop {} stack - stack trace of error (if $log.error)
+         * Queue of log messages to be sent via api
+         * @type {object[]}
          */
-        var LogMessage = function(type, message, cause, exceptionName, data, stack) {
-            this.browser = userAgent;
-            this.type = type;
-            this.message = message;
-            this.cause = cause;
-            this.exceptionName = exceptionName;
-            this.data = data;
-            this.stack = stack;
+        var logPushQueue = [];
+
+        /**
+         * addToLogPushQueue
+         * @param {string} browser - current browser
+         * @param {string} type - type of $log (method name)
+         * @param {string} message - message being logged
+         * @param {} cause - cause of error (if $log.error)
+         * @param {} exceptionName - exception name of error (if $log.error)
+         * @param {Error} data - exception object (if $log.error)
+         * @param {} stack - stack trace of error (if $log.error)
+         */
+        var addToLogPushQueue = function(logArgs, cause, exceptionName, data, stack, type) {
+            if (itypeof(logArgs) === 'array') {
+                var message = '[angular-logex]: ' + logArgs.toString();
+                var logMessage = {
+                    type: type,
+                    message: message,
+                    cause: cause,
+                    exceptionName: exceptionName,
+                    data: data,
+                    stack: stack,
+                    browser: userAgent
+                };
+                logPushQueue.push(logMessage);
+            }
+
         };
 
         /**
@@ -220,10 +232,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
          * @returns {string} - returns formatted string if template and values match the required pattern
          */
-        var supplant = function(template, values, /*{RegExp=}*/ pattern) {
+        var supplant = function(template, values, /*{RegExp=}*/ pattern, ovrrideConstraint) {
             var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
             var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
-            if (criteria1 || criteria2) {
+            var criteria3 = itypeof(ovrrideConstraint) !== 'boolean' ||
+                (itypeof(ovrrideConstraint) === 'boolean' && !ovrrideConstraint);
+            if ((criteria1 || criteria2) && criteria3) {
                 return Array.prototype.slice.call(arguments);
             }
 
@@ -450,6 +464,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 if (isColorifySupportedBrowser && useDefaultColors) {
                                     params[5] = validateColorCssString(params[5]) ? params[5] : defaultLogMethodColors[value];
                                 }
+                                //params.push(value); //adding method name to params
                                 res = func.apply(null, params);
                             } else {
                                 res = oSrc[value];
@@ -478,8 +493,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                         var prepareLogFn = function(logFn, className, override, useOverride, useTemplate, colorCss) {
                             var enhancedLogFn = function() {
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
+                                var args = Array.prototype.slice.call(arguments);
                                 if (activate) {
-                                    var args = Array.prototype.slice.call(arguments);
                                     var prefix = getLogPrefix(className);
                                     if (validateTemplateInputs(useTemplate, args)) {
                                         var data = (supplant.apply(null, args));
@@ -494,6 +509,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
                                     if (logFn) logFn.apply(null, args);
                                 }
+                                //addToLogPushQueue(args /*, type*/);
                             };
 
                             // Only needed to support angular-mocks expectations
@@ -686,9 +702,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var enableLogPushService = function(flag) {
             if (angular.isUndefined(flag)) {
-                logPushSericeEnabled = true;
+                logPushServiceEnabled = true;
             } else if (isBoolean(flag)) {
-                logPushSericeEnabled = flag;
+                logPushServiceEnabled = flag;
             }
         };
 
@@ -722,22 +738,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             }
         };
 
-        /**
-         * Used to set log push configurations in one method
-         * @param {object} value - config options
-         */
-        var logPushConfig = function(value) {
-            if (itypeof(value) === 'object') {
-                if (value.hasOwnProperty('api')) setLogPushApi(value.api);
-                if (value.hasOwnProperty('interval')) setLogPushInterval(value.interval);
-                if (value.hasOwnProperty('methods')) setAllowedLogPushMethods(value.methods);
-                if (value.hasOwnProperty('enable')) {
-                    enableLogPushService(value.enable);
-                } else {
-                    enableLogPushService();
-                }
-            }
-        };
 
         /**
          * Default $get method necessary for provider to work
@@ -746,7 +746,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.6df6dec',
+                version: '0.0.7-sha.b88520e',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
@@ -757,8 +757,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                 enableLogPushService: enableLogPushService,
                 setAllowedLogPushMethods: setAllowedLogPushMethods,
                 setLogPushApi: setLogPushApi,
-                setLogPushInterval: setLogPushInterval,
-                logPushConfig: logPushConfig
+                setLogPushInterval: setLogPushInterval
             };
         };
 
@@ -774,6 +773,5 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.setAllowedLogPushMethods = setAllowedLogPushMethods;
         this.setLogPushApi = setLogPushApi;
         this.setLogPushInterval = setLogPushInterval;
-        this.logPushConfig = logPushConfig;
     }
 ]);

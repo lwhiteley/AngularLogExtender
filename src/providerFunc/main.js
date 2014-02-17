@@ -83,9 +83,9 @@ var useDefaultLogPrefix = function (flag) {
  */
 var enableLogPushService = function (flag) {
     if(angular.isUndefined(flag)){
-        logPushSericeEnabled = true;
+        logPushServiceEnabled = true;
     }else if(isBoolean(flag)){
-        logPushSericeEnabled = flag;
+        logPushServiceEnabled = flag;
     }
 };
 
@@ -116,22 +116,5 @@ var setLogPushInterval = function (value) {
 var setLogPushApi = function (value) {
     if(itypeof(value) === 'string'){
         logPushApi = value;
-    }
-};
-
-/**
- * Used to set log push configurations in one method
- * @param {object} value - config options
- */
-var logPushConfig = function (value) {
-    if(itypeof(value) === 'object'){
-        if(value.hasOwnProperty('api')) setLogPushApi(value.api);
-        if(value.hasOwnProperty('interval')) setLogPushInterval(value.interval);
-        if(value.hasOwnProperty('methods')) setAllowedLogPushMethods(value.methods);
-        if(value.hasOwnProperty('enable')) {
-            enableLogPushService(value.enable);
-        }else{
-            enableLogPushService();
-        }
     }
 };

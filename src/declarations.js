@@ -24,7 +24,7 @@
            * Used to enable backend log pushes
            * @type {Boolean}
            */
-          var logPushSericeEnabled = false;
+          var logPushServiceEnabled = false;
 
            /**
            * api to push log messages
@@ -98,26 +98,38 @@
               error: 'color: red;'
           };
 
-           /**
-           * Log Message Model
-           * @type {object = LogMessage}
-           * @type {string} browser - current browser
-           * @prop {string} type - type of $log (method name)
-           * @prop {string} message - message being logged
-           * @prop {} cause - cause of error (if $log.error)
-           * @prop {} exceptionName - exception name of error (if $log.error)
-           * @prop {Error} data - exception object (if $log.error)
-           * @prop {} stack - stack trace of error (if $log.error)
+            /**
+           * Queue of log messages to be sent via api
+           * @type {object[]}
            */
-          var LogMessage = function(type, message, cause, exceptionName, data, stack){
-              this.browser = userAgent;
-              this.type = type;
-              this.message = message;
-              this.cause = cause;
-              this.exceptionName = exceptionName;
-              this.data = data;
-              this.stack = stack;
-          };
+           var logPushQueue = [];
+
+           /**
+           * addToLogPushQueue
+           * @param {string} browser - current browser
+           * @param {string} type - type of $log (method name)
+           * @param {string} message - message being logged
+           * @param {} cause - cause of error (if $log.error)
+           * @param {} exceptionName - exception name of error (if $log.error)
+           * @param {Error} data - exception object (if $log.error)
+           * @param {} stack - stack trace of error (if $log.error)
+           */
+            var addToLogPushQueue = function(logArgs, cause, exceptionName, data, stack, type){
+                if(itypeof(logArgs) === 'array'){
+                    var message = '[angular-logex]: ' + logArgs.toString();
+                    var logMessage = {
+                        type: type,
+                        message: message,
+                        cause: cause,
+                        exceptionName: exceptionName,
+                        data: data,
+                        stack: stack,
+                        browser: userAgent
+                     };
+                    logPushQueue.push(logMessage);
+                }
+
+            };
 
           /**
            * publicly allowed methods for the extended $log object.
@@ -200,10 +212,12 @@
            * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
            * @returns {string} - returns formatted string if template and values match the required pattern
            */
-          var supplant = function (template, values, /*{RegExp=}*/ pattern) {
+          var supplant = function (template, values, /*{RegExp=}*/ pattern, ovrrideConstraint) {
               var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
               var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
-              if (criteria1 || criteria2) {
+              var criteria3 = itypeof(ovrrideConstraint) !== 'boolean' ||
+                  (itypeof(ovrrideConstraint) === 'boolean' && !ovrrideConstraint);
+              if ((criteria1 || criteria2) && criteria3) {
                   return Array.prototype.slice.call(arguments);
               }
 

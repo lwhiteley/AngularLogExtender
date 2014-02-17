@@ -17,8 +17,7 @@
             enableLogPushService: enableLogPushService,
             setAllowedLogPushMethods: setAllowedLogPushMethods,
             setLogPushApi: setLogPushApi,
-            setLogPushInterval: setLogPushInterval,
-            logPushConfig: logPushConfig
+            setLogPushInterval: setLogPushInterval
         };
     };
 
@@ -34,5 +33,4 @@
     this.setAllowedLogPushMethods = setAllowedLogPushMethods;
     this.setLogPushApi = setLogPushApi;
     this.setLogPushInterval = setLogPushInterval;
-    this.logPushConfig = logPushConfig;
 }]);
