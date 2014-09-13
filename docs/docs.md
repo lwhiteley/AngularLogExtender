@@ -23,12 +23,14 @@ Used within AngularJS to enhance functionality within the AngularJS $log service
 
 default log methods available
 Currently supports :
+
    ['log', 'info', 'warn', 'debug', 'error']
 
 ## colorifySupportedBrowsers
 
 list of browsers that support colorify
 Currently supports :
+
    ['chrome', 'firefox']
 
 ## useDefaultColors
