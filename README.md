@@ -51,6 +51,7 @@ Add a script to your index.html:
 7. Use a template engine for your logs
 8. Disable/Enable default coloring of logs
 9. Toggle between th Default log prefix and custom log prefix
+10. Filter Sensitive Information from logs (Coming Soon!)
 
 
 ##How to Use
