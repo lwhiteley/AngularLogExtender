@@ -62,5 +62,4 @@ describe('overrideLogMethodColor Spec', function () {
         expect(defaultLogMethodColors.log).toBe(css);
         expect(defaultLogMethodColors.error).toBe(css2);
     });
-
 });

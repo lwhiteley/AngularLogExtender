@@ -44,7 +44,7 @@ describe('getInstance function Spec', function () {
             var className = 'CoreController';
             getInstance(className);
             expect(printOverrideLogs).toHaveBeenCalled();
-            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), false, true, className, true);            
+            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), false, true, className, true);
         });
 
         it('should call printOverrideLogs function with className', function () {
@@ -52,17 +52,16 @@ describe('getInstance function Spec', function () {
                 bFlag = false;
             getInstance(className, bFlag);
             expect(printOverrideLogs).toHaveBeenCalled();
-            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), true, bFlag, className, true);            
-        });        
+            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), true, bFlag, className, true);
+        });
 
         it('should call printOverrideLogs function with className', function () {
             var className = 'CoreController',
                 bFlag = true;
             getInstance(className, true);
             expect(printOverrideLogs).toHaveBeenCalled();
-            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), bFlag, bFlag, className, true);            
-        });    
-
+            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), bFlag, bFlag, className, true);
+        });
     });
 
     describe('getInstance function Spec - global enabled flag is false', function () {
@@ -93,7 +92,7 @@ describe('getInstance function Spec', function () {
             var className = 'CoreController';
             getInstance(className);
             expect(printOverrideLogs).toHaveBeenCalled();
-            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), false, true, className, false);            
+            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), false, true, className, false);
         });
 
         it('should call printOverrideLogs function with className', function () {
@@ -101,16 +100,15 @@ describe('getInstance function Spec', function () {
                 bFlag = false;
             getInstance(className, bFlag);
             expect(printOverrideLogs).toHaveBeenCalled();
-            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), true, bFlag, className, false);            
-        });        
+            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), true, bFlag, className, false);
+        });
 
         it('should call printOverrideLogs function with className', function () {
             var className = 'CoreController',
                 bFlag = true;
             getInstance(className, true);
             expect(printOverrideLogs).toHaveBeenCalled();
-            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), bFlag, bFlag, className, false);            
-        });  
-
+            expect(printOverrideLogs).toHaveBeenCalledWith(jasmine.any(Object), bFlag, bFlag, className, false);
+        });
     });
 });

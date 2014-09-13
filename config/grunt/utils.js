@@ -27,7 +27,8 @@ module.exports = {
             license : pkg.license.type,
             contributor : pkg.author,
             appname : pkg.appname,
-            description : pkg.description
+            description : pkg.description,
+            supported_versions : pkg.supported_versions
         };
 
         return version;
