@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/lwhiteley/AngularLogExtender.png?label=ready&title=Ready)](https://waffle.io/lwhiteley/AngularLogExtender)
 AngularLogExtender
 ==================
 
