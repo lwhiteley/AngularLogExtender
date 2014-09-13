@@ -9,7 +9,7 @@ http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorator
 If you wish to contribute, Please read the `Develop.md` file
 Feel Free to make your own contributions to this module so we can make it better :)
 
-[![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
+[![Build Status](https://travis-ci.org/lwhiteley/AngularLogExtender.svg?branch=master)](https://travis-ci.org/lwhiteley/AngularLogExtender)
 [![Coverage Status](https://coveralls.io/repos/ferronrsmith/AngularLogExtender/badge.png)](https://coveralls.io/r/ferronrsmith/AngularLogExtender)
 
 ###Notes
