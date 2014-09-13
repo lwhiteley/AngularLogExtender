@@ -2,37 +2,34 @@
 
 <!-- Start dist/log-ex-unobtrusive.js -->
 
-Log Unobtrusive Extension v0.0.7-sha.d31cf1c
+Log Unobtrusive Extension v0.0.7-sha.abb08dc
 
 Used within AngularJS to enhance functionality within the AngularJS $log service.
 
-## enableGlobally
+*Module Dependency can be added to a angular project as follows :*
+```javascript
+  var app = angular.module('myAngularApp', ['log.ex.uo']);
+```
 
-Used to enable logging globally
+*Usage :*
 
-## logPrefixOverride
-
-Used to activate logPrefix overriding
-
-## useDefaultPrefix
-
-Used to force log-ex to use the default log prefix rules
-
-## customLogPrefixFn
-
-Used to store custom log prefix rules
-
-## userAgent
-
-current browser's user agent
+```javascript
+     app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+         $log.log("Simple Log Extender Example");
+     }]);
+```
 
 ## defaultLogMethods
 
 default log methods available
+Currently supports :
+   ['log', 'info', 'warn', 'debug', 'error']
 
 ## colorifySupportedBrowsers
 
 list of browsers that support colorify
+Currently supports :
+   ['chrome', 'firefox']
 
 ## useDefaultColors
 
@@ -338,6 +335,16 @@ The following function exposes the $decorated logger to allow the defaults to be
 ## enableLogging(flag)
 
 Used externally to enable/disable logging globally
+
+Add the logExProvider dependency to your AngularJS app to configure logging. Pass true to the `logExProvider.enableLogging(boolean)`
+function as a parameter to enable logging. This is set to false by default to disable logging in a production environment.
+The Best practice is to keep this flag set to false in the master version of the code base,
+given that some version control system is being used. See eg. below.
+```javascript
+     app.config(['logExProvider', function(logExProvider) {
+         logExProvider.enableLogging(true);
+      }]);
+ ```
 
 ### Params:
 

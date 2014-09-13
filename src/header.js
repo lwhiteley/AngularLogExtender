@@ -1,7 +1,20 @@
-/**
+/*
  * %APP_NAME% v%VERSION%
  *
  * %DESCRIPTION%
+ *
+ * *Module Dependency can be added to a angular project as follows :*
+ *```javascript
+ *   var app = angular.module('myAngularApp', ['log.ex.uo']);
+ *```
+ *
+ * *Usage :*
+ *
+ * ```javascript
+ *      app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+ *          $log.log("Simple Log Extender Example");
+ *      }]);
+ * ```
  *
  * @original-author  Thomas Burleson
  * @contributor Layton Whiteley
