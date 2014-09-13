@@ -2,7 +2,7 @@
 
 <!-- Start dist/log-ex-unobtrusive.js -->
 
-Log Unobtrusive Extension v0.0.7-sha.7246606
+Log Unobtrusive Extension v0.0.7-sha.5386d78
 
 Used within AngularJS to enhance functionality within the AngularJS $log service.
 
@@ -37,17 +37,20 @@ Currently supports :
    ['chrome', 'firefox']
 ```
 
-## useDefaultColors
-
-flag to activate/deactivate default log method colors
-
-## cssKeys
-
-list of known keys used to style logs
-
 ## defaultLogMethodColors
 
 default colours for each log method
+
+Currently supports :
+```json
+   {
+     log: 'color: green;',
+     info: 'color: blue',
+     warn: 'color: #CC9933;',
+     debug: 'color: brown;',
+     error: 'color: red;'
+   }
+```
 
 ## allowedMethods
 
