@@ -36,7 +36,7 @@ var overrideLogPrefix = function (logPrefix) {
  * @param {boolean} flag - flag that configures disabling default log colors
  */
 var disableDefaultColors = function (flag) {
-    useDefaultColors = (isBoolean(flag) && flag) ? false : true;
+    useDefaultColors = (!(isBoolean(flag) && flag));
 };
 
 /**
@@ -75,4 +75,26 @@ var useDefaultLogPrefix = function (flag) {
     }else if(isBoolean(flag)){
         useDefaultPrefix = flag;
     }
+};
+
+/**
+ * Used to configure the filter feature configuration when logging out objects
+ * This will merge provided configs with the default and also validate
+ * that the fields are usable by the feature
+ * @param {Object} customConfig - config object to override/merge with default config
+ */
+var configureLogFilters = function (customConfig) {
+  if(itypeof(customConfig) === 'object' &&
+    itypeof(customConfig.logFilters) === 'array' &&
+    customConfig.logFilters.length > 0 ){
+
+    angular.forEach(customConfig.logFilters, function(value){
+      if(itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0){
+        filterConfig.logFilters.push(value);
+      }
+    });
+    filterConfig.filterString = (itypeof(customConfig.filterString) !== 'string') ? defaultFilterString : customConfig.filterString;
+
+  }
+
 };

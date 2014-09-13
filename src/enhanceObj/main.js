@@ -57,10 +57,10 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
 };
 
 /**
- * Converts an array to a object literal
+ * Converts an array to a object literal & assign a no operation function as the value
  * @private for internal use only
  * @param {*[]} arr - array to be transformed to object literal
- * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
+ * @returns {Object} - converted object
  */
 var arrToObject = function (arr) {
     var result = {};
