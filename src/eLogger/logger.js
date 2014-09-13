@@ -30,7 +30,9 @@ var prepareLogFn = function (logFn, className, override, useOverride, useTemplat
                 args.unshift(prefix);
             }
 
-            if (logFn) logFn.apply(null, args);
+            if (logFn) {
+                logFn.apply(null, args);
+            }
         }
     };
 

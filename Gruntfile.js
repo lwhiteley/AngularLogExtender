@@ -22,10 +22,10 @@ module.exports = function (grunt) {
             port: port
         },
         jshint: {
-            files: '<%= meta.files %>',
+            files: ['<%= meta.files %>', 'package.json', 'bower.json'],
             options: {
                 // options here to override JSHint defaults
-                jshintrc: '.jshintrc'
+                jshintrc: '.jshintrc',
             }
         },
         jsbeautifier: {
@@ -133,7 +133,10 @@ module.exports = function (grunt) {
         },
         watch: {
             files: '<%= meta.files %>',
-            tasks: ['test']
+            tasks: ['test'],
+            options: {
+                spawn: false
+            }
         },
         coveralls: {
             options: {
@@ -142,7 +145,7 @@ module.exports = function (grunt) {
         },
         bump: {
             options: {
-                files: ['package.json'],
+                files: ['package.json', 'bower.json'],
                 updateConfigs: [],
                 commit: true,
                 commitMessage: 'Release v%VERSION%',
@@ -155,11 +158,6 @@ module.exports = function (grunt) {
         shell: {
             changelog: {
                 command: 'git changelog --tag <%= APP_VERSION.full %>'
-            }
-        },
-        jsonlint: {
-            sample: {
-                src: [ 'package.json', 'bower.json' ]
             }
         },
         clean: {
@@ -222,11 +220,11 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:cover',
         'jshint',
-        'jsonlint',
         'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:performance', 'karma:latest'
     ]);
     grunt.registerTask('minify', ['minified' , 'concat:minify']);
     grunt.registerTask('dist', ['test', 'clean:dist', 'concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
+    grunt.registerTask('release', ['bump', 'dist']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('serve', ['copy:files', 'express:dev', 'open', 'watch']);

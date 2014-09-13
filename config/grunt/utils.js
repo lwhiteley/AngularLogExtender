@@ -5,7 +5,9 @@ var version;
 
 module.exports = {
     getVersion: function () {
-        if (version) return version;
+        if (version) {
+            return version;
+        }
 
         var pkg = JSON.parse(fs.readFileSync('package.json', 'UTF-8'));
         var match = pkg.version.match(/^([^\-]*)(?:\-(.+))?$/);
@@ -15,7 +17,7 @@ module.exports = {
 
         if (match[2]) {
             fullVersion += '-';
-            fullVersion += (match[2] == 'snapshot') ? getSnapshotSuffix() : match[2];
+            fullVersion += (match[2] === 'snapshot') ? getSnapshotSuffix() : match[2];
         }
 
         version = {
