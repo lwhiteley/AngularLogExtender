@@ -2,7 +2,7 @@
 
 <!-- Start dist/log-ex-unobtrusive.js -->
 
-Log Unobtrusive Extension v0.0.7-sha.abb08dc
+Log Unobtrusive Extension v0.0.7-sha.7246606
 
 Used within AngularJS to enhance functionality within the AngularJS $log service.
 
@@ -22,16 +22,20 @@ Used within AngularJS to enhance functionality within the AngularJS $log service
 ## defaultLogMethods
 
 default log methods available
-Currently supports :
 
+Currently supports :
+```json
    ['log', 'info', 'warn', 'debug', 'error']
+```
 
 ## colorifySupportedBrowsers
 
 list of browsers that support colorify
-Currently supports :
 
+Currently supports :
+```json
    ['chrome', 'firefox']
+```
 
 ## useDefaultColors
 
