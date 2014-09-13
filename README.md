@@ -43,15 +43,15 @@ Add the script to your index.html:
 ```
 ###Configurations
 
-1. Set $log Instance Class Name
-2. Enable/Disable Logging Globally
-3. Enable/Disable Logging at a Component Level
-4. Customize the Log Prefix
-5. Enable/Disable Specific $log methods throughout the app
-6. Customize the color of your logs
-7. Use a template engine for your logs
-8. Disable/Enable default coloring of logs
-9. Toggle between th Default log prefix and custom log prefix
+1.  Set $log Instance Class Name
+2.  Enable/Disable Logging Globally
+3.  Enable/Disable Logging at a Component Level
+4.  Customize the Log Prefix
+5.  Enable/Disable Specific $log methods throughout the app
+6.  Customize the color of your logs
+7.  Use a template engine for your logs
+8.  Disable/Enable default coloring of logs
+9.  Toggle between th Default log prefix and custom log prefix
 10. Filter Sensitive Information from logs (Coming Soon!)
 
 
