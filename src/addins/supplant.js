@@ -6,7 +6,7 @@
  * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
  */
 var validateTemplateInputs = function (useTemplate, args) {
-    return isBoolean(useTemplate) && useTemplate && args.length == 2;
+    return isBoolean(useTemplate) && useTemplate && args.length === 2;
 };
 
 /**
