@@ -6,7 +6,8 @@ This is an extension of the Angular $log functionality. It uses the native $deco
 To view the blog this module was extended from and inspired by, go to
 http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
 
-If you wish to contribute, Please read the `Develop.md` file
+If you wish to contribute, Please read the `Develop.md` file.
+
 Feel Free to make your own contributions to this module so we can make it better :)
 
 [![Build Status](https://travis-ci.org/ferronrsmith/AngularLogExtender.png?branch=master)](https://travis-ci.org/ferronrsmith/AngularLogExtender)
@@ -14,7 +15,7 @@ Feel Free to make your own contributions to this module so we can make it better
 
 ###Notes
 
-The prefered file to use is the log-ex-unobtrusive.js file. You can include the module to your AngularJs Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style. Log methods are now colour coded by default.
+You can include the module in your AngularJS Application and it does all the work immediately. Methods native to the log extender are not publicly available in your AngularJs Application so this extension can be used as a standalone plugin. Advanced configurations can be done to make the $log service fit your personal development style. Log methods are now colour coded by default.
 
 Supported browsers for Colorize are currently `Google Chrome` and `Mozilla Firefox`.
 
@@ -36,7 +37,7 @@ These are:
 Now offers bower support.
 `bower install angular-logex --save`
 
-Add a script to your index.html:
+Add the script to your index.html:
 ```javascript
 <script src="/bower_components/angular-logex/dist/log-ex-unobtrusive.js"></script>
 ```
@@ -93,6 +94,16 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.restrictLogMethods(['log', 'info']);
 }]);
 ```
+
+This configuration is helpful when you want to only allow specific types of log messages to be sent to the console in a
+particular environment. For eg. Say we want to only allow error logs to be seen in production, then the following configuration will
+produce this result.
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    logExProvider.enableLogging(true);
+    logExProvider.restrictLogMethods(['error']);
+}]);
+```
 ######2. Override Log Prefix - Log Prefix Formatter
 
 Add the logExProvider dependency to your AngularJS app to configure logging. Pass a custom function that accepts a `className` param to the `overrideLogPrefix` method
@@ -138,7 +149,9 @@ app.config(['logExProvider', function(logExProvider) {
 If you want to quickly toggle between using your custom log pefix rules and the default rules, te following example shows you how
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
-    logExProvider.useDefaultLogPrefix(true); //this forces log-ex to use the default rules
+    // this forces log-ex to use the default rules
+    // passing true as a parameter does the same thing. eg logExProvider.useDefaultLogPrefix(true);
+    logExProvider.useDefaultLogPrefix();
 }]);
 ```
 ```javascript
@@ -146,6 +159,24 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.useDefaultLogPrefix(false); //this tells log-ex to use the custom rules (if set)
 }]);
 ```
+######7. Create custom $log instances with extra functionality
+
+The following snippet shows you the full use of a method `log-ex` provides with the `$log` service when injected into your angular components ($controller, $directive, etc.). It should be reassigned to the `$log` service which creates a new instance specific to the component.
+`Advanced Use Cases` were included below to show you practical uses of the configurations. The snippet below explains what each parameter is used for.
+
+```javascript
+app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+     /*
+     * @param {String=} className - Name of object in which $log.<function> calls are invoked.
+     * @param {boolean=} override - activates/deactivates component level logging
+     * @param {boolean=} activateTemplates - enables/disables the template engine
+     * @param {String=} colorCss - css styles for coloring/styling log outputs,
+     *                             will be applied to all log methods
+     */
+    $log = $log.getInstance(className, override, activateTemplates, colorCss);
+}]);
+```
+
 ##Advanced Use Cases
 ###Use Case 1: Set Component Class Name
 This example can be used to know which component (controller, directive etc.) $log instances are being pushed from to the console. The new instance must be re-assigned to the $log object to take effect. This Advanced use case is always recommended to get more information from your application logs.
@@ -221,20 +252,9 @@ Dec-08-2013-1:20:56PM >> [OVERRIDE] LOGGING ENABLED - $log enabled for this inst
 Dec-08-2013-1:20:56PM >>  Advanced Log Extender Example: Use Case 3: Eg 2
 ```
 
-###Use Case 4: Configure only specific methods to print to the console
-This scenario is helpful when you want to only allow specific types of log messages to be sent to the console in a
-particular environment. For eg. Say we want to only allow error logs to be seen in production, then the following configuration will
-produce this result.
-#####Eg 1.
-```javascript
-app.config(['logExProvider', function(logExProvider) {
-    logExProvider.enableLogging(true);
-    logExProvider.restrictLogMethods(['error']);
-}]);
-```
-###Use Case 5: Use the built in template engine
+###Use Case 4: Use the built in template engine
 Templates can be used to replace string contents with matching propert names of an object.
-Just pass a truthy boolean as the fourth parameter of the `getInstance()` method to activate the template engine.
+Just pass a truthy boolean as the third parameter of the `getInstance()` method to activate the template engine.
 Logs must follow a specific format for this engine to recognize templates. These logs will also be coloured once a custom colour is set.
 The following example shows you how.
 #####Eg.
@@ -252,8 +272,8 @@ Dec-08-2013-1:00:47PM::CoreController >>  Advanced Log Extender Example: Use Cas
 
 Currently, Only numbers and strings will be pushed into the template string.
 
-###Use Case 6: Color your log outputs
-Override the color of all log methods of a specific log instance is possible with AngularLogExtender. Just pass a css style as the third parameter of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
+###Use Case 5: Color your log outputs
+Override the color of all log methods of a specific log instance is possible with AngularLogExtender. Just pass a css style as the fourth parameter of the `getInstance()` method. Currently, only logs with one parameter of type string will be parsed with the specified styles.
 The following example shows you how.
 #####Eg.
 ```javascript

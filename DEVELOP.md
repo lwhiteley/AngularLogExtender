@@ -29,3 +29,7 @@ Navigate to the project directory `personsal_git/log_ex_proj` and execute the `n
 > All pull requests should have the `develop` branch as the destination
 
 > Ensure new functionality or refactors are tested properly
+
+> Essentially, a conversation needs to take place before code is pushed to `master`
+
+> This process reduces surprises and helps maintain quality

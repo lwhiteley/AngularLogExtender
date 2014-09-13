@@ -67,10 +67,12 @@ var overrideLogMethodColors = function (overrides) {
 
 /**
  * Used to force default log prefix functionality
- * @param {boolean} flag - when passed true, it forces log-ex to use the default log prefix
+ * @param {boolean} flag - when passed true or flag is not set, it forces log-ex to use the default log prefix
  */
 var useDefaultLogPrefix = function (flag) {
-    if(isBoolean(flag)){
+    if(angular.isUndefined(flag)){
+        useDefaultPrefix = true;
+    }else if(isBoolean(flag)){
         useDefaultPrefix = flag;
     }
 };

@@ -5,12 +5,18 @@ module.exports = function (grunt) {
 
     var APP_VERSION = util.getVersion();
 
+    // Load grunt tasks automatically
+    require('load-grunt-tasks')(grunt);
+
+    var port = process.env.PORT || 3000;
+
     grunt.initConfig({
         APP_VERSION:APP_VERSION,
         pkg: grunt.file.readJSON('package.json'),
         meta : {
             files : ['Gruntfile.js', 'dist/*.js', 'test/**/*.js', 'src/**/*.js', 'config/**/*.js'],
-            dist : ["dist/*.js"]
+            dist : ["dist/*.js"],
+            port: port
         },
         jshint: {
             files: '<%= meta.files %>',
@@ -61,8 +67,6 @@ module.exports = function (grunt) {
                     // <------- extras End
                     'src/enhanceObj/globals.js',
                     'src/enhanceObj/obj.suffix',
-                    // < ----------------
-
                     // < ----------------
                     'src/module.suffix',
                     // <--------- provider func start
@@ -130,9 +134,6 @@ module.exports = function (grunt) {
                 createTag: true,
                 tagName: 'v%VERSION%',
                 tagMessage: 'Version %VERSION%'
-//                push: true,
-//                pushTo: 'origin master',
-//                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
             }
         },
         shell: {
@@ -161,7 +162,24 @@ module.exports = function (grunt) {
             allinone: false,
             ext: '.min.js'
           }
+        },
+    express: {
+      options: {
+        port: port
+      },
+      dev: {
+        options: {
+          script: 'sample_app/server.js',
+          debug: false
         }
+      }
+    },
+
+    open: {
+      server: {
+        path: 'http://localhost:<%= meta.port %>'
+      }
+    }
     });
 
     grunt.registerTask('bower_update', 'Update bower version', function (arg1) {
@@ -173,20 +191,16 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-jsonlint');
-    grunt.loadNpmTasks('grunt-bump');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-karma-coveralls');
-    grunt.loadNpmTasks('grunt-jsbeautifier');
-    grunt.loadNpmTasks('grunt-minified');
-    grunt.registerTask('test', ['clean:cover','jshint', 'jsonlint', 'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest']);
-    grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minified' ,'concat:minify','bower_update']);
+    grunt.registerTask('test', [
+        'clean:cover',
+        'jshint',
+        'jsonlint',
+        'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest'
+    ]);
+    grunt.registerTask('minify', ['minified' ,'concat:minify']);
+    grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
+    grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
     grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
 };
