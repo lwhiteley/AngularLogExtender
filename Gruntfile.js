@@ -8,14 +8,17 @@ module.exports = function (grunt) {
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
+    // Time how long tasks take. Can help when optimizing build times
+    require('time-grunt')(grunt);
+
     var port = process.env.PORT || 3000;
 
     grunt.initConfig({
-        APP_VERSION:APP_VERSION,
+        APP_VERSION: APP_VERSION,
         pkg: grunt.file.readJSON('package.json'),
-        meta : {
-            files : ['Gruntfile.js', 'dist/*.js', 'test/**/*.js', 'src/**/*.js', 'config/**/*.js'],
-            dist : ["dist/*.js"],
+        meta: {
+            files: ['Gruntfile.js', 'dist/*.js', 'test/**/*.js', 'src/**/*.js', 'config/**/*.js'],
+            dist: ["dist/*.js"],
             port: port
         },
         jshint: {
@@ -25,27 +28,29 @@ module.exports = function (grunt) {
                 jshintrc: '.jshintrc'
             }
         },
-        jsbeautifier : {
-            files : '<%= meta.dist %>'
+        jsbeautifier: {
+            files: '<%= meta.dist %>'
         },
         concat: {
             options: {
                 separator: '\n',
-                process: function(src){
+                process: function (src) {
                     return src
                         .replace(/%VERSION%/g, APP_VERSION.full)
                         .replace(/%WEBSITE%/g, APP_VERSION.website)
                         .replace(/%LICENSE%/g, APP_VERSION.license)
                         .replace(/%CONTRIBUTOR%/g, APP_VERSION.contributor)
                         .replace(/%APP_NAME%/g, APP_VERSION.appname)
-                        .replace(/%DESCRIPTION%/g, APP_VERSION.description);
+                        .replace(/%DESCRIPTION%/g, APP_VERSION.description)
+                        .replace(/%YEAR%/g, new Date().getFullYear())
+                        .replace(/%SUPPORTED_VERSIONS%/g, APP_VERSION.supported_versions.join(", "));
                 }
             },
-            minify:{
+            minify: {
                 src: [
-                        'src/header.js',
-                        'dist/log-ex-unobtrusive.min.js'
-                     ],
+                    'src/header.js',
+                    'dist/log-ex-unobtrusive.min.js'
+                ],
                 dest: 'dist/log-ex-unobtrusive.min.js'
             },
             dist: {
@@ -53,6 +58,11 @@ module.exports = function (grunt) {
                     'src/header.js',
                     'src/module.prefix',
                     'src/declarations.js',
+                    'src/addins/defaults.js',
+                    'src/addins/helpers.js',
+                    'src/addins/color.js',
+                    'src/addins/supplant.js',
+                    'src/addins/masking.js',
                     // < ----------------
                     'src/enhanceObj/obj.prefix',
                     'src/enhanceObj/main.js',
@@ -82,42 +92,48 @@ module.exports = function (grunt) {
                 browsers: ['PhantomJS']
             },
             '1.0.x': {
-                options :  {
+                options: {
                     files: files.getAngularFiles('1.0').concat(files.libs, files.tests('1.0'))
                 },
                 configFile: 'config/karma.conf.js'
             },
             '1.1.x': {
-                options :  {
+                options: {
                     files: files.getAngularFiles('1.1').concat(files.libs, files.tests('1.1'))
                 },
                 configFile: 'config/karma.conf.js'
             },
             '1.1.2': {
-                options :  {
+                options: {
                     files: files.getAngularFiles('1.1.2').concat(files.libs, files.tests('1.1.2'))
                 },
                 configFile: 'config/karma.conf.js'
             },
             '1.2.x': {
-                options :  {
+                options: {
                     files: files.getAngularFiles('1.2').concat(files.libs, files.tests('1.2'))
                 },
                 configFile: 'config/karma.conf.js'
             },
             latest: {
-                options :  {
-                    files: files.getAngularFiles().concat(files.libs, files.tests('1.2'))
+                options: {
+                    files: files.getAngularFiles().concat(files.libs, files.tests('latest'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
+            performance: {
+                options: {
+                    files: files.getAngularFiles().concat(files.libs, ['test/perf/*.js'])
                 },
                 configFile: 'config/karma.conf.js'
             },
             coverage: {
-                configFile : 'config/karma.lcov.conf.js'
+                configFile: 'config/karma.lcov.conf.js'
             }
         },
         watch: {
-            files:  '<%= meta.files %>',
-            tasks: ['jshint', 'karma:unit']
+            files: '<%= meta.files %>',
+            tasks: ['test']
         },
         coveralls: {
             options: {
@@ -150,40 +166,52 @@ module.exports = function (grunt) {
             dist: ['dist/'],
             cover: ['coverage/']
         },
-        minified : {
-          files: {
+        minified: {
+            files: {
                 src: [
-                'dist/log-ex-unobtrusive.js'
+                    'dist/log-ex-unobtrusive.js'
                 ],
                 dest: 'dist/'
-          },
-          options : {
-            sourcemap: true,
-            allinone: false,
-            ext: '.min.js'
-          }
+            },
+            options: {
+                sourcemap: true,
+                allinone: false,
+                ext: '.min.js'
+            }
         },
-    express: {
-      options: {
-        port: port
-      },
-      dev: {
-        options: {
-          script: 'sample_app/server.js',
-          debug: false
-        }
-      }
-    },
+        express: {
+            options: {
+                port: port
+            },
+            dev: {
+                options: {
+                    script: 'sample_app/server.js',
+                    debug: false
+                }
+            }
+        },
 
-    open: {
-      server: {
-        path: 'http://localhost:<%= meta.port %>'
-      }
-    }
+        open: {
+            server: {
+                path: 'http://localhost:<%= meta.port %>'
+            }
+        },
+        copy: {
+            files: {
+                src: 'dist/*',
+                dest: 'sample_app/app/'
+            }
+        },
+        tagrelease: {
+            version: APP_VERSION.full,
+            commit: true,
+            prefix: 'v',
+            annotate: false
+        }
     });
 
     grunt.registerTask('bower_update', 'Update bower version', function (arg1) {
-        if(arguments.length === 0) {
+        if (arguments.length === 0) {
             util.updateBowerVersion(APP_VERSION.full);
         }
         else {
@@ -195,12 +223,12 @@ module.exports = function (grunt) {
         'clean:cover',
         'jshint',
         'jsonlint',
-        'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:latest'
+        'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:performance', 'karma:latest'
     ]);
-    grunt.registerTask('minify', ['minified' ,'concat:minify']);
-    grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
+    grunt.registerTask('minify', ['minified' , 'concat:minify']);
+    grunt.registerTask('dist', ['test', 'clean:dist', 'concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
-    grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
+    grunt.registerTask('serve', ['copy:files', 'express:dev', 'open', 'watch']);
     grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
 };

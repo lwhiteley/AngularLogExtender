@@ -32,7 +32,7 @@ describe('Provider Func Spec', function () {
         var clock, sDateFormat, customLogPrefixFn;
 
         beforeEach(function () {
-            tempCustomPrefix = customLogPrefixFn ;
+            tempCustomPrefix = customLogPrefixFn;
             sDateFormat = "May-02-2010-12:42:53PM >> ";
             clock = angular.mock.$mockDate();
             datespy.clock.create(new Date(2010, 4, 2, 12, 42, 53).getTime());
@@ -94,6 +94,49 @@ describe('Provider Func Spec', function () {
         it('should set useDefaultColors to false when true is passed', function () {
             disableDefaultColors(true);
             expect(useDefaultColors).toBe(false);
+        });
+    });
+
+    describe('configureLogFilters Spec', function () {
+        var tempConfig;
+        beforeEach(function () {
+            tempConfig = angular.copy(filterConfig);
+        });
+        afterEach(function () {
+            filterConfig = angular.copy(tempConfig);
+        });
+
+        it('should keep default log filters when an array is not passed', function () {
+            configureLogFilters(null);
+            expect(filterConfig.logFilters).toEqual([]);
+
+            configureLogFilters(3);
+            expect(filterConfig.logFilters).toEqual([]);
+
+            configureLogFilters({pass: 'csdacdas'});
+            expect(filterConfig.logFilters).toEqual([]);
+        });
+        it('should keep default log filters when an array of strings is not passed', function () {
+            configureLogFilters({logFilters: [null, {}, 2, ['asasa']]});
+            expect(filterConfig.logFilters).toEqual([]);
+        });
+        it('should add log filter keys when an array of strings is  passed', function () {
+            configureLogFilters({logFilters: ['asasa']});
+            expect(filterConfig.logFilters).toEqual(['asasa']);
+        });
+        it('should not override filter string when a string is not provided', function () {
+            configureLogFilters({logFilters: ['password'], filterString: null});
+            expect(filterConfig.filterString).toBe('[FILTERED]');
+        });
+        it('should override filter string when a string is provided', function () {
+            configureLogFilters({logFilters: ['password'], filterString: 'null'});
+            expect(filterConfig.filterString).toBe('null');
+        });
+
+
+        it('should add log filter keys when an array of strings is passed while ommitting keys already listed', function () {
+            configureLogFilters({logFilters: ['password', 'password']});
+            expect(filterConfig.logFilters).toEqual(['password']);
         });
     });
 

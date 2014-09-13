@@ -1,6 +1,6 @@
 describe('arrayToObject Spec', function () {
     it('should return empty object if param is not an array', function () {
-       expect(arrToObject(null)).toEqual({});
+        expect(arrToObject(null)).toEqual({});
     });
 
     it('should return an object literal with array props as keys', function () {

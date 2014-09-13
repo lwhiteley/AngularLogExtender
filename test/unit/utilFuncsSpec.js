@@ -1,13 +1,13 @@
 describe('util Functions spec', function () {
 
-       var chromeAgent = 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36',
-           firefoxAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0',
-           ieAgent = 'Mozilla/5.0 (compatible; MSIE 10.6; Windows NT 6.1; Trident/5.0; InfoPath.2; SLCC1; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET CLR 2.0.50727) 3gpp-gba UNTRUSTED/1.0',
-           safariAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10';
+    var chromeAgent = 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36',
+        firefoxAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0',
+        ieAgent = 'Mozilla/5.0 (compatible; MSIE 10.6; Windows NT 6.1; Trident/5.0; InfoPath.2; SLCC1; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET CLR 2.0.50727) 3gpp-gba UNTRUSTED/1.0',
+        safariAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10';
 
-   var tempBrowsers, tempAgent;
-   beforeEach(function () {
-       tempAgent = userAgent;
+    var tempBrowsers, tempAgent;
+    beforeEach(function () {
+        tempAgent = userAgent;
         tempBrowsers = colorifySupportedBrowsers;
     });
 
@@ -25,11 +25,11 @@ describe('util Functions spec', function () {
             var colorCSS = 'background: #222; color: #bada55';
             var result = colorify(message, 'chromeagent is found', prefix);
             expect(angular.isArray(result)).toBe(true);
-            expect(result[0]).toBe( message);
+            expect(result[0]).toBe(message);
             expect(result.length).toBe(1);
         });
 
-         it('should return array with param1 as only item in array when neither params are strings', function () {
+        it('should return array with param1 as only item in array when neither params are strings', function () {
             var message = 3;
             var colorCSS = null;
             var prefix = "log pre >> ";
@@ -74,7 +74,6 @@ describe('util Functions spec', function () {
             expect(result[1]).toEqual(colorCSS);
             expect(result.length).toBe(2);
         });
-
     });
 
     describe('isSubString Spec ', function () {
@@ -84,7 +83,7 @@ describe('util Functions spec', function () {
             expect(result).toBe(true);
         });
 
-       it('should return false when substring is not within full string', function () {
+        it('should return false when substring is not within full string', function () {
             var result = isSubString('chromeAgent', 'firefoxagent is found');
             expect(result).toBe(false);
         });
@@ -99,10 +98,9 @@ describe('util Functions spec', function () {
             result = isSubString(2, 7);
             expect(result).toBe(false);
         });
-
     });
 
-   describe('isColorifySupported Spec ', function () {
+    describe('isColorifySupported Spec ', function () {
 
         colorifySupportedBrowsers = ['chrome', 'firefox'];
 
@@ -116,16 +114,15 @@ describe('util Functions spec', function () {
             expect(result).toBe(true);
         });
 
-       it('should return false when a supported browser agent is found', function () {
+        it('should return false when a supported browser agent is found', function () {
             userAgent = ieAgent;
             var result = isColorifySupported();
             expect(result).toBe(false);
 
-           userAgent = safariAgent;
+            userAgent = safariAgent;
             result = isColorifySupported();
             expect(result).toBe(false);
         });
-
     });
 
     describe('validateColorizeInputs Spec ', function () {
@@ -143,11 +140,12 @@ describe('util Functions spec', function () {
         });
 
         it('should return false when arg has 1 element that is not a string', function () {
-            var args = [['colorize']];
+            var args = [
+                ['colorize']
+            ];
             var result = validateColorizeInputs(args);
             expect(result).toBe(false);
         });
-
     });
 
     describe('validateTemplateInputs Spec ', function () {
@@ -177,7 +175,6 @@ describe('util Functions spec', function () {
             var result = validateTemplateInputs(useTemplate, a);
             expect(result).toBe(true);
         });
-
     });
 
     describe('itypeof Spec ', function () {
@@ -195,11 +192,11 @@ describe('util Functions spec', function () {
             result = itypeof(1);
             expect(result).toBe('number');
         });
-
     });
+
     describe('containsColorCssKeys Spec ', function () {
 
-      it('should return false when string has no known keys', function () {
+        it('should return false when string has no known keys', function () {
             var css = '{0}';
             var result = containsColorCssKeys(css);
             expect(result).toBe(false);
@@ -219,8 +216,8 @@ describe('util Functions spec', function () {
             var result = containsColorCssKeys(css);
             expect(result).toBe(true);
         });
-
     });
+
     describe('validateColorCssString Spec ', function () {
         it('should return false when string has no colons', function () {
             var message = '{0}';
@@ -248,6 +245,5 @@ describe('util Functions spec', function () {
             var result = validateColorCssString(message);
             expect(result).toBe(true);
         });
-
     });
 });
