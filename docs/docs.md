@@ -397,3 +397,4 @@ Used to force default log prefix functionality
 Default $get method necessary for provider to work
 
 <!-- End dist/log-ex-unobtrusive.js -->
+
