@@ -59,6 +59,54 @@
           var cssKeys = ['color', 'background', 'font-size', 'border'];
 
           /**
+          * list of default keys to filter in objects
+          * @type {string[]}
+          */
+         var defaultLogFilters = ['password'];
+
+         /**
+         * string to put in place of filtered values
+         * @type {string}
+         */
+         var defaultFilterString = '[FILTERED]';
+
+         /**
+         * configuration for filtering values of provided keys
+         * @type {object}
+         */
+         var filterConfig = {
+           filterString: defaultFilterString,
+           logFilters: defaultLogFilters
+           //recursiveSearch: false // prop can be renamed, to be used for recursive object search
+         };
+
+         /**
+          * Evalutes an array of log arguments to be filtered using the provided or default filter keys
+          * @param {[]} value - array to be processed
+          * @returns {[]} - returns a processed array with configured filter values replaced by filterString
+          */
+         var filterValues = function(logArguments){
+          var values = angular.copy(logArguments);
+          if(itypeof(values) === 'array'){
+            angular.forEach(values, function(logValue, logKey){
+              angular.forEach(filterConfig.logFilters, function(filterValue, filterKey){
+
+                // replace filtered values here
+                if(itypeof(logValue) === 'object'){
+                  if(logValue.hasOwnProperty(filterValue) &&
+                    !(/(object|array):?\w*/.test(itypeof(logValue[filterValue]))) ){
+
+                    logValue[filterValue] = filterConfig.filterString;
+                  }
+                }
+
+              });
+            });
+          }
+          return values;
+         };
+
+          /**
            * default colours for each log method
            * @type {object}
            */
@@ -165,9 +213,9 @@
                       r = values;
 
                   try {
-                      for (var s in p) {
-                          r = r[p[s]];
-                      }
+                      angular.forEach(p, function(value, key){
+                          r = r[p[key]];
+                      });
                   } catch (e) {
                       r = a;
                   }

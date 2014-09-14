@@ -97,4 +97,47 @@ describe('Provider Func Spec', function () {
         });
     });
 
+    describe('configureLogFilters Spec', function () {
+      var tempConfig;
+        beforeEach(function () {
+          tempConfig = angular.copy(filterConfig);
+        });
+        afterEach(function () {
+          filterConfig = angular.copy(tempConfig);
+        });
+
+        it('should keep default log filters when an array is not passed', function () {
+            configureLogFilters(null);
+            expect(filterConfig.logFilters).toEqual(['password']);
+
+            configureLogFilters(3);
+            expect(filterConfig.logFilters).toEqual(['password']);
+
+            configureLogFilters({pass: 'csdacdas'});
+            expect(filterConfig.logFilters).toEqual(['password']);
+        });
+        it('should keep default log filters when an array of strings is not passed', function () {
+            configureLogFilters({logFilters: [null, {}, 2, ['asasa']]});
+            expect(filterConfig.logFilters).toEqual(['password']);
+        });
+        it('should add log filter keys when an array of strings is  passed', function () {
+            configureLogFilters({logFilters: ['asasa']});
+            expect(filterConfig.logFilters).toEqual(['password', 'asasa']);
+        });
+        it('should not override filter string when a string is not provided', function () {
+            configureLogFilters({logFilters: ['password'], filterString: null});
+            expect(filterConfig.filterString).toBe('[FILTERED]');
+        });
+        it('should override filter string when a string is provided', function () {
+            configureLogFilters({logFilters: ['password'], filterString: 'null'});
+            expect(filterConfig.filterString).toBe('null');
+        });
+
+
+        it('should add log filter keys when an array of strings is passed while ommitting keys already listed', function () {
+            configureLogFilters({logFilters: ['password']});
+            expect(filterConfig.logFilters).toEqual(['password']);
+        });
+    });
+
 });

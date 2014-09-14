@@ -76,3 +76,30 @@ var useDefaultLogPrefix = function (flag) {
         useDefaultPrefix = flag;
     }
 };
+
+/**
+ * Used to add keys to filter values for when logging out objects
+ * This will merge provided configs with the default and also validate
+ * that the fields are usable by the feature
+ * @param {String[]} values - config object to override/merge with default config
+ */
+var configureLogFilters = function (values) {
+  if(itypeof(values) === 'object'){
+    var tempFilters = angular.copy(values.logFilters);
+    filterConfig = angular.extend(filterConfig, values);
+    filterConfig.logFilters = angular.copy(defaultLogFilters);
+
+    if(angular.isArray(tempFilters)){
+      angular.forEach(tempFilters, function(value, key){
+        if(itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0){
+          filterConfig.logFilters.push(value);
+        }
+      });
+    }
+
+    if(itypeof(filterConfig.filterString) !== 'string'){
+      filterConfig.filterString = defaultFilterString;
+    }
+  }
+
+};

@@ -179,8 +179,14 @@ module.exports = function (grunt) {
       server: {
         path: 'http://localhost:<%= meta.port %>'
       }
-    }
-    });
+    },
+    copy: {
+      files: {
+        src: 'dist/*',
+        dest: 'sample_app/app/',
+      },
+    },
+  });
 
     grunt.registerTask('bower_update', 'Update bower version', function (arg1) {
         if(arguments.length === 0) {
@@ -201,6 +207,6 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', ['test', 'clean:dist','concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
     grunt.registerTask('fixes', ['bump:patch', 'dist']);
     grunt.registerTask('changelog', ['shell:changelog']);
-    grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
+    grunt.registerTask('serve', ['copy:files', 'express:dev', 'open', 'watch']);
     grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
 };

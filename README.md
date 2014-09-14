@@ -52,7 +52,7 @@ Add the script to your index.html:
 7.  Use a template engine for your logs
 8.  Disable/Enable default coloring of logs
 9.  Toggle between th Default log prefix and custom log prefix
-10. Filter Sensitive Information from logs (Coming Soon!)
+10. Filter Sensitive Information from logs
 
 
 ##How to Use
@@ -159,7 +159,43 @@ app.config(['logExProvider', function(logExProvider) {
     logExProvider.useDefaultLogPrefix(false); //this tells log-ex to use the custom rules (if set)
 }]);
 ```
-######7. Create custom $log instances with extra functionality
+######7. Filter sensitive information from objects logged
+
+You can set a list of keys to be filtered in objects before they are logged to the console.
+There is a default list of keys that will be filtered automatically.
+
+These are:
+
+`['password']`
+
+```javascript
+app.config(['logExProvider', function(logExProvider) {
+    // this will override the default configurations and in some cases will
+    // will append config to values (logFilters will append to existing list)
+    logExProvider.configureLogFilters({
+      logFilters: ['card'], // Default: ['password'], result => ['password', 'card']
+      filterString: '[PRIVATE]' // Default: '[FILTERED]'
+    });
+}]);
+```
+
+example.
+
+```js
+myApp.controller('MyCtrl2', function ($scope, $log) {
+    $log = $log.getInstance('MyCtrl2');
+    $log.log({password: '212eswds12', card: '213e213e2132132'});
+});
+
+```
+
+will output:
+
+```
+September-14-2014-4:15:54PM::MyCtrl2 >>  Object {password: "[PRIVATE]", card: "[PRIVATE]"}
+```
+
+######8. Create custom $log instances with extra functionality
 
 The following snippet shows you the full use of a method `log-ex` provides with the `$log` service when injected into your angular components ($controller, $directive, etc.). It should be reassigned to the `$log` service which creates a new instance specific to the component.
 `Advanced Use Cases` were included below to show you practical uses of the configurations. The snippet below explains what each parameter is used for.

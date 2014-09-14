@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.d31cf1c
+ * Log Unobtrusive Extension v0.0.7-sha.c1075a9
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -77,6 +77,54 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {string[]}
          */
         var cssKeys = ['color', 'background', 'font-size', 'border'];
+
+        /**
+         * list of default keys to filter in objects
+         * @type {string[]}
+         */
+        var defaultLogFilters = ['password'];
+
+        /**
+         * string to put in place of filtered values
+         * @type {string}
+         */
+        var defaultFilterString = '[FILTERED]';
+
+        /**
+         * configuration for filtering values of provided keys
+         * @type {object}
+         */
+        var filterConfig = {
+            filterString: defaultFilterString,
+            logFilters: defaultLogFilters
+            //recursiveSearch: false // prop can be renamed, to be used for recursive object search
+        };
+
+        /**
+         * Evalutes an array of log arguments to be filtered using the provided or default filter keys
+         * @param {[]} value - array to be processed
+         * @returns {[]} - returns a processed array with configured filter values replaced by filterString
+         */
+        var filterValues = function(logArguments) {
+            var values = angular.copy(logArguments);
+            if (itypeof(values) === 'array') {
+                angular.forEach(values, function(logValue, logKey) {
+                    angular.forEach(filterConfig.logFilters, function(filterValue, filterKey) {
+
+                        // replace filtered values here
+                        if (itypeof(logValue) === 'object') {
+                            if (logValue.hasOwnProperty(filterValue) &&
+                                !(/(object|array):?\w*/.test(itypeof(logValue[filterValue])))) {
+
+                                logValue[filterValue] = filterConfig.filterString;
+                            }
+                        }
+
+                    });
+                });
+            }
+            return values;
+        };
 
         /**
          * default colours for each log method
@@ -185,9 +233,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                     r = values;
 
                 try {
-                    for (var s in p) {
-                        r = r[p[s]];
-                    }
+                    angular.forEach(p, function(value, key) {
+                        r = r[p[key]];
+                    });
                 } catch (e) {
                     r = a;
                 }
@@ -294,6 +342,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             }
             return prefix;
         };
+
         // Register our $log decorator with AngularJS $provider
         //scroll down to the Configuration section to set the log settings
         $provide.decorator('$log', ["$delegate",
@@ -431,6 +480,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 if (activate) {
                                     var args = Array.prototype.slice.call(arguments);
+                                    args = filterValues(args);
                                     var prefix = getLogPrefix(className);
                                     if (validateTemplateInputs(useTemplate, args)) {
                                         var data = (supplant.apply(null, args));
@@ -631,6 +681,33 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             }
         };
 
+        /**
+         * Used to add keys to filter values for when logging out objects
+         * This will merge provided configs with the default and also validate
+         * that the fields are usable by the feature
+         * @param {String[]} values - config object to override/merge with default config
+         */
+        var configureLogFilters = function(values) {
+            if (itypeof(values) === 'object') {
+                var tempFilters = angular.copy(values.logFilters);
+                filterConfig = angular.extend(filterConfig, values);
+                filterConfig.logFilters = angular.copy(defaultLogFilters);
+
+                if (angular.isArray(tempFilters)) {
+                    angular.forEach(tempFilters, function(value, key) {
+                        if (itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0) {
+                            filterConfig.logFilters.push(value);
+                        }
+                    });
+                }
+
+                if (itypeof(filterConfig.filterString) !== 'string') {
+                    filterConfig.filterString = defaultFilterString;
+                }
+            }
+
+        };
+
 
         /**
          * Default $get method necessary for provider to work
@@ -639,14 +716,15 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.d31cf1c',
+                version: '0.0.7-sha.c1075a9',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
                 disableDefaultColors: disableDefaultColors,
                 setLogMethodColor: setLogMethodColor,
                 overrideLogMethodColors: overrideLogMethodColors,
-                useDefaultLogPrefix: useDefaultLogPrefix
+                useDefaultLogPrefix: useDefaultLogPrefix,
+                configureLogFilters: configureLogFilters
             };
         };
 
@@ -658,5 +736,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.setLogMethodColor = setLogMethodColor;
         this.overrideLogMethodColors = overrideLogMethodColors;
         this.useDefaultLogPrefix = useDefaultLogPrefix;
+        this.configureLogFilters = configureLogFilters;
     }
 ]);
