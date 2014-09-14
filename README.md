@@ -164,13 +164,13 @@ app.config(['logExProvider', function(logExProvider) {
 You can set a list of keys to be filtered in objects before they are logged to the console.
 There is a default list of keys that will be filtered automatically.
 
-These are:
+These are: `['password']`
 
-`['password']`
+example.
 
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
-    // this will override the default configurations and in some cases will
+    // this will override the default configurations and in some cases 
     // will append config to values (logFilters will append to existing list)
     logExProvider.configureLogFilters({
       logFilters: ['card'], // Default: ['password'], result => ['password', 'card']
@@ -178,8 +178,6 @@ app.config(['logExProvider', function(logExProvider) {
     });
 }]);
 ```
-
-example.
 
 ```js
 myApp.controller('MyCtrl2', function ($scope, $log) {
