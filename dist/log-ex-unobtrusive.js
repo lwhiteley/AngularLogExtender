@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.c1075a9
+ * Log Unobtrusive Extension v0.0.7-sha.78825d7
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -79,45 +79,48 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var cssKeys = ['color', 'background', 'font-size', 'border'];
 
         /**
-         * list of default keys to filter in objects
-         * @type {string[]}
-         */
-        var defaultLogFilters = ['password'];
-
-        /**
-         * string to put in place of filtered values
+         * default string to put in place of filtered values
          * @type {string}
          */
         var defaultFilterString = '[FILTERED]';
 
         /**
-         * configuration for filtering values of provided keys
+         * default configuration for filtering values of provided keys
          * @type {object}
          */
         var filterConfig = {
             filterString: defaultFilterString,
-            logFilters: defaultLogFilters
-            //recursiveSearch: false // prop can be renamed, to be used for recursive object search
+            logFilters: []
+        };
+
+        /**
+         * Evalutes an object to verify it is of type `object` or `array`
+         * @param {*} value - an object to be evaluated
+         * @returns boolean - returns true for object types that are `object` or `array`
+         */
+        var isObjectOrArray = function(value) {
+            return (/(object|array)/.test(itypeof(value)));
         };
 
         /**
          * Evalutes an array of log arguments to be filtered using the provided or default filter keys
-         * @param {[]} value - array to be processed
-         * @returns {[]} - returns a processed array with configured filter values replaced by filterString
+         * @param {[] | Object} logArguments - array to be processed
+         * @returns {[] | Object} - returns a processed array with configured filter values replaced by filterString
          */
-        var filterValues = function(logArguments) {
+        var filterSensitiveValues = function(logArguments) {
             var values = angular.copy(logArguments);
-            if (itypeof(values) === 'array') {
+            if (isObjectOrArray(values) && filterConfig.logFilters.length > 0) {
                 angular.forEach(values, function(logValue, logKey) {
-                    angular.forEach(filterConfig.logFilters, function(filterValue, filterKey) {
-
+                    angular.forEach(filterConfig.logFilters, function(filterValue) {
                         // replace filtered values here
-                        if (itypeof(logValue) === 'object') {
-                            if (logValue.hasOwnProperty(filterValue) &&
-                                !(/(object|array):?\w*/.test(itypeof(logValue[filterValue])))) {
+                        if (itypeof(logValue) === 'object' &&
+                            logValue.hasOwnProperty(filterValue) &&
+                            !isObjectOrArray(logValue[filterValue])) {
 
-                                logValue[filterValue] = filterConfig.filterString;
-                            }
+                            logValue[filterValue] = filterConfig.filterString;
+
+                        } else if (isObjectOrArray(logValue)) {
+                            values[logKey] = filterSensitiveValues(logValue);
                         }
 
                     });
@@ -480,7 +483,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 if (activate) {
                                     var args = Array.prototype.slice.call(arguments);
-                                    args = filterValues(args);
+                                    // perform filter of sensitive values within objects and arrays
+                                    args = filterSensitiveValues(args);
                                     var prefix = getLogPrefix(className);
                                     if (validateTemplateInputs(useTemplate, args)) {
                                         var data = (supplant.apply(null, args));
@@ -682,7 +686,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * Used to add keys to filter values for when logging out objects
+         * Used to extend the filter feature configuration when logging out objects
          * This will merge provided configs with the default and also validate
          * that the fields are usable by the feature
          * @param {String[]} values - config object to override/merge with default config
@@ -691,7 +695,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             if (itypeof(values) === 'object') {
                 var tempFilters = angular.copy(values.logFilters);
                 filterConfig = angular.extend(filterConfig, values);
-                filterConfig.logFilters = angular.copy(defaultLogFilters);
+                filterConfig.logFilters = angular.copy([]);
 
                 if (angular.isArray(tempFilters)) {
                     angular.forEach(tempFilters, function(value, key) {
@@ -716,7 +720,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.c1075a9',
+                version: '0.0.7-sha.78825d7',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
