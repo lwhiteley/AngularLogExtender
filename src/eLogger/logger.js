@@ -14,7 +14,10 @@ var prepareLogFn = function (logFn, className, override, useOverride, useTemplat
         if (activate) {
             var args = Array.prototype.slice.call(arguments);
             // perform filter of sensitive values within objects and arrays
-            args = filterSensitiveValues(args);
+            // if at least one filter key is available
+            if(filterConfig.logFilters.length > 0){
+              args = filterSensitiveValues(args);
+            }
             var prefix = getLogPrefix(className);
             if(validateTemplateInputs(useTemplate, args)) {
                 var data = (supplant.apply(null, args));

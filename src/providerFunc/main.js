@@ -78,28 +78,23 @@ var useDefaultLogPrefix = function (flag) {
 };
 
 /**
- * Used to extend the filter feature configuration when logging out objects
+ * Used to configure the filter feature configuration when logging out objects
  * This will merge provided configs with the default and also validate
  * that the fields are usable by the feature
- * @param {String[]} values - config object to override/merge with default config
+ * @param {String[]} customConfig - config object to override/merge with default config
  */
-var configureLogFilters = function (values) {
-  if(itypeof(values) === 'object'){
-    var tempFilters = angular.copy(values.logFilters);
-    filterConfig = angular.extend(filterConfig, values);
-    filterConfig.logFilters = angular.copy([]);
+var configureLogFilters = function (customConfig) {
+  if(itypeof(customConfig) === 'object' &&
+    itypeof(customConfig.logFilters) === 'array' &&
+    customConfig.logFilters.length > 0 ){
 
-    if(angular.isArray(tempFilters)){
-      angular.forEach(tempFilters, function(value, key){
-        if(itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0){
-          filterConfig.logFilters.push(value);
-        }
-      });
-    }
+    angular.forEach(customConfig.logFilters, function(value, key){
+      if(itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0){
+        filterConfig.logFilters.push(value);
+      }
+    });
+    filterConfig.filterString = (itypeof(customConfig.filterString) !== 'string') ? defaultFilterString : customConfig.filterString;
 
-    if(itypeof(filterConfig.filterString) !== 'string'){
-      filterConfig.filterString = defaultFilterString;
-    }
   }
 
 };

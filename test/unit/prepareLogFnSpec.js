@@ -57,7 +57,7 @@ describe('prepareLogFn function Spec', function () {
             expect(logFn.apply).toHaveBeenCalled();
         });
     });
-    
+
     describe('prepareLogFn function Spec - global enabled flag is true, with colorCss', function () {
         beforeEach(function () {
             $log.enableLog(true);
@@ -71,7 +71,7 @@ describe('prepareLogFn function Spec', function () {
             exFn();
             expect(colorify).not.toHaveBeenCalled();
         });
-        
+
         it('should call colorify when colorCss is a string but canColorize returns false', function () {
             spyOn(window, 'validateColorizeInputs').andCallFake(function() {
                 return false;
@@ -80,7 +80,7 @@ describe('prepareLogFn function Spec', function () {
             exFn();
             expect(colorify).not.toHaveBeenCalled();
         });
-        
+
         it('should call colorify when colorCss is a string ', function () {
             spyOn(window, 'validateColorizeInputs').andCallFake(function() {
                 return true;
@@ -90,7 +90,7 @@ describe('prepareLogFn function Spec', function () {
             expect(colorify).toHaveBeenCalled();
         });
     });
-    
+
     describe('prepareLogFn function Spec - global enabled flag is true, with template engine', function () {
         beforeEach(function () {
             $log.enableLog(true);
@@ -104,13 +104,13 @@ describe('prepareLogFn function Spec', function () {
             exFn();
             expect(supplant).not.toHaveBeenCalled();
         });
-        
+
         it('should not call supplant when useTemplate is set ', function () {
             var exFn = prepareLogFn(logFn, "", true, true, null);
             exFn();
             expect(supplant).not.toHaveBeenCalled();
         });
-        
+
         it('should call supplant when useTemplate is a boolean and validateTemplateInputs returns false ', function () {
             spyOn(window, 'validateTemplateInputs').andCallFake(function() {
                 return false;
@@ -119,18 +119,18 @@ describe('prepareLogFn function Spec', function () {
             exFn();
             expect(supplant).not.toHaveBeenCalled();
         });
-        
+
         it('should call supplant when useTemplate is a boolean and validateTemplateInputs returns true ', function () {
             spyOn(window, 'validateTemplateInputs').andCallFake(function() {
                 return true;
             });
-            
+
             var exFn = prepareLogFn(logFn, "", true, true, true, "css:jj;");
             exFn();
             expect(supplant).toHaveBeenCalled();
         });
-        
-        
+
+
     });
     describe('prepareLogFn function Spec - when supplant returns a string ', function () {
         beforeEach(function () {
@@ -144,12 +144,37 @@ describe('prepareLogFn function Spec', function () {
             spyOn(window, 'validateTemplateInputs').andCallFake(function() {
                 return true;
             });
-            
+
             var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
             exFn();
             expect(supplant).toHaveBeenCalled();
         });
-        
+
+    });
+
+    describe('prepareLogFn function Spec - test filterSensitiveValues scenarios - ', function () {
+      var tempConfig;
+      beforeEach(function () {
+          $log.enableLog(true);
+          spyOn(window, 'filterSensitiveValues').andCallThrough();
+          tempConfig = angular.copy(filterConfig);
+      });
+      afterEach(function () {
+          $log.enableLog(false);
+          filterConfig = angular.copy(tempConfig);
+      });
+      it('should call filterSensitiveValues lofFilters array is not empty', function () {
+          filterConfig.logFilters = ['password'];
+          var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
+          exFn();
+          expect(filterSensitiveValues).toHaveBeenCalled();
+      });
+      it('should not call filterSensitiveValues lofFilters array is empty', function () {
+          var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
+          exFn();
+          expect(filterSensitiveValues).not.toHaveBeenCalled();
+      });
+
     });
 
 });

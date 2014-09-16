@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.6b356f2
+ * Log Unobtrusive Extension v0.0.7-sha.eb3d0c8
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -94,22 +94,23 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * Evalutes an object to verify it is of type `object` or `array`
+         * Evaluates an object to verify it is of type `object` or `array`
          * @param {*} value - an object to be evaluated
-         * @returns boolean - returns true for object types that are `object` or `array`
+         * @returns boolean - returns true if parameter is of type object or array
          */
         var isObjectOrArray = function(value) {
             return (/(object|array)/.test(itypeof(value)));
         };
 
         /**
-         * Evalutes an array of log arguments to be filtered using the provided or default filter keys
+         * Evaluates an array of log arguments to be filtered using the provided or default filter keys
          * @param {[] | Object} logArguments - array to be processed
          * @returns {[] | Object} - returns a processed array with configured filter values replaced by filterString
          */
         var filterSensitiveValues = function(logArguments) {
-            var values = angular.copy(logArguments);
-            if (isObjectOrArray(values) && filterConfig.logFilters.length > 0) {
+            if (isObjectOrArray(logArguments) && filterConfig.logFilters.length > 0) {
+
+                var values = angular.copy(logArguments);
                 angular.forEach(values, function(logValue, logKey) {
                     angular.forEach(filterConfig.logFilters, function(filterValue) {
                         // replace filtered values here
@@ -125,8 +126,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
                     });
                 });
+                return values;
+
             }
-            return values;
+            return logArguments;
         };
 
         /**
@@ -217,10 +220,17 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         /**
          * supplant is a string templating engine that replaces patterns
          * in a string with values from a template object
+         * @example:
+         *    for  `var template = 'i am template string - {desciptor}';`
+         *         `var values = {desciptor: 'awesome'};`
+         *
+         *    when `var result = supplant(template, values);`
+         *    then `result` will be `i am template string - awesome`
+         *
          * @param {string} template - string with patterns to be replaced by values
          * @param {object} values - object with values to replace in template string
          * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
-         * @returns {string} - returns formatted string if template and values match the required pattern
+         * @returns {string | array} - returns formatted string if template and values match the required pattern
          */
         var supplant = function(template, values, /*{RegExp=}*/ pattern) {
             var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
@@ -484,7 +494,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 if (activate) {
                                     var args = Array.prototype.slice.call(arguments);
                                     // perform filter of sensitive values within objects and arrays
-                                    args = filterSensitiveValues(args);
+                                    // if at least one filter key is available
+                                    if (filterConfig.logFilters.length > 0) {
+                                        args = filterSensitiveValues(args);
+                                    }
                                     var prefix = getLogPrefix(className);
                                     if (validateTemplateInputs(useTemplate, args)) {
                                         var data = (supplant.apply(null, args));
@@ -686,28 +699,23 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * Used to extend the filter feature configuration when logging out objects
+         * Used to configure the filter feature configuration when logging out objects
          * This will merge provided configs with the default and also validate
          * that the fields are usable by the feature
-         * @param {String[]} values - config object to override/merge with default config
+         * @param {String[]} customConfig - config object to override/merge with default config
          */
-        var configureLogFilters = function(values) {
-            if (itypeof(values) === 'object') {
-                var tempFilters = angular.copy(values.logFilters);
-                filterConfig = angular.extend(filterConfig, values);
-                filterConfig.logFilters = angular.copy([]);
+        var configureLogFilters = function(customConfig) {
+            if (itypeof(customConfig) === 'object' &&
+                itypeof(customConfig.logFilters) === 'array' &&
+                customConfig.logFilters.length > 0) {
 
-                if (angular.isArray(tempFilters)) {
-                    angular.forEach(tempFilters, function(value, key) {
-                        if (itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0) {
-                            filterConfig.logFilters.push(value);
-                        }
-                    });
-                }
+                angular.forEach(customConfig.logFilters, function(value, key) {
+                    if (itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0) {
+                        filterConfig.logFilters.push(value);
+                    }
+                });
+                filterConfig.filterString = (itypeof(customConfig.filterString) !== 'string') ? defaultFilterString : customConfig.filterString;
 
-                if (itypeof(filterConfig.filterString) !== 'string') {
-                    filterConfig.filterString = defaultFilterString;
-                }
             }
 
         };
@@ -720,7 +728,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.6b356f2',
+                version: '0.0.7-sha.eb3d0c8',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,

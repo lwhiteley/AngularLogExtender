@@ -74,22 +74,23 @@
          };
 
          /**
-          * Evalutes an object to verify it is of type `object` or `array`
+          * Evaluates an object to verify it is of type `object` or `array`
           * @param {*} value - an object to be evaluated
-          * @returns boolean - returns true for object types that are `object` or `array`
+          * @returns boolean - returns true if parameter is of type object or array
           */
          var isObjectOrArray = function(value){
            return (/(object|array)/.test(itypeof(value)));
          };
 
          /**
-          * Evalutes an array of log arguments to be filtered using the provided or default filter keys
+          * Evaluates an array of log arguments to be filtered using the provided or default filter keys
           * @param {[] | Object} logArguments - array to be processed
           * @returns {[] | Object} - returns a processed array with configured filter values replaced by filterString
           */
          var filterSensitiveValues = function(logArguments){
-          var values = angular.copy(logArguments);
-          if(isObjectOrArray(values) && filterConfig.logFilters.length > 0){
+          if(isObjectOrArray(logArguments) && filterConfig.logFilters.length > 0){
+
+            var values = angular.copy(logArguments);
             angular.forEach(values, function(logValue, logKey){
               angular.forEach(filterConfig.logFilters, function(filterValue){
                 // replace filtered values here
@@ -105,8 +106,10 @@
 
               });
             });
+            return values;
+
           }
-          return values;
+          return logArguments;
          };
 
           /**
@@ -197,10 +200,17 @@
           /**
            * supplant is a string templating engine that replaces patterns
            * in a string with values from a template object
+           * @example:
+           *    for  `var template = 'i am template string - {desciptor}';`
+           *         `var values = {desciptor: 'awesome'};`
+           *
+           *    when `var result = supplant(template, values);`
+           *    then `result` will be `i am template string - awesome`
+           *
            * @param {string} template - string with patterns to be replaced by values
            * @param {object} values - object with values to replace in template string
            * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
-           * @returns {string} - returns formatted string if template and values match the required pattern
+           * @returns {string | array} - returns formatted string if template and values match the required pattern
            */
           var supplant = function (template, values, /*{RegExp=}*/ pattern) {
               var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
