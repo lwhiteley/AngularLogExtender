@@ -78,7 +78,7 @@ var useDefaultLogPrefix = function (flag) {
 };
 
 /**
- * Used to add keys to filter values for when logging out objects
+ * Used to extend the filter feature configuration when logging out objects
  * This will merge provided configs with the default and also validate
  * that the fields are usable by the feature
  * @param {String[]} values - config object to override/merge with default config
