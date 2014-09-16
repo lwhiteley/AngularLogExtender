@@ -59,13 +59,13 @@
           var cssKeys = ['color', 'background', 'font-size', 'border'];
 
          /**
-         * string to put in place of filtered values
+         * default string to put in place of filtered values
          * @type {string}
          */
          var defaultFilterString = '[FILTERED]';
 
          /**
-         * configuration for filtering values of provided keys
+         * default configuration for filtering values of provided keys
          * @type {object}
          */
          var filterConfig = {
