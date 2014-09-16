@@ -184,8 +184,8 @@ module.exports = function (grunt) {
       files: {
         src: 'dist/*',
         dest: 'sample_app/app/',
-      },
-    },
+      }
+    }
   });
 
     grunt.registerTask('bower_update', 'Update bower version', function (arg1) {

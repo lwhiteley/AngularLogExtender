@@ -162,18 +162,16 @@ app.config(['logExProvider', function(logExProvider) {
 ######7. Filter sensitive information from objects logged
 
 You can set a list of keys to be filtered in objects before they are logged to the console.
-There is a default list of keys that will be filtered automatically.
-
-These are: `['password']`
+NB. Only `object` and `array` will be processed for filtering
 
 example.
 
 ```javascript
 app.config(['logExProvider', function(logExProvider) {
-    // this will override the default configurations and in some cases 
-    // will append config to values (logFilters will append to existing list)
+    // this will extend the default configurations and enable the filtering of sensitive
+    // information for the specified keys.
     logExProvider.configureLogFilters({
-      logFilters: ['card'], // Default: ['password'], result => ['password', 'card']
+      logFilters: ['password', 'card' ], // Default: [], result => ['password', 'card']
       filterString: '[PRIVATE]' // Default: '[FILTERED]'
     });
 }]);

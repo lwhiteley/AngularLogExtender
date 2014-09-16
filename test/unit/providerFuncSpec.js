@@ -108,21 +108,21 @@ describe('Provider Func Spec', function () {
 
         it('should keep default log filters when an array is not passed', function () {
             configureLogFilters(null);
-            expect(filterConfig.logFilters).toEqual(['password']);
+            expect(filterConfig.logFilters).toEqual([]);
 
             configureLogFilters(3);
-            expect(filterConfig.logFilters).toEqual(['password']);
+            expect(filterConfig.logFilters).toEqual([]);
 
             configureLogFilters({pass: 'csdacdas'});
-            expect(filterConfig.logFilters).toEqual(['password']);
+            expect(filterConfig.logFilters).toEqual([]);
         });
         it('should keep default log filters when an array of strings is not passed', function () {
             configureLogFilters({logFilters: [null, {}, 2, ['asasa']]});
-            expect(filterConfig.logFilters).toEqual(['password']);
+            expect(filterConfig.logFilters).toEqual([]);
         });
         it('should add log filter keys when an array of strings is  passed', function () {
             configureLogFilters({logFilters: ['asasa']});
-            expect(filterConfig.logFilters).toEqual(['password', 'asasa']);
+            expect(filterConfig.logFilters).toEqual(['asasa']);
         });
         it('should not override filter string when a string is not provided', function () {
             configureLogFilters({logFilters: ['password'], filterString: null});
@@ -135,7 +135,7 @@ describe('Provider Func Spec', function () {
 
 
         it('should add log filter keys when an array of strings is passed while ommitting keys already listed', function () {
-            configureLogFilters({logFilters: ['password']});
+            configureLogFilters({logFilters: ['password', 'password']});
             expect(filterConfig.logFilters).toEqual(['password']);
         });
     });

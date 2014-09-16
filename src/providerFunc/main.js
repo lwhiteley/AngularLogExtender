@@ -87,7 +87,7 @@ var configureLogFilters = function (values) {
   if(itypeof(values) === 'object'){
     var tempFilters = angular.copy(values.logFilters);
     filterConfig = angular.extend(filterConfig, values);
-    filterConfig.logFilters = angular.copy(defaultLogFilters);
+    filterConfig.logFilters = angular.copy([]);
 
     if(angular.isArray(tempFilters)){
       angular.forEach(tempFilters, function(value, key){

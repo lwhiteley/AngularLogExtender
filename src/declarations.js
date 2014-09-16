@@ -58,12 +58,6 @@
            */
           var cssKeys = ['color', 'background', 'font-size', 'border'];
 
-          /**
-          * list of default keys to filter in objects
-          * @type {string[]}
-          */
-         var defaultLogFilters = ['password'];
-
          /**
          * string to put in place of filtered values
          * @type {string}
@@ -76,28 +70,37 @@
          */
          var filterConfig = {
            filterString: defaultFilterString,
-           logFilters: defaultLogFilters
-           //recursiveSearch: false // prop can be renamed, to be used for recursive object search
+           logFilters: []
+         };
+
+         /**
+          * Evalutes an object to verify it is of type `object` or `array`
+          * @param {*} value - an object to be evaluated
+          * @returns boolean - returns true for object types that are `object` or `array`
+          */
+         var isObjectOrArray = function(value){
+           return (/(object|array)/.test(itypeof(value)));
          };
 
          /**
           * Evalutes an array of log arguments to be filtered using the provided or default filter keys
-          * @param {[]} value - array to be processed
-          * @returns {[]} - returns a processed array with configured filter values replaced by filterString
+          * @param {[] | Object} logArguments - array to be processed
+          * @returns {[] | Object} - returns a processed array with configured filter values replaced by filterString
           */
-         var filterValues = function(logArguments){
+         var filterSensitiveValues = function(logArguments){
           var values = angular.copy(logArguments);
-          if(itypeof(values) === 'array'){
+          if(isObjectOrArray(values) && filterConfig.logFilters.length > 0){
             angular.forEach(values, function(logValue, logKey){
-              angular.forEach(filterConfig.logFilters, function(filterValue, filterKey){
-
+              angular.forEach(filterConfig.logFilters, function(filterValue){
                 // replace filtered values here
-                if(itypeof(logValue) === 'object'){
-                  if(logValue.hasOwnProperty(filterValue) &&
-                    !(/(object|array):?\w*/.test(itypeof(logValue[filterValue]))) ){
+                if(itypeof(logValue) === 'object' &&
+                   logValue.hasOwnProperty(filterValue) &&
+                   !isObjectOrArray(logValue[filterValue]) ){
 
-                    logValue[filterValue] = filterConfig.filterString;
-                  }
+                     logValue[filterValue] = filterConfig.filterString;
+
+                }else if(isObjectOrArray(logValue)){
+                  values[logKey] = filterSensitiveValues(logValue);
                 }
 
               });

@@ -13,7 +13,8 @@ var prepareLogFn = function (logFn, className, override, useOverride, useTemplat
         var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
         if (activate) {
             var args = Array.prototype.slice.call(arguments);
-            args = filterValues(args);
+            // perform filter of sensitive values within objects and arrays
+            args = filterSensitiveValues(args);
             var prefix = getLogPrefix(className);
             if(validateTemplateInputs(useTemplate, args)) {
                 var data = (supplant.apply(null, args));
