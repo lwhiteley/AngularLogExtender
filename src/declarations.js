@@ -211,19 +211,19 @@
 
               pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
 
-              return template.replace(pattern, function (a, b) {
-                  var p = b.split('.'),
-                      r = values;
+            return template.replace(pattern, function (patternToReplace , replacementKey ) {
+                  var replacementKeyList = replacementKey.split('.'),
+                      replacements = values;
 
                   try {
-                      angular.forEach(p, function(value, key){
-                          r = r[p[key]];
+                      angular.forEach(replacementKeyList, function(value, key){
+                          replacements = replacements[replacementKeyList[key]];
                       });
                   } catch (e) {
-                      r = a;
+                      replacements = patternToReplace;
                   }
 
-                  return (typeof r === 'string' || typeof r === 'number') ? r : a;
+                  return (itypeof(replacements) === 'string' || itypeof(replacements) === 'number') ? replacements : patternToReplace;
               });
           };
 

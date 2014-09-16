@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7-sha.78825d7
+ * Log Unobtrusive Extension v0.0.7-sha.6b356f2
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -231,19 +231,19 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
             pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
 
-            return template.replace(pattern, function(a, b) {
-                var p = b.split('.'),
-                    r = values;
+            return template.replace(pattern, function(patternToReplace, replacementKey) {
+                var replacementKeyList = replacementKey.split('.'),
+                    replacements = values;
 
                 try {
-                    angular.forEach(p, function(value, key) {
-                        r = r[p[key]];
+                    angular.forEach(replacementKeyList, function(value, key) {
+                        replacements = replacements[replacementKeyList[key]];
                     });
                 } catch (e) {
-                    r = a;
+                    replacements = patternToReplace;
                 }
 
-                return (typeof r === 'string' || typeof r === 'number') ? r : a;
+                return (itypeof(replacements) === 'string' || itypeof(replacements) === 'number') ? replacements : patternToReplace;
             });
         };
 
@@ -720,7 +720,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7-sha.78825d7',
+                version: '0.0.7-sha.6b356f2',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
