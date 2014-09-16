@@ -183,7 +183,7 @@ module.exports = function (grunt) {
     copy: {
       files: {
         src: 'dist/*',
-        dest: 'sample_app/app/',
+        dest: 'sample_app/app/'
       }
     }
   });
