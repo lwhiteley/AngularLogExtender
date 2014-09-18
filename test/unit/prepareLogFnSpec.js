@@ -163,13 +163,13 @@ describe('prepareLogFn function Spec', function () {
           $log.enableLog(false);
           filterConfig = angular.copy(tempConfig);
       });
-      it('should call filterSensitiveValues lofFilters array is not empty', function () {
+      it('should call filterSensitiveValues logFilters array is not empty', function () {
           filterConfig.logFilters = ['password'];
           var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
           exFn();
           expect(filterSensitiveValues).toHaveBeenCalled();
       });
-      it('should not call filterSensitiveValues lofFilters array is empty', function () {
+      it('should not call filterSensitiveValues logFilters array is empty', function () {
           var exFn = prepareLogFn(logFn, "", true, true, "css:jj;", true);
           exFn();
           expect(filterSensitiveValues).not.toHaveBeenCalled();

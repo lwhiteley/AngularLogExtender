@@ -172,7 +172,7 @@ app.config(['logExProvider', function(logExProvider) {
     // information for the specified keys.
     logExProvider.configureLogFilters({
       logFilters: ['password', 'card' ], // Default: [], result => ['password', 'card']
-      filterString: '[PRIVATE]' // Default: '[FILTERED]', Optional
+      filterString: '[PRIVATE]' // Default: '[FILTERED]'
     });
 }]);
 ```
