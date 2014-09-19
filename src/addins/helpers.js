@@ -22,8 +22,9 @@ var isObjectOrArray = function (value) {
  * @returns {String} - returns an empty string if the value passed is not of type {String}
  */
 var trimString = function (value) {
-    if (itypeof(value) === 'string')
+    if (itypeof(value) === 'string') {
         return value.replace(/^\s*/, '').replace(/\s*$/, '');
+    }
     return "";
 };
 
@@ -54,7 +55,7 @@ var isValidString = function (value) {
  */
 var isSubString = function (sub, full) {
     if (itypeof(sub) === 'string' && itypeof(full) === 'string') {
-        if (full.toLowerCase().indexOf(sub.toLowerCase()) != -1) {
+        if (full.toLowerCase().indexOf(sub.toLowerCase()) !== -1) {
             return true;
         }
     }

@@ -24,7 +24,7 @@ var isColorifySupportedBrowser = isColorifySupported();
  * @returns {boolean} - returns true if args match the above criteria
  */
 var validateColorizeInputs = function (args) {
-    return (args.length == 1 &&
+    return (args.length === 1 &&
         itypeof(args[0]) === 'string');
 };
 

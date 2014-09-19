@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.8-sha.6f1db6f
+ * Log Unobtrusive Extension v0.0.9-sha.ca09575
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -150,8 +150,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {String} - returns an empty string if the value passed is not of type {String}
          */
         var trimString = function(value) {
-            if (itypeof(value) === 'string')
+            if (itypeof(value) === 'string') {
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
+            }
             return "";
         };
 
@@ -182,7 +183,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          */
         var isSubString = function(sub, full) {
             if (itypeof(sub) === 'string' && itypeof(full) === 'string') {
-                if (full.toLowerCase().indexOf(sub.toLowerCase()) != -1) {
+                if (full.toLowerCase().indexOf(sub.toLowerCase()) !== -1) {
                     return true;
                 }
             }
@@ -230,7 +231,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {boolean} - returns true if args match the above criteria
          */
         var validateColorizeInputs = function(args) {
-            return (args.length == 1 &&
+            return (args.length === 1 &&
                 itypeof(args[0]) === 'string');
         };
 
@@ -280,7 +281,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
          */
         var validateTemplateInputs = function(useTemplate, args) {
-            return isBoolean(useTemplate) && useTemplate && args.length == 2;
+            return isBoolean(useTemplate) && useTemplate && args.length === 2;
         };
 
         /**
@@ -319,6 +320,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                 return (itypeof(replacements) === 'string' || itypeof(replacements) === 'number') ? replacements : patternToReplace;
             });
         };
+
         /**
          * Evaluates an array of log arguments to be filtered using the provided or default filter keys
          * @param {[] | Object} logArguments - array to be processed
@@ -344,7 +346,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         // Register $log decorator with AngularJS $provider
         $provide.decorator('$log', ["$delegate",
             function($delegate) {
-                /** 
+                /**
                  * Encapsulates functionality to extends $log and expose additional functionality
                  **/
                 var logEnhancerObj = function() {
@@ -494,7 +496,9 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                         args.unshift(prefix);
                                     }
 
-                                    if (logFn) logFn.apply(null, args);
+                                    if (logFn) {
+                                        logFn.apply(null, args);
+                                    }
                                 }
                             };
 
@@ -568,6 +572,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                         $log.logEnabled = function() {
                             return enabled;
                         };
+
                         return $log;
                     };
                     //---------------------------------------//
@@ -710,7 +715,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.8-sha.6f1db6f',
+                version: '0.0.9-sha.ca09575',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
