@@ -5,12 +5,13 @@ describe('getLogPrefix function Spec', function () {
         var tempUseDefault, tempUseOverride, tempCustomPrefix;
         beforeEach(function () {
             tempUseOverride = logPrefixOverride;
-            tempUseDefault = useDefaultPrefix ;
-            tempCustomPrefix = customLogPrefixFn ;
+            tempUseDefault = useDefaultPrefix;
+            tempCustomPrefix = customLogPrefixFn;
             spyOn(window, 'defaultLogPrefixFn');
 
-            customLogPrefixFn = null;
-
+            customLogPrefixFn = function () {
+                return "";
+            };
         });
 
         afterEach(function () {
@@ -19,20 +20,9 @@ describe('getLogPrefix function Spec', function () {
             customLogPrefixFn = tempCustomPrefix;
         });
 
-        it('should call default when customPrefix is not set and override is false and override is false', function () {
-            logPrefixOverride = false;
-            useDefaultPrefix = null;
-
-            getLogPrefix('class');
-
-            expect(defaultLogPrefixFn).toHaveBeenCalled();
-            expect(customLogPrefixFn).toBe(null);
-        });
-
         it('should call default when customPrefix is  set but useDefault is true', function () {
             logPrefixOverride = true;
             useDefaultPrefix = true;
-            customLogPrefixFn = function(){return "";};
             spyOn(window, 'customLogPrefixFn');
             getLogPrefix('class');
 
@@ -40,13 +30,14 @@ describe('getLogPrefix function Spec', function () {
             expect(customLogPrefixFn).not.toHaveBeenCalled();
         });
 
-        it('should call default when customPrefix is not set and override is true', function () {
+        it('should call default when logPrefixOverride if default is false', function () {
             logPrefixOverride = true;
             useDefaultPrefix = false;
+            spyOn(window, 'customLogPrefixFn');
             getLogPrefix('class');
 
-            expect(defaultLogPrefixFn).toHaveBeenCalled();
-            expect(customLogPrefixFn).toBe(null);
+            expect(defaultLogPrefixFn).not.toHaveBeenCalled();
+            expect(customLogPrefixFn).toHaveBeenCalled();
         });
     });
 
@@ -55,8 +46,8 @@ describe('getLogPrefix function Spec', function () {
         var tempUseDefault, tempUseOverride, tempCustomPrefix;
         beforeEach(function () {
             tempUseOverride = logPrefixOverride;
-            tempUseDefault = useDefaultPrefix ;
-            tempCustomPrefix = customLogPrefixFn ;
+            tempUseDefault = useDefaultPrefix;
+            tempCustomPrefix = customLogPrefixFn;
             spyOn(window, 'defaultLogPrefixFn');
 
         });
@@ -67,21 +58,10 @@ describe('getLogPrefix function Spec', function () {
             customLogPrefixFn = tempCustomPrefix;
         });
 
-        it('should call custom when useDefault is null and override is true', function () {
-            customLogPrefixFn = function(){return "";};
-            spyOn(window, 'customLogPrefixFn');
-            logPrefixOverride = true;
-            useDefaultPrefix = null;
-
-            getLogPrefix('class');
-
-            expect(defaultLogPrefixFn).not.toHaveBeenCalled();
-            expect(customLogPrefixFn).toHaveBeenCalled();
-
-        });
-
         it('should call custom when  useDefault is false  and override is true', function () {
-            customLogPrefixFn = function(){return "";};
+            customLogPrefixFn = function () {
+                return "";
+            };
             spyOn(window, 'customLogPrefixFn');
 
             logPrefixOverride = true;

@@ -1,4 +1,3 @@
-
 //declarations and functions , extensions
 /**
  * Used to enable/disable logging
