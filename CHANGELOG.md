@@ -1,4 +1,15 @@
 
+0.0.8-sha.009021d / 2014-09-19
+==============================
+
+  * Merge pull request #25 from lwhiteley/develop
+  * Merge pull request #22 from lwhiteley/logfilter
+  * Added support filter sensitive data masking. closes #22
+  * Merge pull request #24 from waffle-iron/master
+  * Update README.md
+  * Update .travis.yml
+  * add waffle.io badge
+
 0.0.6-sha.101ac4a / 2014-02-01 
 ==================
 
