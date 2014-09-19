@@ -13,19 +13,24 @@ var prepareLogFn = function (logFn, className, override, useOverride, useTemplat
         var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
         if (activate) {
             var args = Array.prototype.slice.call(arguments);
+            // perform filter of sensitive values within objects and arrays
+            // if at least one filter key is available
+            if (filterConfig.logFilters.length > 0) {
+                args = filterSensitiveValues(args);
+            }
             var prefix = getLogPrefix(className);
-            if(validateTemplateInputs(useTemplate, args)) {
+            if (validateTemplateInputs(useTemplate, args)) {
                 var data = (supplant.apply(null, args));
                 data = (itypeof(data) === 'string') ? [data] : data;
                 args = data;
             }
-            if(itypeof(colorCss) === 'string' && validateColorizeInputs(args)) {
-                args = colorify(args[0], colorCss, prefix) ;
+            if (itypeof(colorCss) === 'string' && validateColorizeInputs(args)) {
+                args = colorify(args[0], colorCss, prefix);
             } else {
                 args.unshift(prefix);
             }
 
-            if(logFn) logFn.apply(null, args);
+            if (logFn) logFn.apply(null, args);
         }
     };
 
@@ -49,7 +54,7 @@ var _$log = createLogObj($log, allowedMethods);
  * @param {String=} colorCss - css styles for coloring log methods
  * @returns {*} $log instance - returns a custom log instance
  */
-var getInstance = function (/*{*=}*/className, /*{boolean=}*/override,/*{boolean=}*/useTemplate, /*{String=}*/colorCss) {
+var getInstance = function (/*{*=}*/className, /*{boolean=}*/override, /*{boolean=}*/useTemplate, /*{String=}*/colorCss) {
     if (isBoolean(className)) {
         override = className;
         className = null;

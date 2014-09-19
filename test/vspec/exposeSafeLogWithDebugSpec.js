@@ -19,7 +19,7 @@ describe('exposeSafeLog function Spec', function () {
 
     it('should return an extended log object when the original angular log is passed with getInstance defined', function () {
         angular.extend(logEx, {
-            getInstance : function () {
+            getInstance: function () {
                 return "something";
             }
         });

@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.7
+ * Log Unobtrusive Extension v0.0.8-sha.6f1db6f
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -7,13 +7,14 @@
  * @contributor Layton Whiteley
  * @contributor A confused individual <ferronrsmith@gmail.com>
  * @website http://www.theSolutionOptimist.com
- * (c) 2013 https://github.com/lwhiteley/AngularLogExtender
+ * (c) 2014 https://github.com/lwhiteley/AngularLogExtender
  * License: MIT
  *
  * Modifications made by @contributor Layton Whiteley:
  * - Modified to be a full stand-alone Angular Application for reuse
  * - Has global and feature level activation/disabling for $log
- * - Created and tested with AngularJS v.1.2.3
+ * - Supported sensitive field filtering
+ * - Created and tested with AngularJS versions : 1.0.4, 1.1.0, 1.2.25, 1.3.0-rc.2
  */
 angular.module("log.ex.uo", []).provider('logEx', ['$provide',
     function($provide) {
@@ -73,6 +74,27 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         var useDefaultColors = true;
 
         /**
+         * list of known keys used to style logs
+         * @type {string[]}
+         */
+        var cssKeys = ['color', 'background', 'font-size', 'border'];
+
+        /**
+         * default string to put in place of filtered values
+         * @type {string}
+         */
+        var defaultFilterString = '[FILTERED]';
+
+        /**
+         * default configuration for filtering values of provided keys
+         * @type {object}
+         */
+        var filterConfig = {
+            filterString: defaultFilterString,
+            logFilters: []
+        };
+
+        /**
          * default colours for each log method
          * @type {object}
          */
@@ -92,6 +114,35 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {string[]}
          */
         var allowedMethods = defaultLogMethods;
+        /**
+         * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
+         * @see overrideLogPrefix to override the logPrefix
+         * @param {string=} className - name of the component class ($controller, $service etc.)
+         * @returns {string} - formatted string that will be prepended to log outputs
+         */
+        var defaultLogPrefixFn = function( /**{String=}*/ className) {
+            var separator = " >> ",
+                format = "MMM-dd-yyyy-h:mm:ssa",
+                now = $filter('date')(new Date(), format);
+            return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
+        };
+        /**
+         * The itypeof operator returns a string indicating the type of the unevaluated operand.
+         * @param {*} val - object to be evaluated
+         * @returns {String} -  returns a string with the type of the evaluated operand
+         */
+        var itypeof = function(val) {
+            return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
+        };
+
+        /**
+         * Evaluates an object to verify it is of type `object` or `array`
+         * @param {*} value - an object to be evaluated
+         * @returns boolean - returns true if parameter is of type object or array
+         */
+        var isObjectOrArray = function(value) {
+            return (/(object|array)/.test(itypeof(value)));
+        };
 
         /**
          * Trims whitespace at the beginning and/or end of a string
@@ -102,15 +153,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             if (itypeof(value) === 'string')
                 return value.replace(/^\s*/, '').replace(/\s*$/, '');
             return "";
-        };
-
-        /**
-         * The itypeof operator returns a string indicating the type of the unevaluated operand.
-         * @param {*} val - object to be evaluated
-         * @returns {String} -  returns a string with the type of the evaluated operand
-         */
-        var itypeof = function(val) {
-            return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
         };
 
         /**
@@ -148,46 +190,18 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         };
 
         /**
-         * The following method checks if useTemplate value is true and
-         * if the log arguments array length is two
-         * @param {boolean} useTemplate - flag that configures the usage of the template engine
-         * @param {*[]} args - list of log arguments that should match pattern creating template strings
-         * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
+         * This method is responsible for generating the prefix of all extended $log messages pushed to the console
+         * @param {string=} className - name of the component class ($controller, $service etc.)
+         * @returns {string} - formatted string that will be prepended to log outputs
          */
-        var validateTemplateInputs = function(useTemplate, args) {
-            return isBoolean(useTemplate) && useTemplate && args.length == 2;
-        };
-        /**
-         * supplant is a string templating engine that replaces patterns
-         * in a string with values from a template object
-         * @param {string} template - string with patterns to be replaced by values
-         * @param {object} values - object with values to replace in template string
-         * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
-         * @returns {string} - returns formatted string if template and values match the required pattern
-         */
-        var supplant = function(template, values, /*{RegExp=}*/ pattern) {
-            var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
-            var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
-            if (criteria1 || criteria2) {
-                return Array.prototype.slice.call(arguments);
+        var getLogPrefix = function( /**{String=}*/ className) {
+            var prefix = '';
+            if (!useDefaultPrefix && logPrefixOverride) {
+                prefix = customLogPrefixFn(className);
+            } else {
+                prefix = defaultLogPrefixFn(className);
             }
-
-            pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
-
-            return template.replace(pattern, function(a, b) {
-                var p = b.split('.'),
-                    r = values;
-
-                try {
-                    for (var s in p) {
-                        r = r[p[s]];
-                    }
-                } catch (e) {
-                    r = a;
-                }
-
-                return (typeof r === 'string' || typeof r === 'number') ? r : a;
-            });
+            return prefix;
         };
 
         /**
@@ -226,7 +240,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @returns {boolean} - returns true if string contains any supported keys
          */
         var containsColorCssKeys = function(css) {
-            return isSubString('color', css) || isSubString('background', css) || isSubString('border', css);
+            for (var x = 0; x < cssKeys.length; x++) {
+                if (isSubString(cssKeys[x], css)) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         /**
@@ -253,38 +272,76 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
             var output = canProcess ? ('' + prefix + message) : message;
             return canProcess ? (["%c" + output, colorCSS]) : [output];
         };
-
         /**
-         * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
-         * @see overrideLogPrefix to override the logPrefix
-         * @param {string=} className - name of the component class ($controller, $service etc.)
-         * @returns {string} - formatted string that will be prepended to log outputs
+         * The following method checks if useTemplate value is true and
+         * if the log arguments array length is two
+         * @param {boolean} useTemplate - flag that configures the usage of the template engine
+         * @param {*[]} args - list of log arguments that should match pattern creating template strings
+         * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
          */
-        var defaultLogPrefixFn = function( /**{String=}*/ className) {
-            var separator = " >> ",
-                format = "MMM-dd-yyyy-h:mm:ssa",
-                now = $filter('date')(new Date(), format);
-            return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
+        var validateTemplateInputs = function(useTemplate, args) {
+            return isBoolean(useTemplate) && useTemplate && args.length == 2;
         };
 
         /**
-         * This method is responsible for generating the prefix of all extended $log messages pushed to the console
-         * @param {string=} className - name of the component class ($controller, $service etc.)
-         * @returns {string} - formatted string that will be prepended to log outputs
+         * supplant is a string templating engine that replaces patterns
+         * in a string with values from a template object
+         * @example:
+         *    for  `var template = 'i am template string - {descriptor}';`
+         *         `var values = {descriptor: 'awesome'};`
+         *
+         *    when `var result = supplant(template, values);`
+         *    then `result` will be `i am template string - awesome`
+         *
+         * @param {string} template - string with patterns to be replaced by values
+         * @param {object} values - object with values to replace in template string
+         * @param {RegExp=} pattern - custom regular expression of pattern to replace in template string
+         * @returns {string|Array} - returns formatted string if template and values match the required pattern
          */
-        var getLogPrefix = function( /**{String=}*/ className) {
-            var prefix = '';
-            if ((!isBoolean(useDefaultPrefix) || !useDefaultPrefix) &&
-                isBoolean(logPrefixOverride) && logPrefixOverride &&
-                angular.isFunction(customLogPrefixFn)) {
-                prefix = customLogPrefixFn(className);
-            } else {
-                prefix = defaultLogPrefixFn(className);
+        var supplant = function(template, values, /*{RegExp=}*/ pattern) {
+            var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
+            var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
+            if (criteria1 || criteria2) {
+                return Array.prototype.slice.call(arguments);
             }
-            return prefix;
+            pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
+
+            return template.replace(pattern, function(patternToReplace, replacementKey) {
+                var replacementKeyList = replacementKey.split('.'),
+                    replacements = values;
+                try {
+                    angular.forEach(replacementKeyList, function(value, key) {
+                        replacements = replacements[replacementKeyList[key]];
+                    });
+                } catch (e) {
+                    replacements = patternToReplace;
+                }
+                return (itypeof(replacements) === 'string' || itypeof(replacements) === 'number') ? replacements : patternToReplace;
+            });
         };
-        // Register our $log decorator with AngularJS $provider
-        //scroll down to the Configuration section to set the log settings
+        /**
+         * Evaluates an array of log arguments to be filtered using the provided or default filter keys
+         * @param {[] | Object} logArguments - array to be processed
+         * @returns {[] | Object} - returns a processed array with configured filter values replaced by filterString
+         */
+        var filterSensitiveValues = function(logArguments) {
+            if (isObjectOrArray(logArguments) && filterConfig.logFilters.length > 0) {
+                angular.forEach(logArguments, function(logValue, logKey) {
+                    angular.forEach(filterConfig.logFilters, function(filterValue) {
+                        // replace filtered values here
+                        if (itypeof(logValue) === 'object' &&
+                            logValue.hasOwnProperty(filterValue) && !isObjectOrArray(logValue[filterValue])) {
+                            logValue[filterValue] = filterConfig.filterString;
+                        } else if (isObjectOrArray(logValue)) {
+                            logArguments[logKey] = filterSensitiveValues(logValue);
+                        }
+                    });
+                });
+                return logArguments;
+            }
+            return logArguments;
+        };
+        // Register $log decorator with AngularJS $provider
         $provide.decorator('$log', ["$delegate",
             function($delegate) {
                 /** 
@@ -350,10 +407,10 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                     };
 
                     /**
-                     * Converts an array to a object literal
+                     * Converts an array to a object literal & assign a no operation function as the value
                      * @private for internal use only
                      * @param {*[]} arr - array to be transformed to object literal
-                     * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
+                     * @returns {Object} - converted object
                      */
                     var arrToObject = function(arr) {
                         var result = {};
@@ -400,8 +457,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                     };
                     /**
                      * Contains functionality for transforming the AngularJS $log
-                     * returns extended $log object
                      * @param $log {Object} - original angular $log to be enhanced
+                     * @returns {Object} - extended $log object
                      **/
                     var enhanceLogger = function($log) {
 
@@ -420,6 +477,11 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                                 var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                                 if (activate) {
                                     var args = Array.prototype.slice.call(arguments);
+                                    // perform filter of sensitive values within objects and arrays
+                                    // if at least one filter key is available
+                                    if (filterConfig.logFilters.length > 0) {
+                                        args = filterSensitiveValues(args);
+                                    }
                                     var prefix = getLogPrefix(className);
                                     if (validateTemplateInputs(useTemplate, args)) {
                                         var data = (supplant.apply(null, args));
@@ -471,7 +533,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                             return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, useTemplate, colorCss]);
                         };
 
-
                         //declarations and functions , extensions
                         /**
                          * Used to enable/disable logging
@@ -483,7 +544,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
                          * Extends the $log object with the transformed native methods
                          * @param $log - $log instance
                          * @param {function} createLogObj -  defines transformation rules
-                         **/
+                         */
                         angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, false, null]));
 
                         /**
@@ -579,7 +640,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @param {boolean} flag - flag that configures disabling default log colors
          */
         var disableDefaultColors = function(flag) {
-            useDefaultColors = (isBoolean(flag) && flag) ? false : true;
+            useDefaultColors = (!(isBoolean(flag) && flag));
         };
 
         /**
@@ -610,11 +671,34 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         /**
          * Used to force default log prefix functionality
-         * @param {boolean} flag - when passed true, it forces log-ex to use the default log prefix
+         * @param {boolean} flag - when passed true or flag is not set, it forces log-ex to use the default log prefix
          */
         var useDefaultLogPrefix = function(flag) {
-            if (isBoolean(flag)) {
+            if (angular.isUndefined(flag)) {
+                useDefaultPrefix = true;
+            } else if (isBoolean(flag)) {
                 useDefaultPrefix = flag;
+            }
+        };
+
+        /**
+         * Used to configure the filter feature configuration when logging out objects
+         * This will merge provided configs with the default and also validate
+         * that the fields are usable by the feature
+         * @param {Object} customConfig - config object to override/merge with default config
+         */
+        var configureLogFilters = function(customConfig) {
+            if (itypeof(customConfig) === 'object' &&
+                itypeof(customConfig.logFilters) === 'array' &&
+                customConfig.logFilters.length > 0) {
+
+                angular.forEach(customConfig.logFilters, function(value) {
+                    if (itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0) {
+                        filterConfig.logFilters.push(value);
+                    }
+                });
+                filterConfig.filterString = (itypeof(customConfig.filterString) !== 'string') ? defaultFilterString : customConfig.filterString;
+
             }
         };
 
@@ -626,14 +710,15 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.7',
+                version: '0.0.8-sha.6f1db6f',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
                 disableDefaultColors: disableDefaultColors,
                 setLogMethodColor: setLogMethodColor,
                 overrideLogMethodColors: overrideLogMethodColors,
-                useDefaultLogPrefix: useDefaultLogPrefix
+                useDefaultLogPrefix: useDefaultLogPrefix,
+                configureLogFilters: configureLogFilters
             };
         };
 
@@ -645,5 +730,6 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.setLogMethodColor = setLogMethodColor;
         this.overrideLogMethodColors = overrideLogMethodColors;
         this.useDefaultLogPrefix = useDefaultLogPrefix;
+        this.configureLogFilters = configureLogFilters;
     }
 ]);

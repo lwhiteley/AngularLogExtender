@@ -36,7 +36,7 @@ var overrideLogPrefix = function (logPrefix) {
  * @param {boolean} flag - flag that configures disabling default log colors
  */
 var disableDefaultColors = function (flag) {
-    useDefaultColors = (isBoolean(flag) && flag) ? false : true;
+    useDefaultColors = (!(isBoolean(flag) && flag));
 };
 
 /**
@@ -59,7 +59,7 @@ var setLogMethodColor = function (methodName, colorCss) {
  */
 var overrideLogMethodColors = function (overrides) {
     if (itypeof(overrides) === 'object') {
-        angular.forEach(overrides, function(colorCss, method){
+        angular.forEach(overrides, function (colorCss, method) {
             setLogMethodColor(method, colorCss);
         });
     }
@@ -67,10 +67,33 @@ var overrideLogMethodColors = function (overrides) {
 
 /**
  * Used to force default log prefix functionality
- * @param {boolean} flag - when passed true, it forces log-ex to use the default log prefix
+ * @param {boolean} flag - when passed true or flag is not set, it forces log-ex to use the default log prefix
  */
 var useDefaultLogPrefix = function (flag) {
-    if(isBoolean(flag)){
+    if (angular.isUndefined(flag)) {
+        useDefaultPrefix = true;
+    } else if (isBoolean(flag)) {
         useDefaultPrefix = flag;
+    }
+};
+
+/**
+ * Used to configure the filter feature configuration when logging out objects
+ * This will merge provided configs with the default and also validate
+ * that the fields are usable by the feature
+ * @param {Object} customConfig - config object to override/merge with default config
+ */
+var configureLogFilters = function (customConfig) {
+    if (itypeof(customConfig) === 'object' &&
+        itypeof(customConfig.logFilters) === 'array' &&
+        customConfig.logFilters.length > 0) {
+
+        angular.forEach(customConfig.logFilters, function (value) {
+            if (itypeof(value) === 'string' && filterConfig.logFilters.indexOf(value) < 0) {
+                filterConfig.logFilters.push(value);
+            }
+        });
+        filterConfig.filterString = (itypeof(customConfig.filterString) !== 'string') ? defaultFilterString : customConfig.filterString;
+
     }
 };

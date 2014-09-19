@@ -1,4 +1,3 @@
-
 //declarations and functions , extensions
 /**
  * Used to enable/disable logging
@@ -10,7 +9,7 @@ var enabled = false;
  * Extends the $log object with the transformed native methods
  * @param $log - $log instance
  * @param {function} createLogObj -  defines transformation rules
- **/
+ */
 angular.extend($log, createLogObj($log, allowedMethods, prepareLogFn, [null, false, false, false, null]));
 
 /**
