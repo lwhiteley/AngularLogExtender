@@ -2,6 +2,16 @@
 
 /**
  * Used externally to enable/disable logging globally
+ *
+ * Add the logExProvider dependency to your AngularJS app to configure logging. Pass true to the `logExProvider.enableLogging(boolean)`
+ * function as a parameter to enable logging. This is set to false by default to disable logging in a production environment.
+ * The Best practice is to keep this flag set to false in the master version of the code base,
+ * given that some version control system is being used. See eg. below.
+ * ```javascript
+ *      app.config(['logExProvider', function(logExProvider) {
+ *          logExProvider.enableLogging(true);
+ *       }]);
+ *  ```
  * @param {boolean} flag - flag that sets whether logging is enabled/disabled
  */
 var enableLogging = function (flag) {

@@ -1,7 +1,20 @@
-/**
- * Log Unobtrusive Extension v0.0.9-sha.ca09575
+/*
+ * Log Unobtrusive Extension v0.0.9-sha.06736a2
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
+ *
+ * *Module Dependency can be added to a angular project as follows :*
+ *```javascript
+ *   var app = angular.module('myAngularApp', ['log.ex.uo']);
+ *```
+ *
+ * *Usage :*
+ *
+ * ```javascript
+ *      app.controller('CoreController', ['$scope','$log', function($scope, $log) {
+ *          $log.log("Simple Log Extender Example");
+ *      }]);
+ * ```
  *
  * @original-author  Thomas Burleson
  * @contributor Layton Whiteley
@@ -114,6 +127,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
          * @type {string[]}
          */
         var allowedMethods = defaultLogMethods;
+
         /**
          * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
          * @see overrideLogPrefix to override the logPrefix
@@ -346,7 +360,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         // Register $log decorator with AngularJS $provider
         $provide.decorator('$log', ["$delegate",
             function($delegate) {
-                /**
+                /** 
                  * Encapsulates functionality to extends $log and expose additional functionality
                  **/
                 var logEnhancerObj = function() {
@@ -611,6 +625,16 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
 
         /**
          * Used externally to enable/disable logging globally
+         *
+         * Add the logExProvider dependency to your AngularJS app to configure logging. Pass true to the `logExProvider.enableLogging(boolean)`
+         * function as a parameter to enable logging. This is set to false by default to disable logging in a production environment.
+         * The Best practice is to keep this flag set to false in the master version of the code base,
+         * given that some version control system is being used. See eg. below.
+         * ```javascript
+         *      app.config(['logExProvider', function(logExProvider) {
+         *          logExProvider.enableLogging(true);
+         *       }]);
+         *  ```
          * @param {boolean} flag - flag that sets whether logging is enabled/disabled
          */
         var enableLogging = function(flag) {
@@ -715,7 +739,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide',
         this.$get = function() {
             return {
                 name: 'Log Unobtrusive Extension',
-                version: '0.0.9-sha.ca09575',
+                version: '0.0.9-sha.06736a2',
                 enableLogging: enableLogging,
                 restrictLogMethods: restrictLogMethods,
                 overrideLogPrefix: overrideLogPrefix,
