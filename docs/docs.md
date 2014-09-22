@@ -2,7 +2,7 @@
 
 <!-- Start dist/log-ex-unobtrusive.js -->
 
-Log Unobtrusive Extension v0.0.7-sha.5386d78
+Log Unobtrusive Extension v0.0.9-sha.06736a2
 
 Used within AngularJS to enhance functionality within the AngularJS $log service.
 
@@ -19,38 +19,53 @@ Used within AngularJS to enhance functionality within the AngularJS $log service
      }]);
 ```
 
+## enableGlobally
+
+Used to enable logging globally
+
+## logPrefixOverride
+
+Used to activate logPrefix overriding
+
+## useDefaultPrefix
+
+Used to force log-ex to use the default log prefix rules
+
+## customLogPrefixFn
+
+Used to store custom log prefix rules
+
+## userAgent
+
+current browser's user agent
+
 ## defaultLogMethods
 
 default log methods available
-
-Currently supports :
-```json
-   ['log', 'info', 'warn', 'debug', 'error']
-```
 
 ## colorifySupportedBrowsers
 
 list of browsers that support colorify
 
-Currently supports :
-```json
-   ['chrome', 'firefox']
-```
+## useDefaultColors
+
+flag to activate/deactivate default log method colors
+
+## cssKeys
+
+list of known keys used to style logs
+
+## defaultFilterString
+
+default string to put in place of filtered values
+
+## filterConfig
+
+default configuration for filtering values of provided keys
 
 ## defaultLogMethodColors
 
 default colours for each log method
-
-Currently supports :
-```json
-   {
-     log: 'color: green;',
-     info: 'color: blue',
-     warn: 'color: #CC9933;',
-     debug: 'color: brown;',
-     error: 'color: red;'
-   }
-```
 
 ## allowedMethods
 
@@ -59,13 +74,17 @@ this give the developer the option of using special features
 such as setting a className and overriding log messages.
 More Options to come.
 
-## trimString(value)
+## defaultLogPrefixFn(className)
 
-Trims whitespace at the beginning and/or end of a string
+This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
+
+See: overrideLogPrefix to override the logPrefix
 
 ### Params:
 
-* **String** *value* - string to be trimmed
+* **string=** *className* - name of the component class ($controller, $service etc.)
+
+{String=}
 
 ## itypeof(val)
 
@@ -74,6 +93,22 @@ The itypeof operator returns a string indicating the type of the unevaluated ope
 ### Params:
 
 * ***** *val* - object to be evaluated
+
+## isObjectOrArray(value)
+
+Evaluates an object to verify it is of type `object` or `array`
+
+### Params:
+
+* ***** *value* - an object to be evaluated
+
+## trimString(value)
+
+Trims whitespace at the beginning and/or end of a string
+
+### Params:
+
+* **String** *value* - string to be trimmed
 
 ## isBoolean(value)
 
@@ -101,28 +136,15 @@ checks if @param1 is a substring of @param2
 * **string** *sub* - partial string that may be a sub string
 * **string** *full* - full string that may have the unevaluated substring
 
-## validateTemplateInputs(useTemplate, args)
+## getLogPrefix(className)
 
-The following method checks if useTemplate value is true and
-if the log arguments array length is two
-
-### Params:
-
-* **boolean** *useTemplate* - flag that configures the usage of the template engine
-* ***[]** *args* - list of log arguments that should match pattern creating template strings
-
-## supplant(template, values, pattern)
-
-supplant is a string templating engine that replaces patterns
-in a string with values from a template object
+This method is responsible for generating the prefix of all extended $log messages pushed to the console
 
 ### Params:
 
-* **string** *template* - string with patterns to be replaced by values
-* **object** *values* - object with values to replace in template string
-* **RegExp=** *pattern* - custom regular expression of pattern to replace in template string
+* **string=** *className* - name of the component class ($controller, $service etc.)
 
-{RegExp=}
+{String=}
 
 ## isColorifySupported()
 
@@ -165,27 +187,36 @@ e.g. Expected outcome $log.log('%c Oh my heavens! ', 'background: #222; color: #
 * **string** *colorCSS* - css string to apply to message
 * **string** *prefix* - log prefix to be prepended to message
 
-## defaultLogPrefixFn(className)
+## validateTemplateInputs(useTemplate, args)
 
-This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
-
-See: overrideLogPrefix to override the logPrefix
-
-### Params:
-
-* **string=** *className* - name of the component class ($controller, $service etc.)
-
-{String=}
-
-## getLogPrefix(className)
-
-This method is responsible for generating the prefix of all extended $log messages pushed to the console
+The following method checks if useTemplate value is true and
+if the log arguments array length is two
 
 ### Params:
 
-* **string=** *className* - name of the component class ($controller, $service etc.)
+* **boolean** *useTemplate* - flag that configures the usage of the template engine
+* ***[]** *args* - list of log arguments that should match pattern creating template strings
 
-{String=}
+## supplant(template, values, pattern)
+
+supplant is a string templating engine that replaces patterns
+in a string with values from a template object
+
+### Params:
+
+* **string** *template* - string with patterns to be replaced by values
+* **object** *values* - object with values to replace in template string
+* **RegExp=** *pattern* - custom regular expression of pattern to replace in template string
+
+{RegExp=}
+
+## filterSensitiveValues(|)
+
+Evaluates an array of log arguments to be filtered using the provided or default filter keys
+
+### Params:
+
+* **[]** *|* Object} logArguments - array to be processed
 
 ## logEnhancerObj()
 
@@ -239,7 +270,7 @@ then a message will be displayed for the specific $log instance
 
 ## arrToObject(arr)
 
-Converts an array to a object literal
+Converts an array to a object literal & assign a no operation function as the value
 
 ### Params:
 
@@ -264,7 +295,6 @@ This method also provides the capability to specify the log methods to expose
 ## enhanceLogger({Object})
 
 Contains functionality for transforming the AngularJS $log
-returns extended $log object
 
 ### Params:
 
@@ -407,6 +437,16 @@ Used to force default log prefix functionality
 ### Params:
 
 * **boolean** *flag* - when passed true or flag is not set, it forces log-ex to use the default log prefix
+
+## configureLogFilters(customConfig)
+
+Used to configure the filter feature configuration when logging out objects
+This will merge provided configs with the default and also validate
+that the fields are usable by the feature
+
+### Params:
+
+* **Object** *customConfig* - config object to override/merge with default config
 
 ## $get()
 

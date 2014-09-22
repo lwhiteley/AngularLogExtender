@@ -236,7 +236,7 @@ module.exports = function (grunt) {
     grunt.registerTask('dist', ['test', 'clean:dist', 'concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
     grunt.registerTask('release', ['bump', 'dist']);
     grunt.registerTask('release', ['bump', 'dist']);
-    grunt.registerTask('docs', ['markdox']);
+    grunt.registerTask('docs', ['dist', 'markdox']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('serve', ['copy:files', 'express:dev', 'open', 'watch']);
     grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
