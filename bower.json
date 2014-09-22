@@ -20,6 +20,7 @@
         "composer.json",
         "package.json",
         "src",
+        "docs",
         "coverage",
         ".*"
     ]

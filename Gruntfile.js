@@ -205,6 +205,16 @@ module.exports = function (grunt) {
             commit: true,
             prefix: 'v',
             annotate: false
+        },
+        markdox: {
+            options: {
+                template: 'docs/tmpl/template.md.ejs'
+            },
+            target: {
+                files: [
+                    {src: 'dist/log-ex-unobtrusive.js', dest: 'docs/docs.md'}
+                ]
+            }
         }
     });
 
@@ -225,7 +235,8 @@ module.exports = function (grunt) {
     grunt.registerTask('minify', ['minified' , 'concat:minify']);
     grunt.registerTask('dist', ['test', 'clean:dist', 'concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
     grunt.registerTask('release', ['bump', 'dist']);
-    grunt.registerTask('fixes', ['bump:patch', 'dist']);
+    grunt.registerTask('release', ['bump', 'dist']);
+    grunt.registerTask('docs', ['markdox']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('serve', ['copy:files', 'express:dev', 'open', 'watch']);
     grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
