@@ -27,7 +27,7 @@ var processOverride = function (override) {
  * @returns {boolean} - returns override if both params are booleans else returns {boolean=} false
  */
 var activateLogs = function (enabled, override) {
-    if(isBoolean(enabled) && isBoolean(override)) {
+    if (isBoolean(enabled) && isBoolean(override)) {
         return override;
     }
     return false;
@@ -57,16 +57,16 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
 };
 
 /**
- * Converts an array to a object literal
+ * Converts an array to a object literal & assign a no operation function as the value
  * @private for internal use only
  * @param {*[]} arr - array to be transformed to object literal
- * @returns {{getInstance: (exports.packets.noop|*|container.noop|noop|)}}
+ * @returns {Object} - converted object
  */
 var arrToObject = function (arr) {
     var result = {};
-    if(angular.isArray(arr)) {
-        result = { getInstance:angular.noop };
-        angular.forEach(arr, function(value) {
+    if (angular.isArray(arr)) {
+        result = { getInstance: angular.noop };
+        angular.forEach(arr, function (value) {
             result[value] = angular.noop;
         });
     }
@@ -83,7 +83,7 @@ var arrToObject = function (arr) {
  * @param {Array=} aParams - parameters to be used in prepareLogFn
  * @returns {Object} - returns a $log instance
  */
-var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/aParams) {
+var createLogObj = function (oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/aParams) {
     var resultSet = {},
         oMethods = arrToObject(aMethods);
     angular.forEach(defaultLogMethods, function (value) {
@@ -92,7 +92,7 @@ var createLogObj = function(oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/
             var params = [];
             angular.copy(aParams, params);
             params.unshift(oSrc[value]);
-            if(isColorifySupportedBrowser && useDefaultColors) {
+            if (isColorifySupportedBrowser && useDefaultColors) {
                 params[5] = validateColorCssString(params[5]) ? params[5] : defaultLogMethodColors[value];
             }
             //params.push(value); //adding method name to params

@@ -3,6 +3,7 @@ describe('useDefaultLogPrefix Spec', function () {
     beforeEach(function () {
         tempDefault = useDefaultPrefix;
     });
+
     afterEach(function () {
         useDefaultPrefix = false;
     });
