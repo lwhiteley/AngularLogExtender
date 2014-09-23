@@ -57,6 +57,7 @@ module.exports = function (grunt) {
                     'src/header.js',
                     'src/module.prefix',
                     'src/declarations.js',
+                    // <--------- additional functionality start
                     'src/addins/defaults.js',
                     'src/addins/helpers.js',
                     'src/addins/color.js',
@@ -187,7 +188,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         open: {
             server: {
                 path: 'http://localhost:<%= meta.port %>'
