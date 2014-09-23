@@ -20,6 +20,7 @@ module.exports = function (grunt) {
         },
         jshint: {
             files: ['<%= meta.files %>', 'package.json', 'bower.json'],
+            dist: ['<%= meta.dist %>'],
             options: {
                 // options here to override JSHint defaults
                 jshintrc: '.jshintrc'
@@ -208,11 +209,11 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', [
         'clean:cover',
-        'jshint',
+        'jshint:files',
         'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:performance', 'karma:latest'
     ]);
     grunt.registerTask('minify', ['minified' , 'concat:minify']);
-    grunt.registerTask('dist', ['test', 'clean:dist', 'concat:dist', 'jsbeautifier', 'minify']);
+    grunt.registerTask('dist', ['clean:dist', 'test', 'concat:dist', 'jsbeautifier', 'minify', 'jshint:dist']);
     grunt.registerTask('dev-release', ['bump:pr:git', 'dist', 'tagrelease']);
     grunt.registerTask('release', ['bump:patch', 'dist', 'tagrelease']);
     grunt.registerTask('changelog', ['shell:changelog']);
