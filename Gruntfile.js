@@ -3,8 +3,6 @@ var files = require('./config/files');
 
 module.exports = function (grunt) {
 
-    var APP_VERSION = util.getVersion();
-
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
@@ -14,7 +12,6 @@ module.exports = function (grunt) {
     var port = process.env.PORT || 3000;
 
     grunt.initConfig({
-        APP_VERSION: APP_VERSION,
         pkg: grunt.file.readJSON('package.json'),
         meta: {
             files: ['Gruntfile.js', 'dist/*.js', 'test/**/*.js', 'src/**/*.js', 'config/**/*.js'],
@@ -25,7 +22,7 @@ module.exports = function (grunt) {
             files: ['<%= meta.files %>', 'package.json', 'bower.json'],
             options: {
                 // options here to override JSHint defaults
-                jshintrc: '.jshintrc',
+                jshintrc: '.jshintrc'
             }
         },
         jsbeautifier: {
@@ -35,8 +32,9 @@ module.exports = function (grunt) {
             options: {
                 separator: '\n',
                 process: function (src) {
+                    var APP_VERSION = util.getVersion();
                     return src
-                        .replace(/%VERSION%/g, APP_VERSION.full)
+                        .replace(/%VERSION%/g, APP_VERSION.version)
                         .replace(/%WEBSITE%/g, APP_VERSION.website)
                         .replace(/%LICENSE%/g, APP_VERSION.license)
                         .replace(/%CONTRIBUTOR%/g, APP_VERSION.contributor)
@@ -145,19 +143,19 @@ module.exports = function (grunt) {
         },
         bump: {
             options: {
-                files: ['package.json', 'bower.json'],
-                updateConfigs: [],
-                commit: true,
-                commitMessage: 'Release v%VERSION%',
-                commitFiles: ['-a'], // '-a' for all files
-                createTag: true,
-                tagName: 'v%VERSION%',
-                tagMessage: 'Version %VERSION%'
+                filepaths: ['package.json', 'bower.json'],
+                syncVersions: true,
+                commit: false,
+                commitMessage: 'Bumping version to {%= version %}.',
+                tag: false,
+                tagName: 'v{%= version %}',
+                tagMessage: 'Version {%= version %}',
+                tagPrerelease: false
             }
         },
         shell: {
             changelog: {
-                command: 'git changelog --tag <%= APP_VERSION.full %>'
+                command: 'git changelog --tag <%= APP_VERSION.version %>'
             }
         },
         clean: {
@@ -201,19 +199,10 @@ module.exports = function (grunt) {
             }
         },
         tagrelease: {
-            version: APP_VERSION.full,
+            version: util.getVersion().version,
             commit: true,
-            prefix: 'v',
+            prefix: '',
             annotate: false
-        }
-    });
-
-    grunt.registerTask('bower_update', 'Update bower version', function (arg1) {
-        if (arguments.length === 0) {
-            util.updateBowerVersion(APP_VERSION.full);
-        }
-        else {
-            util.updateBowerVersion(arg1);
         }
     });
 
@@ -223,9 +212,9 @@ module.exports = function (grunt) {
         'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:performance', 'karma:latest'
     ]);
     grunt.registerTask('minify', ['minified' , 'concat:minify']);
-    grunt.registerTask('dist', ['test', 'clean:dist', 'concat:dist', 'jsbeautifier', 'minify', 'bower_update']);
-    grunt.registerTask('release', ['bump', 'dist']);
-    grunt.registerTask('fixes', ['bump:patch', 'dist']);
+    grunt.registerTask('dist', ['test', 'clean:dist', 'concat:dist', 'jsbeautifier', 'minify']);
+    grunt.registerTask('dev-release', ['bump:pr:git', 'dist', 'tagrelease']);
+    grunt.registerTask('release', ['bump:patch', 'dist', 'tagrelease']);
     grunt.registerTask('changelog', ['shell:changelog']);
     grunt.registerTask('serve', ['copy:files', 'express:dev', 'open', 'watch']);
     grunt.registerTask('default', ['test', 'karma:coverage', 'coveralls']);
