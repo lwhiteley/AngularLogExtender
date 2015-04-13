@@ -30,8 +30,8 @@ $log.getInstance = getInstance;
  * @param {boolean} verbose - flag that sets whether logging should be enabled quietly
  */
 $log.enableLog = function (flag, verbose) {
-    enabled = flag;
-    quiet = verbose;
+	enabled = flag;
+	quiet = verbose;
 };
 
 /**
@@ -39,5 +39,5 @@ $log.enableLog = function (flag, verbose) {
  * @returns {boolean} - returns global enabled flag
  */
 $log.logEnabled = function () {
-    return enabled && !quiet;
+	return enabled && !quiet;
 };

@@ -6,7 +6,7 @@
  * @returns {boolean} - returns true if log arguments match template pattern and useTemplate is set to true
  */
 var validateTemplateInputs = function (useTemplate, args) {
-    return isBoolean(useTemplate) && useTemplate && args.length === 2;
+	return isBoolean(useTemplate) && useTemplate && args.length === 2;
 };
 
 /**
@@ -25,23 +25,23 @@ var validateTemplateInputs = function (useTemplate, args) {
  * @returns {string|Array} - returns formatted string if template and values match the required pattern
  */
 var supplant = function (template, values, /*{RegExp=}*/ pattern) {
-    var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
-    var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
-    if (criteria1 || criteria2) {
-        return Array.prototype.slice.call(arguments);
-    }
-    pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
+	var criteria1 = itypeof(template) !== 'string' && itypeof(values) !== 'object';
+	var criteria2 = itypeof(template) !== 'string' || itypeof(values) !== 'object';
+	if (criteria1 || criteria2) {
+		return Array.prototype.slice.call(arguments);
+	}
+	pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
 
-    return template.replace(pattern, function (patternToReplace, replacementKey) {
-        var replacementKeyList = replacementKey.split('.'),
-            replacements = values;
-        try {
-            angular.forEach(replacementKeyList, function (value, key) {
-                replacements = replacements[replacementKeyList[key]];
-            });
-        } catch (e) {
-            replacements = patternToReplace;
-        }
-        return (itypeof(replacements) === 'string' || itypeof(replacements) === 'number') ? replacements : patternToReplace;
-    });
+	return template.replace(pattern, function (patternToReplace, replacementKey) {
+		var replacementKeyList = replacementKey.split('.'),
+			replacements = values;
+		try {
+			angular.forEach(replacementKeyList, function (value, key) {
+				replacements = replacements[replacementKeyList[key]];
+			});
+		} catch (e) {
+			replacements = patternToReplace;
+		}
+		return (itypeof(replacements) === 'string' || itypeof(replacements) === 'number') ? replacements : patternToReplace;
+	});
 };

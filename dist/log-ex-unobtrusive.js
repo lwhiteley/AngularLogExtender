@@ -120,6 +120,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
      * @type {string[]}
      */
     var allowedMethods = defaultLogMethods;
+
     /**
      * This is the default method responsible for formatting the prefix of all extended $log messages pushed to the console
      * @see overrideLogPrefix to override the logPrefix
@@ -132,6 +133,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
             now = $filter('date')(new Date(), format);
         return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
     };
+
     /**
      * The itypeof operator returns a string indicating the type of the unevaluated operand.
      * @param {*} val - object to be evaluated
@@ -279,6 +281,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
         var output = canProcess ? ('' + prefix + message) : message;
         return canProcess ? (["%c" + output, colorCSS]) : [output];
     };
+
     /**
      * The following method checks if useTemplate value is true and
      * if the log arguments array length is two
@@ -349,6 +352,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
         }
         return logArguments;
     };
+
     // Register $log decorator with AngularJS $provider
     $provide.decorator('$log', ["$delegate", function($delegate) {
         /** 
@@ -462,6 +466,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
                 });
                 return resultSet;
             };
+
             /**
              * Contains functionality for transforming the AngularJS $log
              * @param $log {Object} - original angular $log to be enhanced
@@ -598,6 +603,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
             var exposeSafeLog = function($log) {
                 return createLogObj($log, allowedMethods);
             };
+
             // add public methods to logEnhancerObj
             this.enhanceLogger = enhanceLogger;
             this.exposeSafeLog = exposeSafeLog;

@@ -9,36 +9,36 @@
  * @returns {Function} - returns function with specific rules for a log metod
  */
 var prepareLogFn = function (logFn, className, override, useOverride, useTemplate, colorCss) {
-    var enhancedLogFn = function () {
-        var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
-        if (activate) {
-            var args = Array.prototype.slice.call(arguments);
-            // perform filter of sensitive values within objects and arrays
-            // if at least one filter key is available
-            if (filterConfig.logFilters.length > 0) {
-                args = filterSensitiveValues(args);
-            }
-            var prefix = getLogPrefix(className);
-            if (validateTemplateInputs(useTemplate, args)) {
-                var data = (supplant.apply(null, args));
-                data = (itypeof(data) === 'string') ? [data] : data;
-                args = data;
-            }
-            if (itypeof(colorCss) === 'string' && validateColorizeInputs(args)) {
-                args = colorify(args[0], colorCss, prefix);
-            } else {
-                args.unshift(prefix);
-            }
+	var enhancedLogFn = function () {
+		var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
+		if (activate) {
+			var args = Array.prototype.slice.call(arguments);
+			// perform filter of sensitive values within objects and arrays
+			// if at least one filter key is available
+			if (filterConfig.logFilters.length > 0) {
+				args = filterSensitiveValues(args);
+			}
+			var prefix = getLogPrefix(className);
+			if (validateTemplateInputs(useTemplate, args)) {
+				var data = (supplant.apply(null, args));
+				data = (itypeof(data) === 'string') ? [data] : data;
+				args = data;
+			}
+			if (itypeof(colorCss) === 'string' && validateColorizeInputs(args)) {
+				args = colorify(args[0], colorCss, prefix);
+			} else {
+				args.unshift(prefix);
+			}
 
-            if (logFn) {
-                logFn.apply(null, args);
-            }
-        }
-    };
+			if (logFn) {
+				logFn.apply(null, args);
+			}
+		}
+	};
 
-    // Only needed to support angular-mocks expectations
-    enhancedLogFn.logs = [ ];
-    return enhancedLogFn;
+	// Only needed to support angular-mocks expectations
+	enhancedLogFn.logs = [];
+	return enhancedLogFn;
 };
 
 /**
@@ -57,16 +57,16 @@ var _$log = createLogObj($log, allowedMethods);
  * @returns {*} $log instance - returns a custom log instance
  */
 var getInstance = function (/*{*=}*/className, /*{boolean=}*/override, /*{boolean=}*/useTemplate, /*{String=}*/colorCss) {
-    if (isBoolean(className)) {
-        override = className;
-        className = null;
-    } else if (itypeof(className) === 'string') {
-        className = trimString(className);
-    } else {
-        className = null;
-    }
-    var useOverride = processUseOverride(override);
-    override = processOverride(override);
-    printOverrideLogs(_$log, useOverride, override, className, enabled);
-    return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, useTemplate, colorCss]);
+	if (isBoolean(className)) {
+		override = className;
+		className = null;
+	} else if (itypeof(className) === 'string') {
+		className = trimString(className);
+	} else {
+		className = null;
+	}
+	var useOverride = processUseOverride(override);
+	override = processOverride(override);
+	printOverrideLogs(_$log, useOverride, override, className, enabled);
+	return createLogObj(_$log, allowedMethods, prepareLogFn, [className, override, useOverride, useTemplate, colorCss]);
 };

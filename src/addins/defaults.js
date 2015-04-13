@@ -5,8 +5,8 @@
  * @returns {string} - formatted string that will be prepended to log outputs
  */
 var defaultLogPrefixFn = function (/**{String=}*/ className) {
-    var separator = " >> ",
-        format = "MMM-dd-yyyy-h:mm:ssa",
-        now = $filter('date')(new Date(), format);
-    return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
+	var separator = " >> ",
+		format = "MMM-dd-yyyy-h:mm:ssa",
+		now = $filter('date')(new Date(), format);
+	return "" + now + ((itypeof(className) !== 'string') ? "" : "::" + className) + separator;
 };
