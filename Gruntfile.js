@@ -115,6 +115,12 @@ module.exports = function (grunt) {
                 },
                 configFile: 'config/karma.conf.js'
             },
+            '1.3.x': {
+                options: {
+                    files: files.getAngularFiles('1.3').concat(files.libs, files.tests('1.3'))
+                },
+                configFile: 'config/karma.conf.js'
+            },
             latest: {
                 options: {
                     files: files.getAngularFiles().concat(files.libs, files.tests('latest'))
@@ -210,7 +216,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:cover',
         'jshint:files',
-        'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x', 'karma:1.1.2', 'karma:performance', 'karma:latest'
+        'karma:1.0.x', 'karma:1.1.x', 'karma:1.2.x',  'karma:1.3.x', 'karma:1.1.2', 'karma:performance', 'karma:latest'
     ]);
     grunt.registerTask('minify', ['minified' , 'concat:minify']);
     grunt.registerTask('dist', ['clean:dist', 'test', 'concat:dist', 'jsbeautifier', 'minify', 'jshint:dist']);
