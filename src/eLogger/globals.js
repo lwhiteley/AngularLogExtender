@@ -6,6 +6,12 @@
 var enabled = false;
 
 /**
+ * Used to enable quiet logger enabling.
+ * @type {boolean}
+ */
+var quiet = false;
+
+/**
  * Extends the $log object with the transformed native methods
  * @param $log - $log instance
  * @param {function} createLogObj -  defines transformation rules
@@ -21,9 +27,11 @@ $log.getInstance = getInstance;
 /**
  * The following method enable/disable logging globally
  * @param {boolean} flag - boolean flag specifying if log should be enabled/disabled
+ * @param {boolean} verbose - flag that sets whether logging should be enabled quietly
  */
-$log.enableLog = function (flag) {
+$log.enableLog = function (flag, verbose) {
     enabled = flag;
+    quiet = verbose;
 };
 
 /**
@@ -31,5 +39,5 @@ $log.enableLog = function (flag) {
  * @returns {boolean} - returns global enabled flag
  */
 $log.logEnabled = function () {
-    return enabled;
+    return enabled && !quiet;
 };
