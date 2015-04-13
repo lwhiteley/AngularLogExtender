@@ -163,7 +163,7 @@ module.exports = function (grunt) {
         },
         shell: {
             changelog: {
-                command: 'git changelog --tag <%= APP_VERSION.version %>'
+                command: 'git changelog --tag v<%= APP_VERSION.version %>'
             }
         },
         clean: {

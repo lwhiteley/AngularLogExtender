@@ -1,3 +1,45 @@
+0.0.10-3+sha.c8ba77d / 2015-04-12
+=================================
+
+  * Release 0.0.10-3+sha.c8ba77d
+  * bump tagrelease version
+  * Updates to package.json and libs
+  * added new angular libraries to the testing cycle to ensure nothin has broken. the latest 1.2.x, 1.3.x & 1.4.x beta libraries has been added. closes #40
+  * Merge pull request #31 from lwhiteley/feature/developer
+  * added more details to develop.md for developers & also updated wiki. closes #31
+  * Merge pull request #28 from lwhiteley/jshint
+  * Update dist task to lint dist file after generation. resolves #28
+  * Merge pull request #30 from lwhiteley/readme
+  * remove detailed docs from readme. closes #30
+  * Merge pull request #29 from lwhiteley/feature/bump
+  * Used proper semantic versioning library for numbering. closes #29
+
+0.0.10-2+sha.c8ba77d / 2014-09-22
+=================================
+
+  * Release 0.0.10-2+sha.c8ba77d
+  * Bumping version to 0.0.10-2.
+  * Bumping version to 0.0.10-2.
+  * Bumping version to 0.0.10-2.
+  * Bumping version to 0.0.10-1.
+  * Bumping version to 0.0.10-0.
+
+v0.0.9-sha.6871eea / 2014-09-13
+===============================
+
+  * fixed jshint, lint issues & upgraded packages. closes #26
+
+v0.0.9 / 2014-09-19
+===================
+
+  * Release v0.0.9
+  * Merge pull request #25 from lwhiteley/develop
+  * Merge pull request #22 from lwhiteley/logfilter
+  * Added support filter sensitive data masking. closes #22
+  * Merge pull request #24 from waffle-iron/master
+  * Update README.md
+  * Update .travis.yml
+  * add waffle.io badge
 
 0.0.8-sha.009021d / 2014-09-19
 ==============================
