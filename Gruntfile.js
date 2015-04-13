@@ -13,6 +13,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        appVersion : util.getVersion().version,
         meta: {
             files: ['Gruntfile.js', 'dist/*.js', 'test/**/*.js', 'src/**/*.js', 'config/**/*.js'],
             dist: ["dist/*.js"],
@@ -163,7 +164,7 @@ module.exports = function (grunt) {
         },
         shell: {
             changelog: {
-                command: 'git changelog --tag v<%= APP_VERSION.version %>'
+                command: 'git changelog --tag <%= appVersion %>'
             }
         },
         clean: {
