@@ -207,7 +207,7 @@ module.exports = function (grunt) {
             }
         },
         tagrelease: {
-            version: util.getVersion().version,
+            file: 'package.json',
             commit: true,
             prefix: '',
             annotate: false
