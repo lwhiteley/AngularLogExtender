@@ -11,6 +11,13 @@ var $filter = $injector.get('$filter');
 var enableGlobally = false;
 
 /**
+ * Used to enable quiet logger enabling.
+ * When this feature is enable the config message is not shown
+ * @type {boolean}
+ */
+var enabledQuietly = false;
+
+/**
  * Used to activate logPrefix overriding
  * @type {boolean}
  */

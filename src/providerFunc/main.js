@@ -3,9 +3,11 @@
 /**
  * Used externally to enable/disable logging globally
  * @param {boolean} flag - flag that sets whether logging is enabled/disabled
+ * @param {boolean} verbose - flag that sets whether logging should be enabled quietly
  */
-var enableLogging = function (flag) {
+var enableLogging = function(flag, verbose) {
     enableGlobally = isBoolean(flag) ? flag : false;
+    enabledQuietly = isBoolean(verbose) ? verbose : false;
 };
 
 /**
