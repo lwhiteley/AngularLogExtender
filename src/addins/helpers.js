@@ -4,7 +4,7 @@
  * @returns {String} -  returns a string with the type of the evaluated operand
  */
 var itypeof = function (val) {
-	return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
+  return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
 };
 
 /**
@@ -13,7 +13,7 @@ var itypeof = function (val) {
  * @returns boolean - returns true if parameter is of type object or array
  */
 var isObjectOrArray = function (value) {
-	return (/(object|array)/.test(itypeof(value)));
+  return (/(object|array)/.test(itypeof(value)));
 };
 
 /**
@@ -22,10 +22,10 @@ var isObjectOrArray = function (value) {
  * @returns {String} - returns an empty string if the value passed is not of type {String}
  */
 var trimString = function (value) {
-	if (itypeof(value) === 'string') {
-		return value.replace(/^\s*/, '').replace(/\s*$/, '');
-	}
-	return "";
+  if (itypeof(value) === 'string') {
+    return value.replace(/^\s*/, '').replace(/\s*$/, '');
+  }
+  return "";
 };
 
 /**
@@ -34,7 +34,7 @@ var trimString = function (value) {
  * @returns {boolean} - returns true if evaluated object is a boolean
  */
 var isBoolean = function (value) {
-	return itypeof(value) === 'boolean';
+  return itypeof(value) === 'boolean';
 };
 
 /**
@@ -44,7 +44,7 @@ var isBoolean = function (value) {
  * @returns {*|Boolean|boolean} - returns true if string is not null or empty
  */
 var isValidString = function (value) {
-	return (itypeof(value) === 'string' && trimString(value) !== "");
+  return (itypeof(value) === 'string' && trimString(value) !== "");
 };
 
 /**
@@ -54,12 +54,12 @@ var isValidString = function (value) {
  * @returns {boolean} - returns true if a substring is found in the ful string
  */
 var isSubString = function (sub, full) {
-	if (itypeof(sub) === 'string' && itypeof(full) === 'string') {
-		if (full.toLowerCase().indexOf(sub.toLowerCase()) !== -1) {
-			return true;
-		}
-	}
-	return false;
+  if (itypeof(sub) === 'string' && itypeof(full) === 'string') {
+    if (full.toLowerCase().indexOf(sub.toLowerCase()) !== -1) {
+      return true;
+    }
+  }
+  return false;
 };
 
 /**
@@ -68,11 +68,11 @@ var isSubString = function (sub, full) {
  * @returns {string} - formatted string that will be prepended to log outputs
  */
 var getLogPrefix = function (/**{String=}*/ className) {
-	var prefix = '';
-	if (!useDefaultPrefix && logPrefixOverride) {
-		prefix = customLogPrefixFn(className);
-	} else {
-		prefix = defaultLogPrefixFn(className);
-	}
-	return prefix;
+  var prefix = '';
+  if (!useDefaultPrefix && logPrefixOverride) {
+    prefix = customLogPrefixFn(className);
+  } else {
+    prefix = defaultLogPrefixFn(className);
+  }
+  return prefix;
 };

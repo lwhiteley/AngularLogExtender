@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.11-1+sha.1ed2e6a
+ * Log Unobtrusive Extension v0.0.11-3+sha.c6b11f5
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -7,14 +7,14 @@
  * @contributor Layton Whiteley
  * @contributor A confused individual <ferronrsmith@gmail.com>
  * @website http://www.theSolutionOptimist.com
- * (c) 2015 https://github.com/lwhiteley/AngularLogExtender
+ * (c) 2016 https://github.com/lwhiteley/AngularLogExtender
  * License: MIT
  *
  * Modifications made by @contributor Layton Whiteley:
  * - Modified to be a full stand-alone Angular Application for reuse
  * - Has global and feature level activation/disabling for $log
  * - Supported sensitive field filtering
- * - Created and tested with AngularJS versions : 1.0.4, 1.1.0, 1.1.2, 1.2.28, 1.3.14, 1.4.0-rc.0
+ * - Created and tested with AngularJS versions : 1.0.4, 1.1.0, 1.1.2, 1.2.28, 1.3.14, 1.4.0-rc.0, 1.5.0
  */
 angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide) {
 
@@ -735,7 +735,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
     this.$get = function() {
         return {
             name: 'Log Unobtrusive Extension',
-            version: '0.0.11-1+sha.1ed2e6a',
+            version: '0.0.11-3+sha.c6b11f5',
             enableLogging: enableLogging,
             restrictLogMethods: restrictLogMethods,
             overrideLogPrefix: overrideLogPrefix,

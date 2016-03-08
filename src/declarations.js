@@ -76,8 +76,8 @@ var defaultFilterString = '[FILTERED]';
  * @type {object}
  */
 var filterConfig = {
-	filterString: defaultFilterString,
-	logFilters: []
+  filterString: defaultFilterString,
+  logFilters: []
 };
 
 /**
@@ -85,11 +85,11 @@ var filterConfig = {
  * @type {object}
  */
 var defaultLogMethodColors = {
-	log: 'color: green;',
-	info: 'color: blue',
-	warn: 'color: #CC9933;',
-	debug: 'color: brown;',
-	error: 'color: red;'
+  log: 'color: green;',
+  info: 'color: blue',
+  warn: 'color: #CC9933;',
+  debug: 'color: brown;',
+  error: 'color: red;'
 };
 
 /**

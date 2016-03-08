@@ -1,4 +1,5 @@
 module.exports = {
+  // order is important!
 	libs: [
 		'libs/datespy/datespy.js',
 		'test/helpers/globals.js',

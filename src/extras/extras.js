@@ -6,5 +6,5 @@
  * @returns {*} - returns $log instance fitted for external configurations and regular use
  */
 var exposeSafeLog = function ($log) {
-	return createLogObj($log, allowedMethods);
+  return createLogObj($log, allowedMethods);
 };

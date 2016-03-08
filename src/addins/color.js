@@ -3,12 +3,12 @@
  * @returns {boolean} - returns true if the current browser supports colorify
  */
 var isColorifySupported = function () {
-	for (var i = 0; i < colorifySupportedBrowsers.length; i++) {
-		if (isSubString(colorifySupportedBrowsers[i], userAgent)) {
-			return true;
-		}
-	}
-	return false;
+  for (var i = 0; i < colorifySupportedBrowsers.length; i++) {
+    if (isSubString(colorifySupportedBrowsers[i], userAgent)) {
+      return true;
+    }
+  }
+  return false;
 };
 
 /**
@@ -24,8 +24,8 @@ var isColorifySupportedBrowser = isColorifySupported();
  * @returns {boolean} - returns true if args match the above criteria
  */
 var validateColorizeInputs = function (args) {
-	return (args.length === 1 &&
-	itypeof(args[0]) === 'string');
+  return (args.length === 1 &&
+  itypeof(args[0]) === 'string');
 };
 
 /**
@@ -34,12 +34,12 @@ var validateColorizeInputs = function (args) {
  * @returns {boolean} - returns true if string contains any supported keys
  */
 var containsColorCssKeys = function (css) {
-	for (var x = 0; x < cssKeys.length; x++) {
-		if (isSubString(cssKeys[x], css)) {
-			return true;
-		}
-	}
-	return false;
+  for (var x = 0; x < cssKeys.length; x++) {
+    if (isSubString(cssKeys[x], css)) {
+      return true;
+    }
+  }
+  return false;
 };
 
 /**
@@ -48,8 +48,8 @@ var containsColorCssKeys = function (css) {
  * @returns {boolean} - returns true if string has css format
  */
 var validateColorCssString = function (value) {
-	return (itypeof(value) === 'string' && isSubString(':', value) &&
-		trimString(value).length > 6) && containsColorCssKeys(value);
+  return (itypeof(value) === 'string' && isSubString(':', value) &&
+    trimString(value).length > 6) && containsColorCssKeys(value);
 };
 
 /**
@@ -61,8 +61,8 @@ var validateColorCssString = function (value) {
  * @returns {*[]} - returns colorify formatted array if all inputs are valid else returns array with the original message
  */
 var colorify = function (message, colorCSS, prefix) {
-	prefix = (itypeof(prefix) === 'string' ? prefix : '');
-	var canProcess = isColorifySupportedBrowser && validateColorCssString(colorCSS) && itypeof(message) === 'string';
-	var output = canProcess ? ('' + prefix + message) : message;
-	return canProcess ? (["%c" + output, colorCSS]) : [output];
+  prefix = (itypeof(prefix) === 'string' ? prefix : '');
+  var canProcess = isColorifySupportedBrowser && validateColorCssString(colorCSS) && itypeof(message) === 'string';
+  var output = canProcess ? ('' + prefix + message) : message;
+  return canProcess ? (["%c" + output, colorCSS]) : [output];
 };

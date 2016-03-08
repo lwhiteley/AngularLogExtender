@@ -5,7 +5,7 @@
  * @returns {boolean} - returns true if override is a boolean
  */
 var processUseOverride = function (override) {
-	return isBoolean(override);
+  return isBoolean(override);
 };
 
 /**
@@ -16,7 +16,7 @@ var processUseOverride = function (override) {
  * @returns {boolean} - returns true if override is not equal to false
  */
 var processOverride = function (override) {
-	return override !== false;
+  return override !== false;
 };
 
 /**
@@ -27,10 +27,10 @@ var processOverride = function (override) {
  * @returns {boolean} - returns override if both params are booleans else returns {boolean=} false
  */
 var activateLogs = function (enabled, override) {
-	if (isBoolean(enabled) && isBoolean(override)) {
-		return override;
-	}
-	return false;
+  if (isBoolean(enabled) && isBoolean(override)) {
+    return override;
+  }
+  return false;
 };
 
 /**
@@ -48,12 +48,12 @@ var activateLogs = function (enabled, override) {
  * @param enabled - global flag that activates/deactivates logging
  */
 var printOverrideLogs = function (_$log, useOverride, _override, className, enabled) {
-	var instance = (isValidString(className)) ? className : "this instance";
-	if (!enabled && useOverride && _override) {
-		_$log.log(getLogPrefix() + "[OVERRIDE] LOGGING ENABLED - $log enabled for " + instance);
-	} else if (enabled && useOverride && !_override) {
-		_$log.log(getLogPrefix() + "[OVERRIDE] LOGGING DISABLED - $log disabled for " + instance);
-	}
+  var instance = (isValidString(className)) ? className : "this instance";
+  if (!enabled && useOverride && _override) {
+    _$log.log(getLogPrefix() + "[OVERRIDE] LOGGING ENABLED - $log enabled for " + instance);
+  } else if (enabled && useOverride && !_override) {
+    _$log.log(getLogPrefix() + "[OVERRIDE] LOGGING DISABLED - $log disabled for " + instance);
+  }
 };
 
 /**
@@ -63,14 +63,14 @@ var printOverrideLogs = function (_$log, useOverride, _override, className, enab
  * @returns {Object} - converted object
  */
 var arrToObject = function (arr) {
-	var result = {};
-	if (angular.isArray(arr)) {
-		result = {getInstance: angular.noop};
-		angular.forEach(arr, function (value) {
-			result[value] = angular.noop;
-		});
-	}
-	return result;
+  var result = {};
+  if (angular.isArray(arr)) {
+    result = {getInstance: angular.noop};
+    angular.forEach(arr, function (value) {
+      result[value] = angular.noop;
+    });
+  }
+  return result;
 };
 
 /**
@@ -84,22 +84,22 @@ var arrToObject = function (arr) {
  * @returns {Object} - returns a $log instance
  */
 var createLogObj = function (oSrc, aMethods, /**{Function=}*/func, /**{*Array=}*/aParams) {
-	var resultSet = {},
-		oMethods = arrToObject(aMethods);
-	angular.forEach(defaultLogMethods, function (value) {
-		var res;
-		if (angular.isDefined(aParams)) {
-			var params = [];
-			angular.copy(aParams, params);
-			params.unshift(oSrc[value]);
-			if (isColorifySupportedBrowser && useDefaultColors) {
-				params[5] = validateColorCssString(params[5]) ? params[5] : defaultLogMethodColors[value];
-			}
-			res = func.apply(null, params);
-		} else {
-			res = oSrc[value];
-		}
-		resultSet[value] = angular.isUndefined(oMethods[value]) ? angular.noop : res;
-	});
-	return resultSet;
+  var resultSet = {},
+    oMethods = arrToObject(aMethods);
+  angular.forEach(defaultLogMethods, function (value) {
+    var res;
+    if (angular.isDefined(aParams)) {
+      var params = [];
+      angular.copy(aParams, params);
+      params.unshift(oSrc[value]);
+      if (isColorifySupportedBrowser && useDefaultColors) {
+        params[5] = validateColorCssString(params[5]) ? params[5] : defaultLogMethodColors[value];
+      }
+      res = func.apply(null, params);
+    } else {
+      res = oSrc[value];
+    }
+    resultSet[value] = angular.isUndefined(oMethods[value]) ? angular.noop : res;
+  });
+  return resultSet;
 };
