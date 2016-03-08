@@ -1,4 +1,11 @@
 
+0.0.11-3+sha.c6b11f5 / 2016-03-07
+=================================
+
+  * NPM Package updates
+  * Added Angular 1.5.x to test suite
+  * Reformat all code
+
 0.0.10-3+sha.c8ba77d / 2015-04-12
 =================================
 
