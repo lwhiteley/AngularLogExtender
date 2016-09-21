@@ -51,7 +51,7 @@ var defaultLogMethods = ['log', 'info', 'warn', 'debug', 'error', 'getInstance']
  * list of browsers that support colorify
  * @type {string[]}
  */
-var colorifySupportedBrowsers = ['chrome', 'firefox', 'AppleWebKit'];
+var colorifySupportedBrowsers = ['firefox', 'AppleWebKit'];
 
 /**
  * flag to activate/deactivate default log method colors
