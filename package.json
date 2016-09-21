@@ -12,7 +12,7 @@
     "type": "MIT",
     "url": "https://github.com/lwhiteley/AngularLogExtender/blob/master/LICENSE"
   },
-  "version": "0.0.12",
+  "version": "0.0.13-0+sha.84f8278",
   "engine": "node >= 0.10.0",
   "supported_versions": [
     "1.0.4",
