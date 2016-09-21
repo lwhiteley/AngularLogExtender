@@ -1,4 +1,10 @@
 
+0.0.12 / 2016-09-20
+===================
+
+  * fixed :bug: whereby the original logged object was being modified by the
+    filter function
+
 0.0.11-3+sha.c6b11f5 / 2016-03-07
 =================================
 
