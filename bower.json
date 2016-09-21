@@ -1,6 +1,6 @@
 {
   "name": "angular-logex",
-  "version": "0.0.12-0+sha.afc3898",
+  "version": "0.0.12",
   "main": "./dist/log-ex-unobtrusive.js",
   "dependencies": {
     "angular": ">= 1.1.2"

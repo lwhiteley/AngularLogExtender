@@ -128,5 +128,34 @@ describe('filterSensitiveValues Spec', function () {
       var result = filterSensitiveValues(val);
       expect(result).toEqual(expected);
     });
+
+    it('should not modify original object', function () {
+      filterConfig.logFilters = ['id', 'email', 'device_id', 'token', 'password'];
+
+      var originalReq = [{
+        id : '9223c3d3-9a75-4554-86f8-c2e5f1f00e0d',
+        name : 'ferron',
+        email : 'ferron@logextender.com',
+        device_id : 'c2e5f1f00e0d',
+        token : '2332414124',
+        password : 'dwqd23edwq'
+      }];
+
+      var reqCopy = [];
+
+      angular.copy(originalReq, reqCopy);
+
+      var result = filterSensitiveValues(reqCopy);
+
+      expect(reqCopy).toEqual(originalReq);
+      expect(result).toEqual([{
+        id : filterConfig.filterString,
+        name : 'ferron',
+        email : filterConfig.filterString,
+        device_id : filterConfig.filterString,
+        token : filterConfig.filterString,
+        password : filterConfig.filterString
+      }]);
+    });
   });
 });
