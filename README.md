@@ -3,9 +3,6 @@ AngularLogExtender
 [![Build Status](https://travis-ci.org/lwhiteley/AngularLogExtender.svg?branch=master)](https://travis-ci.org/lwhiteley/AngularLogExtender)
 [![Coverage Status](https://coveralls.io/repos/ferronrsmith/AngularLogExtender/badge.png)](https://coveralls.io/r/ferronrsmith/AngularLogExtender)
 
-[![Stories in Ready](https://badge.waffle.io/lwhiteley/AngularLogExtender.png?label=ready&title=Ready)](https://waffle.io/lwhiteley/AngularLogExtender)
-
-
 This is an extension of the Angular $log functionality.
 It uses the native $decorator to push the $log pass its capabilities and provide new
 functionality such as configuring the $log for different environments such as
