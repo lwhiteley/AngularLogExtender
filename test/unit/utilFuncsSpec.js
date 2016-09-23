@@ -3,7 +3,9 @@ describe('util Functions spec', function () {
   var chromeAgent = 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36',
     firefoxAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0',
     ieAgent = 'Mozilla/5.0 (compatible; MSIE 10.6; Windows NT 6.1; Trident/5.0; InfoPath.2; SLCC1; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET CLR 2.0.50727) 3gpp-gba UNTRUSTED/1.0',
-    safariAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10';
+    safariAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10',
+    operaAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36 OPR/32.0.1948.69',
+    vivaldiAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Vivaldi/1.0.83.38 Safari/537.36';
 
   var tempBrowsers, tempAgent;
   beforeEach(function () {
@@ -114,7 +116,7 @@ describe('util Functions spec', function () {
       expect(result).toBeTruthy();
     });
 
-    it('should return false when a supported browser agent is found', function () {
+    it('should return false when unsupported browser agent is detected', function () {
       userAgent = ieAgent;
       var result = isColorifySupported();
       expect(result).toBeFalsy();
@@ -123,6 +125,22 @@ describe('util Functions spec', function () {
       result = isColorifySupported();
       expect(result).toBeFalsy();
     });
+
+    it('should return true when a webkit browser is found', function () {
+      colorifySupportedBrowsers = ['firefox', 'AppleWebkit'];
+      userAgent = safariAgent;
+      var result = isColorifySupported();
+      expect(result).toBeTruthy();
+
+      userAgent = operaAgent;
+      result = isColorifySupported();
+      expect(result).toBeTruthy();
+
+      userAgent = vivaldiAgent;
+      result = isColorifySupported();
+      expect(result).toBeTruthy();
+    });
+
   });
 
   describe('validateColorizeInputs Spec ', function () {
