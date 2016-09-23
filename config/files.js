@@ -19,7 +19,7 @@ module.exports = {
 	reporters: ['dots', 'coverage'],
 	tests: function (version) {
 		var vspec = [];
-		if (/[1-9]\.[2-9]|[1-9]\.[1-9]\.[2-9]|[1-9]\.[2-9]\.[1-9]/.test(version)) {
+		if (/(?:[1-9]\.(?:[2-9](?:\.[1-9])?|[1-9]\.[2-9])|latest)/.test(version)) {
 			vspec = [
 				'test/vspec/*.js'
 			];
