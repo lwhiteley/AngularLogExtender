@@ -1,7 +1,7 @@
 AngularLogExtender
 ==================
 [![Build Status](https://travis-ci.org/lwhiteley/AngularLogExtender.svg?branch=master)](https://travis-ci.org/lwhiteley/AngularLogExtender)
-[![Coverage Status](https://coveralls.io/repos/ferronrsmith/AngularLogExtender/badge.png)](https://coveralls.io/r/ferronrsmith/AngularLogExtender)
+[![Coverage Status](https://coveralls.io/repos/github/ferronrsmith/AngularLogExtender/badge.svg?branch=master)](https://coveralls.io/github/ferronrsmith/AngularLogExtender?branch=master)
 
 This is an extension of the Angular $log functionality.
 It uses the native $decorator to push the $log pass its capabilities and provide new
