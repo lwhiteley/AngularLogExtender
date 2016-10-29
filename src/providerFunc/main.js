@@ -11,6 +11,14 @@ var enableLogging = function (flag, verbose) {
 };
 
 /**
+ * Used externally to enable/disable template engine
+ * @param {boolean} flag - flag that sets whether template engine is enabled/disabled
+ */
+var useTemplates = function (flag) {
+  enableTemplatesGlobally = isBoolean(flag) ? flag : false;
+};
+
+/**
  * Configure which log functions can be exposed at runtime
  * @param {*[]} arrMethods - list of methods that can be used
  */

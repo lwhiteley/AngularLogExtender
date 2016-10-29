@@ -4,7 +4,7 @@
  * @returns {String} -  returns a string with the type of the evaluated operand
  */
 var itypeof = function (val) {
-  return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
+  return Object.prototype.toString.call(val).replace(/(\[|object|\s|])/g, "").toLowerCase();
 };
 
 /**

@@ -30,7 +30,7 @@ var supplant = function (template, values, /*{RegExp=}*/ pattern) {
   if (criteria1 || criteria2) {
     return Array.prototype.slice.call(arguments);
   }
-  pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
+  pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^{}]*)}/g;
 
   return template.replace(pattern, function (patternToReplace, replacementKey) {
     var replacementKeyList = replacementKey.split('.'),

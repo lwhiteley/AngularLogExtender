@@ -1,5 +1,5 @@
 /**
- * Log Unobtrusive Extension v0.0.13
+ * Log Unobtrusive Extension v0.0.14-0+sha.4893751
  *
  * Used within AngularJS to enhance functionality within the AngularJS $log service.
  *
@@ -29,6 +29,12 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
      * @type {boolean}
      */
     var enableGlobally = false;
+
+    /**
+     * Used to enable template engine globally
+     * @type {boolean}
+     */
+    var enableTemplatesGlobally = false;
 
     /**
      * Used to enable quiet logger enabling.
@@ -140,7 +146,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
      * @returns {String} -  returns a string with the type of the evaluated operand
      */
     var itypeof = function(val) {
-        return Object.prototype.toString.call(val).replace(/(\[|object|\s|\])/g, "").toLowerCase();
+        return Object.prototype.toString.call(val).replace(/(\[|object|\s|])/g, "").toLowerCase();
     };
 
     /**
@@ -314,7 +320,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
         if (criteria1 || criteria2) {
             return Array.prototype.slice.call(arguments);
         }
-        pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^\{\}]*)\}/g;
+        pattern = itypeof(pattern) === 'regexp' ? pattern : /\{([^{}]*)}/g;
 
         return template.replace(pattern, function(patternToReplace, replacementKey) {
             var replacementKeyList = replacementKey.split('.'),
@@ -486,6 +492,14 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
                  * @returns {Function} - returns function with specific rules for a log metod
                  */
                 var prepareLogFn = function(logFn, className, override, useOverride, useTemplate, colorCss) {
+
+                    var activateTemplates = useTemplate;
+
+                    // override template activation if templateGlobally is true
+                    if (!useTemplate && enableTemplatesGlobally) {
+                        activateTemplates = enableTemplatesGlobally;
+                    }
+
                     var enhancedLogFn = function() {
                         var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
                         if (activate) {
@@ -496,7 +510,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
                                 args = filterSensitiveValues(args);
                             }
                             var prefix = getLogPrefix(className);
-                            if (validateTemplateInputs(useTemplate, args)) {
+                            if (validateTemplateInputs(activateTemplates, args)) {
                                 var data = (supplant.apply(null, args));
                                 data = (itypeof(data) === 'string') ? [data] : data;
                                 args = data;
@@ -639,6 +653,14 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
     };
 
     /**
+     * Used externally to enable/disable template engine
+     * @param {boolean} flag - flag that sets whether template engine is enabled/disabled
+     */
+    var useTemplates = function(flag) {
+        enableTemplatesGlobally = isBoolean(flag) ? flag : false;
+    };
+
+    /**
      * Configure which log functions can be exposed at runtime
      * @param {*[]} arrMethods - list of methods that can be used
      */
@@ -736,7 +758,7 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
     this.$get = function() {
         return {
             name: 'Log Unobtrusive Extension',
-            version: '0.0.13',
+            version: '0.0.14-0+sha.4893751',
             enableLogging: enableLogging,
             restrictLogMethods: restrictLogMethods,
             overrideLogPrefix: overrideLogPrefix,
@@ -744,7 +766,8 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
             setLogMethodColor: setLogMethodColor,
             overrideLogMethodColors: overrideLogMethodColors,
             useDefaultLogPrefix: useDefaultLogPrefix,
-            configureLogFilters: configureLogFilters
+            configureLogFilters: configureLogFilters,
+            useTemplates: useTemplates
         };
     };
 
@@ -757,4 +780,5 @@ angular.module("log.ex.uo", []).provider('logEx', ['$provide', function($provide
     this.overrideLogMethodColors = overrideLogMethodColors;
     this.useDefaultLogPrefix = useDefaultLogPrefix;
     this.configureLogFilters = configureLogFilters;
+    this.useTemplates = useTemplates;
 }]);
