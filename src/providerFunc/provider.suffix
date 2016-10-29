@@ -14,7 +14,8 @@
             setLogMethodColor: setLogMethodColor,
             overrideLogMethodColors: overrideLogMethodColors,
             useDefaultLogPrefix: useDefaultLogPrefix,
-            configureLogFilters: configureLogFilters
+            configureLogFilters: configureLogFilters,
+            useTemplates: useTemplates
         };
     };
 
@@ -27,4 +28,5 @@
     this.overrideLogMethodColors = overrideLogMethodColors;
     this.useDefaultLogPrefix = useDefaultLogPrefix;
     this.configureLogFilters = configureLogFilters;
+    this.useTemplates = useTemplates;
 }]);

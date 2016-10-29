@@ -9,6 +9,14 @@
  * @returns {Function} - returns function with specific rules for a log metod
  */
 var prepareLogFn = function (logFn, className, override, useOverride, useTemplate, colorCss) {
+
+  var activateTemplates = useTemplate;
+
+  // override template activation if templateGlobally is true
+  if(!useTemplate && enableTemplatesGlobally) {
+    activateTemplates = enableTemplatesGlobally;
+  }
+
   var enhancedLogFn = function () {
     var activate = (useOverride) ? activateLogs(enabled, override) : enabled;
     if (activate) {
@@ -19,7 +27,7 @@ var prepareLogFn = function (logFn, className, override, useOverride, useTemplat
         args = filterSensitiveValues(args);
       }
       var prefix = getLogPrefix(className);
-      if (validateTemplateInputs(useTemplate, args)) {
+      if (validateTemplateInputs(activateTemplates, args)) {
         var data = (supplant.apply(null, args));
         data = (itypeof(data) === 'string') ? [data] : data;
         args = data;
