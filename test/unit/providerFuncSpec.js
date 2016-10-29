@@ -146,9 +146,30 @@ describe('Provider Func Spec', function () {
     });
 
 
-    it('should add log filter keys when an array of strings is passed while ommitting keys already listed', function () {
+    it('should add log filter keys when an array of strings is passed while omitting keys already listed', function () {
       configureLogFilters({logFilters: ['password', 'password']});
       expect(filterConfig.logFilters).toEqual(['password']);
+    });
+  });
+
+  describe('useTemplates Spec', function () {
+    beforeEach(function () {
+      enableTemplatesGlobally = false;
+    });
+    afterEach(function () {
+      enableTemplatesGlobally = false;
+    });
+    it('should enable templates globally', function () {
+      useTemplates(true);
+      expect(enableTemplatesGlobally).toBeTruthy();
+    });
+
+    it('should disable templates globally', function () {
+      useTemplates(true);
+      expect(enableTemplatesGlobally).toBeTruthy();
+
+      useTemplates(false);
+      expect(enableTemplatesGlobally).toBeFalsy();
     });
   });
 

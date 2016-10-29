@@ -95,11 +95,31 @@ describe('prepareLogFn function Spec', function () {
     beforeEach(function () {
       $log.enableLog(true);
       spyOn(window, 'supplant').andCallThrough();
+      enableTemplatesGlobally = false;
     });
     afterEach(function () {
       $log.enableLog(false);
+      enableTemplatesGlobally = false;
     });
     it('should not call supplant when useTemplate is false ', function () {
+      var exFn = prepareLogFn(logFn, "", true, true, null, false);
+      exFn();
+      expect(supplant).not.toHaveBeenCalled();
+    });
+
+    it('should call supplant when useTemplate is false && template enable globally', function () {
+      spyOn(window, 'validateTemplateInputs').andCallFake(function () {
+        return true;
+      });
+
+      useTemplates(true);
+      var exFn = prepareLogFn(logFn, "", true, true, null, false);
+      exFn();
+      expect(supplant).toHaveBeenCalled();
+    });
+
+    it('should call not supplant when useTemplate is false && template disabled globally', function () {
+      useTemplates(false);
       var exFn = prepareLogFn(logFn, "", true, true, null, false);
       exFn();
       expect(supplant).not.toHaveBeenCalled();
